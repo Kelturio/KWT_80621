@@ -16,8 +16,5 @@ BEGIN
 	
 	#RuntimeMeters_Instance();
 	
-	
-	
-	
 END_FUNCTION_BLOCK
 

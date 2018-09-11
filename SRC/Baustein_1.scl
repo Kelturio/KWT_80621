@@ -22,8 +22,8 @@ VERSION : 0.1
    END_VAR
 
    VAR 
-      i_iec_timer_1 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : IEC_TIMER;
-      i_iec_timer_2 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : IEC_TIMER;
+      i_IEC_TMR_1 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : IEC_TIMER;
+      i_IEC_TMR_2 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : IEC_TIMER;
    END_VAR
 
    VAR_TEMP 
@@ -39,11 +39,11 @@ BEGIN
 	#io_s_p1 := #i_strang = 1 OR #t_err_p2 OR #i_beide;
 	#io_s_p2 := #i_strang = 0 OR #t_err_p1 OR #i_beide;
 	
-	#i_iec_timer_1.TOF(IN := #io_s_p1,
-	                   PT := #i_tof_pt,
-	                   Q => #o_p1);
-	#i_iec_timer_2.TOF(IN := #io_s_p2,
-	                   PT := #i_tof_pt,
-	                   Q => #o_p2);
+	#i_IEC_TMR_1.TOF(IN := #io_s_p1,
+	                 PT := #i_tof_pt,
+	                 Q => #o_p1);
+	#i_IEC_TMR_2.TOF(IN := #io_s_p2,
+	                 PT := #i_tof_pt,
+	                 Q => #o_p2);
 END_FUNCTION_BLOCK
 

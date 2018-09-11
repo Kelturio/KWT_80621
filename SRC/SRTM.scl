@@ -8,10 +8,6 @@ VERSION : 0.1
       i_NR : UInt;   // Number of the operating hours counter
    END_VAR
 
-   VAR_OUTPUT 
-      o_CV : DInt;   // Current value of the operating hours counter
-   END_VAR
-
    VAR 
       R_TRIG_Instance {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;   // Detect positive signal edge
       F_TRIG_Instance {OriginalPartName := 'F_TRIG_1200'; LibVersion := '1.0'} : F_TRIG;   // Detect negative signal edge
@@ -25,6 +21,7 @@ VERSION : 0.1
    VAR_TEMP 
       t_R_TRIG_Q : Bool;   // Result of positive edge evaluation
       t_F_TRIG_Q : Bool;   // Result of negative edge evaluation
+      s_CV : DInt;
    END_VAR
 
 
@@ -46,7 +43,7 @@ BEGIN
 	                  MODE := #s_MODE,
 	                  PV := #s_PV,
 	                  CQ => #s_CQ,
-	                  CV => #o_CV);
+	                  CV => #s_CV);
 	
 END_FUNCTION_BLOCK
 

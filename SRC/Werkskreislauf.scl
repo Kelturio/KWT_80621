@@ -17,8 +17,6 @@ VERSION : 0.1
    VAR 
       s_p1 : Bool;
       s_p2 : Bool;
-      s_iec_timer1 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;   // Timer Nachlaufzeit
-      s_iec_timer2 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;   // Timer Nachlaufzeit
       s_Nachlaufzeit : Time := T#10S;
       Baustein_1_Instance : "Baustein_1";
    END_VAR
@@ -41,6 +39,5 @@ BEGIN
 	                     o_p2 => #o_Pumpe2,
 	                     io_s_p1 := #s_p1,
 	                     io_s_p2 := #s_p2);
-	
 END_FUNCTION_BLOCK
 

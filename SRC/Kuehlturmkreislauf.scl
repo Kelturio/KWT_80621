@@ -8,8 +8,8 @@ VERSION : 0.1
       i_Max : Real;
       i_BetriebP1 : Bool;
       i_BetriebP2 : Bool;
-      i_StörungP1 : Bool;
-      i_StörungP2 : Bool;
+      i_StoerungP1 : Bool;
+      i_StoerungP2 : Bool;
    END_VAR
 
    VAR_OUTPUT 
@@ -31,12 +31,12 @@ VERSION : 0.1
       s_Beide_Pumpen : Bool;
       s_Nachlaufzeit : Time := T#10S;
       Baustein_1_Instance : "Baustein_1";
-      IEC_Timer_0_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
-      IEC_Timer_1_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
+      IEC_TMR_0_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      IEC_TMR_1_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
       s_Ventilator1_ET : Time;
       s_Ventilator2_ET : Time;
-      c_SET_POINT_MIN : Int := 0;
-      c_SET_POINT_MAX : Int := 27648;
+      s_SET_POINT_MIN : Int := 0;
+      s_SET_POINT_MAX : Int := 27648;
       s_MaxThreshold : Real := 1.0;
    END_VAR
 
@@ -52,8 +52,8 @@ BEGIN
 	
 	#Baustein_1_Instance(i_strang := #i_Strang,
 	                     i_beide := #s_Beide_Pumpen,
-	                     i_err1 := #i_StörungP1,
-	                     i_err2 := #i_StörungP2,
+	                     i_err1 := #i_StoerungP1,
+	                     i_err2 := #i_StoerungP2,
 	                     i_run1 := #i_BetriebP1,
 	                     i_run2 := #i_BetriebP2,
 	                     i_tof_pt := #s_Nachlaufzeit,
@@ -62,29 +62,29 @@ BEGIN
 	                     io_s_p1 := #s_Pumpe1,
 	                     io_s_p2 := #s_Pumpe2);
 	
-	#IEC_Timer_0_Instance(IN := #i_BetriebP1 AND NOT #s_zu_kalt,
-	                      PT := #s_Ventilator_pt,
-	                      Q => #o_Ventilator1,
-	                      ET => #s_Ventilator1_ET);
+	#IEC_TMR_0_Instance.TON(IN := #i_BetriebP1 AND NOT #s_zu_kalt,
+	                        PT := #s_Ventilator_pt,
+	                        Q => #o_Ventilator1,
+	                        ET => #s_Ventilator1_ET);
 	
-	#IEC_Timer_1_Instance(IN := #i_BetriebP2 AND NOT #s_zu_kalt,
-	                      PT := #s_Ventilator_pt,
-	                      Q => #o_Ventilator2,
-	                      ET => #s_Ventilator2_ET);
+	#IEC_TMR_1_Instance.TON(IN := #i_BetriebP2 AND NOT #s_zu_kalt,
+	                        PT := #s_Ventilator_pt,
+	                        Q => #o_Ventilator2,
+	                        ET => #s_Ventilator2_ET);
 	
 	#s_zu_kalt := #i_Vorlauftemperatur <= #i_Min;
 	#s_zu_warm := #i_Vorlauftemperatur >= #i_Max;
 	
 	IF #s_zu_warm THEN
-	    #s_Sollwert := #c_SET_POINT_MAX;
+	    #s_Sollwert := #s_SET_POINT_MAX;
 	ELSIF #s_zu_kalt THEN
-	    #s_Sollwert := #c_SET_POINT_MIN;
+	    #s_Sollwert := #s_SET_POINT_MIN;
 	ELSE
 	    #s_Sollwert := "ScaleValueRealToInt"(VALUE := #i_Vorlauftemperatur,
 	                                         XMIN := #i_Min,
 	                                         XMAX := #i_Max,
-	                                         YMIN := #c_SET_POINT_MIN,
-	                                         YMAX := #c_SET_POINT_MAX);
+	                                         YMIN := #s_SET_POINT_MIN,
+	                                         YMAX := #s_SET_POINT_MAX);
 	END_IF;
 	
 	#o_Ventilator1Sollwert := #s_Sollwert;
