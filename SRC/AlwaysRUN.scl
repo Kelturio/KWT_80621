@@ -4,6 +4,7 @@ AUTHOR : Searinox
 VERSION : 0.1
    VAR 
       ScaleAnalogValues_Instance : "ScaleAnalogValues";
+      RuntimeMeters_Instance : "RuntimeMeters";
    END_VAR
 
 
@@ -12,6 +13,11 @@ BEGIN
 	                            i_Ruecklauftemp := "Ruecklauftemperatur",
 	                            o_Vorlauftemp => "Global-DB".Vorlauftemperatur,
 	                            o_Ruecklauftemp => "Global-DB".Ruecklauftemperatur);
+	
+	#RuntimeMeters_Instance();
+	
+	
+	
 	
 END_FUNCTION_BLOCK
 
