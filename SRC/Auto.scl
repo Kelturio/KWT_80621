@@ -15,6 +15,7 @@ VERSION : 0.1
       s_MaxInitVal : Real := 27.0;
       s_MinToMaxZone : Real := 2.0;
       s_strang : Bool;
+      Hebeanlage_Instance : "Hebeanlage";
    END_VAR
 
    VAR_TEMP 
@@ -55,6 +56,24 @@ BEGIN
 	END_IF;
 	
 	#s_Min := #s_Max - #s_MinToMaxZone;
+	
+	#Hebeanlage_Instance(Strang := #s_strang,
+	                     Motorschutzschalter_H1 := "Motorschutzschalter Hebeanlage 1",
+	                     Motorschutzschalter_H2 := "Motorschutzschalter Hebeanlage 2",
+	                     "H1 Klappe geöffnet" := "Hebeanlage 1 Klappe geöffnet",
+	                     "H2 Klappe geöffnet" := "Hebeanlage 2 Klappe geöffnet",
+	                     "Behälter Trockenlaufschutz" := "Behälter Hebeanlage Trockenlaufschutz",
+	                     "Behälter Pumpe ein" := "Behälter Hebeanlage Pumpe ein",
+	                     "Behälter Pumpe aus" := "Behälter Hebeanlage Pumpe aus",
+	                     "Behälter Überlauf" := "Behälter Hebeanlage Überlauf",
+	                     "H1 Differenzdruck" := "Hebeanlage 1 Differenzdruck",
+	                     "H2 Differenzdruck" := "Hebeanlage 2 Differenzdruck",
+	                     "Hebeanlage 1 öffnen" => "Hebeanlage 1 öffnen",
+	                     "Hebeanlage 2 öffnen" => "Hebeanlage 2 öffnen",
+	                     Pumpe_H1 => "Pumpe Hebeanlage 1",
+	                     Pumpe_H2 => "Pumpe Hebeanlage 2",
+	                     H1_Durchflußmenge => "Hebeanlage 1 Durchflußmenge",
+	                     H2_Durchflußmenge => "Hebeanlage 2 Durchflußmenge");
 	
 END_FUNCTION_BLOCK
 
