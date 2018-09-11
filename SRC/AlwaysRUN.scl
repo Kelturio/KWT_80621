@@ -1,0 +1,17 @@
+﻿FUNCTION_BLOCK "AlwaysRUN"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR 
+      ScaleAnalogValues_Instance : "ScaleAnalogValues";
+   END_VAR
+
+
+BEGIN
+	#ScaleAnalogValues_Instance(i_Vorlauftemp := "Vorlauftemperatur",
+	                            i_Ruecklauftemp := "Ruecklauftemperatur",
+	                            o_Vorlauftemp => "Global-DB".Vorlauftemperatur,
+	                            o_Ruecklauftemp => "Global-DB".Ruecklauftemperatur);
+	
+END_FUNCTION_BLOCK
+

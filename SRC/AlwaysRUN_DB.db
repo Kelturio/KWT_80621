@@ -1,0 +1,11 @@
+﻿DATA_BLOCK "AlwaysRUN_DB"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+NON_RETAIN
+"AlwaysRUN"
+
+BEGIN
+
+END_DATA_BLOCK
+
