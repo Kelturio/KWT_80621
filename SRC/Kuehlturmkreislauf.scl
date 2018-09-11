@@ -30,12 +30,14 @@ VERSION : 0.1
       s_Ventilator_pt : Time := T#30S;
       s_Beide_Pumpen : Bool;
       s_Nachlaufzeit : Time := T#10S;
-      "s_Max+1" : Real;
       Baustein_1_Instance : "Baustein_1";
       IEC_Timer_0_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
       IEC_Timer_1_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
       s_Ventilator1_ET : Time;
       s_Ventilator2_ET : Time;
+      c_SET_POINT_MIN : Int := 0;
+      c_SET_POINT_MAX : Int := 27648;
+      s_MaxThreshold : Real := 1.0;
    END_VAR
 
    VAR_TEMP 
@@ -46,6 +48,8 @@ VERSION : 0.1
 
 
 BEGIN
+	#s_Beide_Pumpen := #i_Vorlauftemperatur > (#i_Max + #s_MaxThreshold);
+	
 	#Baustein_1_Instance(i_strang := #i_Strang,
 	                     i_beide := #s_Beide_Pumpen,
 	                     i_err1 := #i_StörungP1,
@@ -58,13 +62,6 @@ BEGIN
 	                     io_s_p1 := #s_Pumpe1,
 	                     io_s_p2 := #s_Pumpe2);
 	
-	#s_zu_kalt := #i_Vorlauftemperatur <= #i_Min;
-	#s_zu_warm := #i_Vorlauftemperatur >= #i_Max;
-	
-	#"s_Max+1" := #i_Max + 1.0;
-	
-	#s_Beide_Pumpen := #i_Vorlauftemperatur > #"s_Max+1";
-	
 	#IEC_Timer_0_Instance(IN := #i_BetriebP1 AND NOT #s_zu_kalt,
 	                      PT := #s_Ventilator_pt,
 	                      Q => #o_Ventilator1,
@@ -75,14 +72,19 @@ BEGIN
 	                      Q => #o_Ventilator2,
 	                      ET => #s_Ventilator2_ET);
 	
-	#s_Sollwert := "ScaleValueRealToInt"(VALUE := #i_Vorlauftemperatur, XMIN := #i_Min, XMAX := #i_Max, YMIN := 0, YMAX := 27648);
-	
-	IF #s_zu_kalt THEN
-	    #s_Sollwert := 0;
-	END_IF;
+	#s_zu_kalt := #i_Vorlauftemperatur <= #i_Min;
+	#s_zu_warm := #i_Vorlauftemperatur >= #i_Max;
 	
 	IF #s_zu_warm THEN
-	    #s_Sollwert := 27648;
+	    #s_Sollwert := #c_SET_POINT_MAX;
+	ELSIF #s_zu_kalt THEN
+	    #s_Sollwert := #c_SET_POINT_MIN;
+	ELSE
+	    #s_Sollwert := "ScaleValueRealToInt"(VALUE := #i_Vorlauftemperatur,
+	                                         XMIN := #i_Min,
+	                                         XMAX := #i_Max,
+	                                         YMIN := #c_SET_POINT_MIN,
+	                                         YMAX := #c_SET_POINT_MAX);
 	END_IF;
 	
 	#o_Ventilator1Sollwert := #s_Sollwert;
