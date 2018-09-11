@@ -1,0 +1,17 @@
+﻿FUNCTION "Scale_PT100" : Real
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      value : Int;
+   END_VAR
+
+   VAR_TEMP 
+      t_norm : Real;
+   END_VAR
+
+
+BEGIN
+	#t_norm := NORM_X(MIN := 0, VALUE := #value, MAX := 27648);
+	#Scale_PT100 := SCALE_X(MIN := 0.0, VALUE := #t_norm, MAX := 100.0);
+END_FUNCTION
+
