@@ -1,0 +1,51 @@
+﻿FUNCTION_BLOCK "SRTM"
+TITLE = Runtime meter
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      i_CLK : Bool;   // Power flow or input bit whose transition edge is detected
+      i_NR : UInt;   // Runtime meter number: (possible values: 0..9)
+   END_VAR
+
+   VAR_OUTPUT 
+      o_CV : DInt;   // Current runtime hours value for the specified meter
+   END_VAR
+
+   VAR 
+      R_TRIG_Instance {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;
+      F_TRIG_Instance {OriginalPartName := 'F_TRIG_1200'; LibVersion := '1.0'} : F_TRIG;
+      RTM_MODE : "RTM_MODE";   // RTM Execution mode numbers
+      s_MODE : Byte;   // RTM Execution mode number
+      s_PV : DInt;   // Preset hours value for the specified runtime meter
+      s_CQ : Bool;   // Runtime meter status (1 = running)
+      s_RET_VAL : Int;   // Function result / error message
+   END_VAR
+
+   VAR_TEMP 
+      t_R_TRIG_Q : Bool;   // Indicates an positive edge was detected
+      t_F_TRIG_Q : Bool;   // Indicates an negative edge was detected
+   END_VAR
+
+
+BEGIN
+	#R_TRIG_Instance(CLK := #i_CLK,
+	                 Q => #t_R_TRIG_Q);
+	#F_TRIG_Instance(CLK := #i_CLK,
+	                 Q => #t_F_TRIG_Q);
+	
+	IF #t_R_TRIG_Q THEN
+	    #s_MODE := #RTM_MODE.START;
+	ELSIF #t_F_TRIG_Q THEN
+	    #s_MODE := #RTM_MODE.STOP;
+	ELSE
+	    #s_MODE := #RTM_MODE.FETCH;
+	END_IF;
+	
+	#s_RET_VAL := RTM(NR := #i_NR,
+	                  MODE := #s_MODE,
+	                  PV := #s_PV,
+	                  CQ => #s_CQ,
+	                  CV => #o_CV);
+	
+END_FUNCTION_BLOCK
+
