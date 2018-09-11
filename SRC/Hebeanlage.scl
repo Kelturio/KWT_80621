@@ -1,0 +1,54 @@
+﻿FUNCTION_BLOCK "Hebeanlage"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      Strang : Bool;
+      Motorschutzschalter_H1 : Bool;
+      Motorschutzschalter_H2 : Bool;
+      "H1 Klappe geöffnet" : Bool;
+      "H2 Klappe geöffnet" : Bool;
+      "Behälter Trockenlaufschutz" : Bool;
+      "Behälter Pumpe ein" : Bool;
+      "Behälter Pumpe aus" : Bool;
+      "Behälter Überlauf" : Bool;
+      "H1 Differenzdruck" : Int;
+      "H2 Differenzdruck" : Int;
+   END_VAR
+
+   VAR_OUTPUT 
+      "Hebeanlage 1 öffnen" : Bool;
+      "Hebeanlage 2 öffnen" : Bool;
+      Pumpe_H1 : Bool;
+      Pumpe_H2 : Bool;
+      H1_Durchflußmenge : Int;
+      H2_Durchflußmenge : Int;
+   END_VAR
+
+   VAR 
+      s_P1 : Bool;
+      s_P2 : Bool;
+      s_Nachlaufzeit : Time := T#10S;
+      Baustein_1_Instance : "Baustein_1";
+   END_VAR
+
+   VAR_TEMP 
+      t_err_P1 : Bool;
+      t_err_P2 : Bool;
+   END_VAR
+
+
+BEGIN
+	#Baustein_1_Instance(i_strang := #Strang,
+	                     i_beide := "AlwaysFALSE",
+	                     i_err1 := #Motorschutzschalter_H1,
+	                     i_err2 := #Motorschutzschalter_H2,
+	                     i_run1 := "AlwaysTRUE",
+	                     i_run2 := "AlwaysTRUE",
+	                     i_tof_pt := #s_Nachlaufzeit,
+	                     o_p1 => #Pumpe_H1,
+	                     o_p2 => #Pumpe_H2,
+	                     io_s_p1 := #s_P1,
+	                     io_s_p2 := #s_P2);
+	
+END_FUNCTION_BLOCK
+
