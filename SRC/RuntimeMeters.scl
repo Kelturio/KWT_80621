@@ -1,0 +1,46 @@
+﻿FUNCTION_BLOCK "RuntimeMeters"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR 
+      SRTM_Instances : Array[0..9] of "SRTM";
+   END_VAR
+
+   VAR_TEMP 
+      i : Int;
+      t_CLK : Bool;
+   END_VAR
+
+
+BEGIN
+	FOR #i := 0 TO 9 DO
+	    CASE #i OF
+	        0:
+	            #t_CLK := "AlwaysTRUE";
+	        1:
+	            #t_CLK := "Betrieb Pumpe 1";
+	        2:
+	            #t_CLK := "Betrieb Pumpe 2";
+	        3:
+	            #t_CLK := "Betrieb Pumpe 3";
+	        4:
+	            #t_CLK := "Betrieb Pumpe 4";
+	        5:
+	            #t_CLK := "Pumpe Hebeanlage 1";
+	        6:
+	            #t_CLK := "Pumpe Hebeanlage 2";
+	        7:
+	            #t_CLK := "Ventilator 1 Betrieb";
+	        8:
+	            #t_CLK := "Ventilator 2 Betrieb";
+	        9:
+	            #t_CLK := "AlwaysFALSE";
+	        ELSE
+	            #t_CLK := "AlwaysFALSE";
+	    END_CASE;
+	    #SRTM_Instances[#i](i_CLK := #t_CLK,
+	                        i_NR := #i);
+	END_FOR;
+	
+END_FUNCTION_BLOCK
+
