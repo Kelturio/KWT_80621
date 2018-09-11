@@ -1,0 +1,12 @@
+﻿DATA_BLOCK "MainInstane_DB"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+FAMILY : AKK
+VERSION : 0.1
+NON_RETAIN
+"MainInstane"
+
+BEGIN
+
+END_DATA_BLOCK
+
