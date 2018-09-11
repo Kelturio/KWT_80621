@@ -4,7 +4,7 @@ VERSION : 0.1
 NON_RETAIN
    VAR 
       Vorlauftemperatur : Real;
-      Rücklauftemperatur : Real;
+      Ruecklauftemperatur : Real;
       Auto : Bool;
    END_VAR
 
