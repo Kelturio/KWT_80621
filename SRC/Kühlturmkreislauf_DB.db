@@ -1,0 +1,10 @@
+﻿DATA_BLOCK "Kühlturmkreislauf_DB"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+NON_RETAIN
+"Kühlturmkreislauf"
+
+BEGIN
+
+END_DATA_BLOCK
+
