@@ -1,0 +1,60 @@
+﻿FUNCTION_BLOCK "Auto"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR 
+      s_Min : Real := 0.0;
+   END_VAR
+   VAR RETAIN
+      s_Max : Real := 27.0;
+   END_VAR
+   VAR 
+      Werkskreislauf_Instance : "Werkskreislauf";
+      Kuehlturmkreislauf_Instance : "Kuehlturmkreislauf";
+      s_MaxCapMin : Real := 0.0;
+      s_MaxCapMax : Real := 100.0;
+      s_MaxInitVal : Real := 27.0;
+      s_MinToMaxZone : Real := 2.0;
+      s_strang : Bool;
+   END_VAR
+
+   VAR_TEMP 
+      t_ret_val : Int;
+      t_dtl_out {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+   END_VAR
+
+
+BEGIN
+	#t_ret_val := RD_SYS_T(#t_dtl_out);
+	#s_strang := #t_dtl_out.DAY MOD 2 = 0;
+	
+	#Werkskreislauf_Instance(i_Strang := #s_strang,
+	                         i_Betrieb1 := "Betrieb Pumpe 1",
+	                         i_Betrieb2 := "Betrieb Pumpe 2",
+	                         i_Stoerung1 := NOT "Störung Pumpe 1",
+	                         i_Stoerung2 := NOT "Störung Pumpe 2",
+	                         o_Pumpe1 => "Pumpe 1",
+	                         o_Pumpe2 => "Pumpe 2");
+	
+	#Kuehlturmkreislauf_Instance(i_Strang := #s_strang,
+	                             i_Vorlauftemperatur := "Global-DB".Vorlauftemperatur,
+	                             i_Min := #s_Min,
+	                             i_Max := #s_Max,
+	                             i_BetriebP1 := "Betrieb Pumpe 3",
+	                             i_BetriebP2 := "Betrieb Pumpe 4",
+	                             i_StoerungP1 := NOT "Motorschutzschalter Pumpe 3 OK",
+	                             i_StoerungP2 := NOT "Motorschutzschalter Pumpe 4 OK",
+	                             o_Pumpe3 => "Pumpe 3",
+	                             o_Pumpe4 => "Pumpe 4",
+	                             o_Ventilator1 => "Ventilator 1",
+	                             o_Ventilator2 => "Ventilator 2",
+	                             o_Ventilator1Sollwert => "Sollwert Ventilator 1",
+	                             o_Ventilator2Sollwert => "Sollwert Ventilator 2");
+	
+	IF #s_Max < #s_MaxCapMin OR #s_Max > #s_MaxCapMax THEN
+	    #s_Max := #s_MaxInitVal;
+	END_IF;
+	
+	#s_Min := #s_Max - #s_MinToMaxZone;
+	
+END_FUNCTION_BLOCK
+
