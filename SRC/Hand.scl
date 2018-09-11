@@ -1,0 +1,14 @@
+﻿FUNCTION_BLOCK "Hand"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR 
+      static_Vent1SollP : Int;
+      static_Vent2SollP : Int;
+   END_VAR
+
+
+BEGIN
+	"Sollwert Ventilator 1" := "ScaleValueInt"(VALUE := #static_Vent1SollP, XMIN := 0, XMAX := 100, YMIN := 0, YMAX := 27648);
+	"Sollwert Ventilator 2" := "ScaleValueInt"(VALUE := #static_Vent2SollP, XMIN := 0, XMAX := 100, YMIN := 0, YMAX := 27648);
+END_FUNCTION_BLOCK
+
