@@ -1,0 +1,92 @@
+﻿FUNCTION_BLOCK "Kuehlturmkreislauf"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      i_Strang : Bool;   // Strang
+      i_Vorlauftemperatur : Real;   // Vorlauftemperatur
+      i_Min : Real;
+      i_Max : Real;
+      i_BetriebP1 : Bool;
+      i_BetriebP2 : Bool;
+      i_StörungP1 : Bool;
+      i_StörungP2 : Bool;
+   END_VAR
+
+   VAR_OUTPUT 
+      o_Pumpe3 : Bool;
+      o_Pumpe4 : Bool;
+      o_Ventilator1 : Bool;
+      o_Ventilator2 : Bool;
+      o_Ventilator1Sollwert : Int;
+      o_Ventilator2Sollwert : Int;
+   END_VAR
+
+   VAR 
+      s_Pumpe1 : Bool;
+      s_Pumpe2 : Bool;
+      s_zu_kalt : Bool;
+      s_zu_warm : Bool;
+      s_Sollwert : Int;
+      s_Ventilator_pt : Time := T#30S;
+      s_Beide_Pumpen : Bool;
+      s_Nachlaufzeit : Time := T#10S;
+      "s_Max+1" : Real;
+      Baustein_1_Instance : "Baustein_1";
+      IEC_Timer_0_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
+      IEC_Timer_1_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
+      s_Ventilator1_ET : Time;
+      s_Ventilator2_ET : Time;
+   END_VAR
+
+   VAR_TEMP 
+      t_norm_out : Real;
+      t_err_p1 : Real;
+      t_err_p2 : Real;
+   END_VAR
+
+
+BEGIN
+	#Baustein_1_Instance(i_strang := #i_Strang,
+	                     i_beide := #s_Beide_Pumpen,
+	                     i_err1 := #i_StörungP1,
+	                     i_err2 := #i_StörungP2,
+	                     i_run1 := #i_BetriebP1,
+	                     i_run2 := #i_BetriebP2,
+	                     i_tof_pt := #s_Nachlaufzeit,
+	                     o_p1 => #o_Pumpe3,
+	                     o_p2 => #o_Pumpe4,
+	                     io_s_p1 := #s_Pumpe1,
+	                     io_s_p2 := #s_Pumpe2);
+	
+	#s_zu_kalt := #i_Vorlauftemperatur <= #i_Min;
+	#s_zu_warm := #i_Vorlauftemperatur >= #i_Max;
+	
+	#"s_Max+1" := #i_Max + 1.0;
+	
+	#s_Beide_Pumpen := #i_Vorlauftemperatur > #"s_Max+1";
+	
+	#IEC_Timer_0_Instance(IN := #i_BetriebP1 AND NOT #s_zu_kalt,
+	                      PT := #s_Ventilator_pt,
+	                      Q => #o_Ventilator1,
+	                      ET => #s_Ventilator1_ET);
+	
+	#IEC_Timer_1_Instance(IN := #i_BetriebP2 AND NOT #s_zu_kalt,
+	                      PT := #s_Ventilator_pt,
+	                      Q => #o_Ventilator2,
+	                      ET => #s_Ventilator2_ET);
+	
+	#s_Sollwert := "ScaleValueRealToInt"(VALUE := #i_Vorlauftemperatur, XMIN := #i_Min, XMAX := #i_Max, YMIN := 0, YMAX := 27648);
+	
+	IF #s_zu_kalt THEN
+	    #s_Sollwert := 0;
+	END_IF;
+	
+	IF #s_zu_warm THEN
+	    #s_Sollwert := 27648;
+	END_IF;
+	
+	#o_Ventilator1Sollwert := #s_Sollwert;
+	#o_Ventilator2Sollwert := #s_Sollwert;
+	
+END_FUNCTION_BLOCK
+
