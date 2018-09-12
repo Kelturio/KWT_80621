@@ -44,6 +44,7 @@ BEGIN
 	                             i_BetriebP2 := "Betrieb Pumpe 4",
 	                             i_StoerungP1 := NOT "Motorschutzschalter Pumpe 3 OK",
 	                             i_StoerungP2 := NOT "Motorschutzschalter Pumpe 4 OK",
+	                             i_AbsalzPulse:="Absalzanlage Impuls",
 	                             o_Pumpe3 => "Pumpe 3",
 	                             o_Pumpe4 => "Pumpe 4",
 	                             o_Ventilator1 => "Ventilator 1",
