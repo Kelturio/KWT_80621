@@ -10,6 +10,7 @@ VERSION : 0.1
       i_BetriebP2 : Bool;
       i_StoerungP1 : Bool;
       i_StoerungP2 : Bool;
+      i_AbsalzPulse : Bool;
    END_VAR
 
    VAR_OUTPUT 
@@ -38,17 +39,15 @@ VERSION : 0.1
       s_SET_POINT_MIN : Int := 0;
       s_SET_POINT_MAX : Int := 27648;
       s_MaxThreshold : Real := 1.0;
-   END_VAR
-
-   VAR_TEMP 
-      t_norm_out : Real;
-      t_err_p1 : Real;
-      t_err_p2 : Real;
+      IEC_TMR_2_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      s_AbsalzPulsePT : Time := T#5m;
+      s_AbsalzTP : Bool;
+      s_AbsalzPulseET : Time;
    END_VAR
 
 
 BEGIN
-	#s_Beide_Pumpen := #i_Vorlauftemperatur > (#i_Max + #s_MaxThreshold);
+	#s_Beide_Pumpen := #i_Vorlauftemperatur > (#i_Max + #s_MaxThreshold) OR #s_AbsalzTP;
 	
 	#Baustein_1_Instance(i_strang := #i_Strang,
 	                     i_beide := #s_Beide_Pumpen,
@@ -71,6 +70,12 @@ BEGIN
 	                        PT := #s_Ventilator_pt,
 	                        Q => #o_Ventilator2,
 	                        ET => #s_Ventilator2_ET);
+	
+	#IEC_TMR_2_Instance.TP(IN:=#i_AbsalzPulse,
+	                    PT:=#s_AbsalzPulsePT,
+	                    Q=>#s_AbsalzTP,
+	                    ET=>#s_AbsalzPulseET);
+	
 	
 	#s_zu_kalt := #i_Vorlauftemperatur <= #i_Min;
 	#s_zu_warm := #i_Vorlauftemperatur >= #i_Max;
