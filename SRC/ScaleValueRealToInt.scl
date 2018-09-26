@@ -1,7 +1,7 @@
 ﻿FUNCTION "ScaleValueRealToInt" : Int
 TITLE = ScaleValue
 { S7_Optimized_Access := 'TRUE' }
-AUTHOR : Searinox
+AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
 FAMILY : AKK
 NAME : '1337'
 VERSION : 0.1

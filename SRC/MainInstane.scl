@@ -1,22 +1,66 @@
 ﻿FUNCTION_BLOCK "MainInstane"
 { S7_Optimized_Access := 'TRUE' }
-AUTHOR : Searinox
+AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
 FAMILY : AKK
 VERSION : 0.1
    VAR 
-      AlwaysRUN_Instance : "AlwaysRUN";
-      Auto_Instance : "Auto";
-      Hand_Instance : "Hand";
+      AlwaysRUN : "AlwaysRUN";
+      Auto : "Auto";
+      Hand : "Hand";
+      AutoMode : Bool := false;
+      Vorlauftemperatur : Real;
+      Ruecklauftemperatur : Real;
+   END_VAR
+   VAR RETAIN
+      HMI : Struct
+         StorageTankLevel : Struct
+            P1 : Int := 14;   // position 1, e.g. maximum value reached
+            P2 : Int := 6;   // position 2, e.g. upper preset value reached
+            P3 : Int := 4;   // position 3, e.g. lower preset value reached
+            P4 : Int := 2;   // position 4, e.g. minimum value reached
+         END_STRUCT;
+         StorageTankRefill : Bool;
+      END_STRUCT;
    END_VAR
 
 
 BEGIN
-	#AlwaysRUN_Instance();
+	#AlwaysRUN();
 	
-	IF "Global-DB".Auto THEN
-	    #Auto_Instance();
+	IF NOT "Steuerspannung Ein" OR NOT "Sicherung Ausgänge OK" THEN
+	    #AutoMode := 0;
+	    "Ventilator 1" := 0;
+	    "Ventilator 2" := 0;
+	    "Pumpe 1" := 0;
+	    "Pumpe 2" := 0;
+	    "Pumpe 3" := 0;
+	    "Pumpe 4" := 0;
+	    //"Rundumleuchte Störung" := 0;
+	    "Reserve DQ 1" := 0;
+	    "ZU-Klappen 1 öffnen" := 0;
+	    "ZU-Klappen 2 öffnen" := 0;
+	    "Hebeanlage 1 öffnen" := 0;
+	    "Hebeanlage 2 öffnen" := 0;
+	    "Pumpe Hebeanlage 1" := 0;
+	    "Pumpe Hebeanlage 2" := 0;
+	    "Reserve DQ 2" := 0;
+	    "Reserve DQ 3" := 0;
+	    "Reserve DQ 4" := 0;
+	    "Reserve DQ 5" := 0;
+	    "Wasserbehälter Wassercontainer Nachfüllung" := 0;
+	    "Reserve DQ 7" := 0;
+	    "Reserve DQ 8" := 0;
+	    "Reserve DQ 9" := 0;
+	    "Reserve DQ 10" := 0;
+	    "Reserve DQ 11" := 0;
+	    "Reserve DQ 12" := 0;
+	    "Reserve DQ 13" := 0;
+	END_IF;
+	
+	IF #AutoMode THEN
+	    #Auto();
 	ELSE
-	    #Hand_Instance();
+	    #Hand();
 	END_IF;
 	
 END_FUNCTION_BLOCK

@@ -1,5 +1,7 @@
 ﻿FUNCTION_BLOCK "Werkskreislauf"
 { S7_Optimized_Access := 'TRUE' }
+AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
+FAMILY : AKK
 VERSION : 0.1
    VAR_INPUT 
       i_Strang : Bool;
@@ -18,26 +20,21 @@ VERSION : 0.1
       s_p1 : Bool;
       s_p2 : Bool;
       s_Nachlaufzeit : Time := T#10S;
-      Baustein_1_Instance : "Baustein_1";
-   END_VAR
-
-   VAR_TEMP 
-      t_err_p1 : Bool;
-      t_err_p2 : Bool;
+      Baustein_1 : "Baustein_1";
    END_VAR
 
 
 BEGIN
-	#Baustein_1_Instance(i_strang := #i_Strang,
-	                     i_beide := "AlwaysFALSE",
-	                     i_err1 := #i_Stoerung1,
-	                     i_err2 := #i_Stoerung2,
-	                     i_run1 := #i_Betrieb1,
-	                     i_run2 := #i_Betrieb2,
-	                     i_tof_pt := #s_Nachlaufzeit,
-	                     o_p1 => #o_Pumpe1,
-	                     o_p2 => #o_Pumpe2,
-	                     io_s_p1 := #s_p1,
-	                     io_s_p2 := #s_p2);
+	#Baustein_1(i_strang := #i_Strang,
+	            i_beide := "AlwaysFALSE",
+	            i_err1 := #i_Stoerung1,
+	            i_err2 := #i_Stoerung2,
+	            i_run1 := #i_Betrieb1,
+	            i_run2 := #i_Betrieb2,
+	            i_tof_pt := #s_Nachlaufzeit,
+	            o_p1 => #o_Pumpe1,
+	            o_p2 => #o_Pumpe2,
+	            io_s_p1 := #s_p1,
+	            io_s_p2 := #s_p2);
 END_FUNCTION_BLOCK
 

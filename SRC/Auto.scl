@@ -1,5 +1,7 @@
 ﻿FUNCTION_BLOCK "Auto"
 { S7_Optimized_Access := 'TRUE' }
+AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
+FAMILY : AKK
 VERSION : 0.1
    VAR 
       s_Min : Real := 0.0;
@@ -8,14 +10,14 @@ VERSION : 0.1
       s_Max : Real := 27.0;
    END_VAR
    VAR 
-      Werkskreislauf_Instance : "Werkskreislauf";
-      Kuehlturmkreislauf_Instance : "Kuehlturmkreislauf";
+      Werkskreislauf : "Werkskreislauf";
+      Kuehlturmkreislauf : "Kuehlturmkreislauf";
       s_MaxCapMin : Real := 0.0;
       s_MaxCapMax : Real := 100.0;
       s_MaxInitVal : Real := 27.0;
       s_MinToMaxZone : Real := 2.0;
       s_strang : Bool;
-      Hebeanlage_Instance : "Hebeanlage";
+      Hebeanlage : "Hebeanlage";
    END_VAR
 
    VAR_TEMP 
@@ -28,29 +30,35 @@ BEGIN
 	#t_ret_val := RD_SYS_T(#t_dtl_out);
 	#s_strang := #t_dtl_out.DAY MOD 2 = 0;
 	
-	#Werkskreislauf_Instance(i_Strang := #s_strang,
-	                         i_Betrieb1 := "Betrieb Pumpe 1",
-	                         i_Betrieb2 := "Betrieb Pumpe 2",
-	                         i_Stoerung1 := NOT "Störung Pumpe 1",
-	                         i_Stoerung2 := NOT "Störung Pumpe 2",
-	                         o_Pumpe1 => "Pumpe 1",
-	                         o_Pumpe2 => "Pumpe 2");
+	"Main_DB".AlwaysRUN.StorageTankRefill := "MB_Wasserbehälter" <= "Main_DB".HMI.StorageTankLevel.P2;
 	
-	#Kuehlturmkreislauf_Instance(i_Strang := #s_strang,
-	                             i_Vorlauftemperatur := "Global-DB".Vorlauftemperatur,
-	                             i_Min := #s_Min,
-	                             i_Max := #s_Max,
-	                             i_BetriebP1 := "Betrieb Pumpe 3",
-	                             i_BetriebP2 := "Betrieb Pumpe 4",
-	                             i_StoerungP1 := NOT "Motorschutzschalter Pumpe 3 OK",
-	                             i_StoerungP2 := NOT "Motorschutzschalter Pumpe 4 OK",
-	                             i_AbsalzPulse:="Absalzanlage Impuls",
-	                             o_Pumpe3 => "Pumpe 3",
-	                             o_Pumpe4 => "Pumpe 4",
-	                             o_Ventilator1 => "Ventilator 1",
-	                             o_Ventilator2 => "Ventilator 2",
-	                             o_Ventilator1Sollwert => "Sollwert Ventilator 1",
-	                             o_Ventilator2Sollwert => "Sollwert Ventilator 2");
+	#Werkskreislauf(i_Strang := #s_strang,
+	                i_Betrieb1 := "Betrieb Pumpe 1",
+	                i_Betrieb2 := "Betrieb Pumpe 2",
+	                i_Stoerung1 := "Störung Pumpe 1",
+	                i_Stoerung2 := "Störung Pumpe 2",
+	                o_Pumpe1 => "Pumpe 1",
+	                o_Pumpe2 => "Pumpe 2");
+	
+	#Kuehlturmkreislauf(i_Strang := #s_strang,
+	                    i_Vorlauftemperatur := "Main_DB".Vorlauftemperatur,
+	                    i_Min := #s_Min,
+	                    i_Max := #s_Max,
+	                    i_BetriebP1 := "Betrieb Pumpe 3",
+	                    i_BetriebP2 := "Betrieb Pumpe 4",
+	                    i_StoerungP1 := NOT "Motorschutzschalter Pumpe 3 OK",
+	                    i_StoerungP2 := NOT "Motorschutzschalter Pumpe 4 OK",
+	                    i_AbsalzPulse := "Absalzanlage Impuls",
+	                    i_ZuKlappen1offen := "ZU-Klappen 1 geöffnet",
+	                    i_ZuKlappen2offen := "ZU-Klappen 2 geöffnet",
+	                    o_Pumpe3 => "Pumpe 3",
+	                    o_Pumpe4 => "Pumpe 4",
+	                    o_Ventilator1 => "Ventilator 1",
+	                    o_Ventilator2 => "Ventilator 2",
+	                    o_Ventilator1Sollwert => "Sollwert Ventilator 1",
+	                    o_Ventilator2Sollwert => "Sollwert Ventilator 2",
+	                    o_ZuKlappen1oeffnen => "ZU-Klappen 1 öffnen",
+	                    o_ZuKlappen2oeffnen => "ZU-Klappen 2 öffnen");
 	
 	IF #s_Max < #s_MaxCapMin OR #s_Max > #s_MaxCapMax THEN
 	    #s_Max := #s_MaxInitVal;
@@ -58,23 +66,30 @@ BEGIN
 	
 	#s_Min := #s_Max - #s_MinToMaxZone;
 	
-	#Hebeanlage_Instance(Strang := #s_strang,
-	                     Motorschutzschalter_H1 := "Motorschutzschalter Hebeanlage 1",
-	                     Motorschutzschalter_H2 := "Motorschutzschalter Hebeanlage 2",
-	                     "H1 Klappe geöffnet" := "Hebeanlage 1 Klappe geöffnet",
-	                     "H2 Klappe geöffnet" := "Hebeanlage 2 Klappe geöffnet",
-	                     "Behälter Trockenlaufschutz" := "Behälter Hebeanlage Trockenlaufschutz",
-	                     "Behälter Pumpe ein" := "Behälter Hebeanlage Pumpe ein",
-	                     "Behälter Pumpe aus" := "Behälter Hebeanlage Pumpe aus",
-	                     "Behälter Überlauf" := "Behälter Hebeanlage Überlauf",
-	                     "H1 Differenzdruck" := "Hebeanlage 1 Differenzdruck",
-	                     "H2 Differenzdruck" := "Hebeanlage 2 Differenzdruck",
-	                     "Hebeanlage 1 öffnen" => "Hebeanlage 1 öffnen",
-	                     "Hebeanlage 2 öffnen" => "Hebeanlage 2 öffnen",
-	                     Pumpe_H1 => "Pumpe Hebeanlage 1",
-	                     Pumpe_H2 => "Pumpe Hebeanlage 2",
-	                     H1_Durchflußmenge => "Hebeanlage 1 Durchflußmenge",
-	                     H2_Durchflußmenge => "Hebeanlage 2 Durchflußmenge");
+	IF "AlwaysFALSE" THEN
+	    #Hebeanlage(Strang := #s_strang,
+	                Temp := "Main_DB".Ruecklauftemperatur,
+	                TempMin := #s_Min,
+	                TempMax := #s_Max + 1,
+	                Motorschutzschalter_H1 := "Motorschutzschalter Hebeanlage 1",
+	                Motorschutzschalter_H2 := "Motorschutzschalter Hebeanlage 2",
+	                Betrieb_P1 := "Betrieb Pumpe Hebeanlage 1",
+	                Betrieb_P2 := "Betrieb Pumpe Hebeanlage 2",
+	                "H1 Klappe geöffnet" := "Hebeanlage 1 Klappe geöffnet",
+	                "H2 Klappe geöffnet" := "Hebeanlage 2 Klappe geöffnet",
+	                "Behälter Trockenlaufschutz" := "Wasserbehälter OUT1",
+	                "Behälter Pumpe ein" := "Wasserbehälter OUT2",
+	                "Behälter Pumpe aus" := "Wasserbehälter OUT3",
+	                "Behälter Überlauf" := "Wasserbehälter OUT4",
+	                "H1 Differenzdruck" := "Hebeanlage 1 Differenzdruck",
+	                "H2 Differenzdruck" := "Hebeanlage 2 Differenzdruck",
+	                "Hebeanlage 1 öffnen" => "Hebeanlage 1 öffnen",
+	                "Hebeanlage 2 öffnen" => "Hebeanlage 2 öffnen",
+	                Pumpe_H1 => "Pumpe Hebeanlage 1",
+	                Pumpe_H2 => "Pumpe Hebeanlage 2",
+	                H1_Durchflußmenge => "Hebeanlage 1 Durchflußmenge",
+	                H2_Durchflußmenge => "Hebeanlage 2 Durchflußmenge");
+	END_IF;
 	
 END_FUNCTION_BLOCK
 

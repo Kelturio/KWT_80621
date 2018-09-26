@@ -1,5 +1,7 @@
 ﻿FUNCTION_BLOCK "Hand"
 { S7_Optimized_Access := 'TRUE' }
+AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
+FAMILY : AKK
 VERSION : 0.1
    VAR 
       static_Vent1SollP : Int;
@@ -10,5 +12,8 @@ VERSION : 0.1
 BEGIN
 	"Sollwert Ventilator 1" := "ScaleValueInt"(VALUE := #static_Vent1SollP, XMIN := 0, XMAX := 100, YMIN := 0, YMAX := 27648);
 	"Sollwert Ventilator 2" := "ScaleValueInt"(VALUE := #static_Vent2SollP, XMIN := 0, XMAX := 100, YMIN := 0, YMAX := 27648);
+	
+	"Main_DB".AlwaysRUN.StorageTankRefill :=
+	"Main_DB".HMI.StorageTankRefill AND "MB_Wasserbehälter" <= "Main_DB".HMI.StorageTankLevel.P2;
 END_FUNCTION_BLOCK
 

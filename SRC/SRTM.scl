@@ -1,7 +1,8 @@
 ﻿FUNCTION_BLOCK "SRTM"
 TITLE = Simple runtime meter wrapper
 { S7_Optimized_Access := 'TRUE' }
-AUTHOR : 'Searinox_(Gerrit_Vogtlaender)'
+AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
+FAMILY : AKK
 VERSION : 0.1
    VAR_INPUT 
       i_CLK : Bool;   // Incoming signal, the edge of which is to be queried
@@ -9,27 +10,27 @@ VERSION : 0.1
    END_VAR
 
    VAR 
-      R_TRIG_Instance {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;   // Detect positive signal edge
-      F_TRIG_Instance {OriginalPartName := 'F_TRIG_1200'; LibVersion := '1.0'} : F_TRIG;   // Detect negative signal edge
+      R_TRIG {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;   // Detect positive signal edge
+      F_TRIG {OriginalPartName := 'F_TRIG_1200'; LibVersion := '1.0'} : F_TRIG;   // Detect negative signal edge
       RTM_MODE : "RTM_MODE";   // Job IDs
       s_MODE : Byte;   // Job ID
       s_PV : DInt;   // New value for the operating hours counter
       s_CQ : Bool;   // Status of the operating hours counter (1: running)
       s_RET_VAL : Int;   // If an error occurs while the instruction is being executed, the return value contains an error code.
+      s_CV : DInt;   // Current value of the operating hours counter
    END_VAR
 
    VAR_TEMP 
       t_R_TRIG_Q : Bool;   // Result of positive edge evaluation
       t_F_TRIG_Q : Bool;   // Result of negative edge evaluation
-      s_CV : DInt;
    END_VAR
 
 
 BEGIN
-	#R_TRIG_Instance(CLK := #i_CLK,
-	                 Q => #t_R_TRIG_Q);
-	#F_TRIG_Instance(CLK := #i_CLK,
-	                 Q => #t_F_TRIG_Q);
+	#R_TRIG(CLK := #i_CLK,
+	        Q => #t_R_TRIG_Q);
+	#F_TRIG(CLK := #i_CLK,
+	        Q => #t_F_TRIG_Q);
 	
 	IF #t_R_TRIG_Q THEN
 	    #s_MODE := #RTM_MODE.START;

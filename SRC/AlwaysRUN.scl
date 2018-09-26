@@ -1,20 +1,42 @@
 ﻿FUNCTION_BLOCK "AlwaysRUN"
 { S7_Optimized_Access := 'TRUE' }
-AUTHOR : Searinox
+AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
+FAMILY : AKK
 VERSION : 0.1
    VAR 
-      ScaleAnalogValues_Instance : "ScaleAnalogValues";
-      RuntimeMeters_Instance : "RuntimeMeters";
+      ScaleAnalogValues : "ScaleAnalogValues";
+      RuntimeMeters : "RuntimeMeters";
+      Alarm : "Alarm";
+      IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      StorageTankRefill : Bool;
+      StorageTankRefillPt : Time := T#5s;
+   END_VAR
+
+   VAR_TEMP 
+      StorageTankRefillEt : Time;
    END_VAR
 
 
 BEGIN
-	#ScaleAnalogValues_Instance(i_Vorlauftemp := "Vorlauftemperatur",
-	                            i_Ruecklauftemp := "Ruecklauftemperatur",
-	                            o_Vorlauftemp => "Global-DB".Vorlauftemperatur,
-	                            o_Ruecklauftemp => "Global-DB".Ruecklauftemperatur);
+	#ScaleAnalogValues(i_Vorlauftemp := "Vorlauftemperatur",
+	                   i_Ruecklauftemp := "Ruecklauftemperatur",
+	                   o_Vorlauftemp => "Main_DB".Vorlauftemperatur,
+	                   o_Ruecklauftemp => "Main_DB".Ruecklauftemperatur);
 	
-	#RuntimeMeters_Instance();
+	#RuntimeMeters();
+	
+	"M_Wasserbehälter OUT1" := "Wasserbehälter OUT1";
+	"M_Wasserbehälter OUT2" := "Wasserbehälter OUT2";
+	"M_Wasserbehälter OUT3" := "Wasserbehälter OUT3";
+	"M_Wasserbehälter OUT4" := "Wasserbehälter OUT4";
+	
+	#Alarm();
+	
+	#IEC_TMR_0.TOF(IN := #StorageTankRefill,
+	               PT := #StorageTankRefillPt,
+	               Q => "Wasserbehälter Wassercontainer Nachfüllung",
+	               ET => #StorageTankRefillEt);
+	
 	
 END_FUNCTION_BLOCK
 

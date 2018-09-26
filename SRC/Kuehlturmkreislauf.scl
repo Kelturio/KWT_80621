@@ -1,5 +1,7 @@
 ﻿FUNCTION_BLOCK "Kuehlturmkreislauf"
 { S7_Optimized_Access := 'TRUE' }
+AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
+FAMILY : AKK
 VERSION : 0.1
    VAR_INPUT 
       i_Strang : Bool;   // Strang
@@ -11,6 +13,8 @@ VERSION : 0.1
       i_StoerungP1 : Bool;
       i_StoerungP2 : Bool;
       i_AbsalzPulse : Bool;
+      i_ZuKlappen1offen : Bool;
+      i_ZuKlappen2offen : Bool;
    END_VAR
 
    VAR_OUTPUT 
@@ -20,6 +24,8 @@ VERSION : 0.1
       o_Ventilator2 : Bool;
       o_Ventilator1Sollwert : Int;
       o_Ventilator2Sollwert : Int;
+      o_ZuKlappen1oeffnen : Bool;
+      o_ZuKlappen2oeffnen : Bool;
    END_VAR
 
    VAR 
@@ -31,15 +37,15 @@ VERSION : 0.1
       s_Ventilator_pt : Time := T#30S;
       s_Beide_Pumpen : Bool;
       s_Nachlaufzeit : Time := T#10S;
-      Baustein_1_Instance : "Baustein_1";
-      IEC_TMR_0_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
-      IEC_TMR_1_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      Baustein_1 : "Baustein_1";
+      IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      IEC_TMR_1 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
       s_Ventilator1_ET : Time;
       s_Ventilator2_ET : Time;
       s_SET_POINT_MIN : Int := 0;
       s_SET_POINT_MAX : Int := 27648;
       s_MaxThreshold : Real := 1.0;
-      IEC_TMR_2_Instance {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      IEC_TMR_2 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
       s_AbsalzPulsePT : Time := T#5m;
       s_AbsalzTP : Bool;
       s_AbsalzPulseET : Time;
@@ -49,33 +55,32 @@ VERSION : 0.1
 BEGIN
 	#s_Beide_Pumpen := #i_Vorlauftemperatur > (#i_Max + #s_MaxThreshold) OR #s_AbsalzTP;
 	
-	#Baustein_1_Instance(i_strang := #i_Strang,
-	                     i_beide := #s_Beide_Pumpen,
-	                     i_err1 := #i_StoerungP1,
-	                     i_err2 := #i_StoerungP2,
-	                     i_run1 := #i_BetriebP1,
-	                     i_run2 := #i_BetriebP2,
-	                     i_tof_pt := #s_Nachlaufzeit,
-	                     o_p1 => #o_Pumpe3,
-	                     o_p2 => #o_Pumpe4,
-	                     io_s_p1 := #s_Pumpe1,
-	                     io_s_p2 := #s_Pumpe2);
+	#Baustein_1(i_strang := #i_Strang,
+	            i_beide := #s_Beide_Pumpen,
+	            i_err1 := #i_StoerungP1,
+	            i_err2 := #i_StoerungP2,
+	            i_run1 := #i_BetriebP1,
+	            i_run2 := #i_BetriebP2,
+	            i_tof_pt := #s_Nachlaufzeit,
+	            o_p1 => #o_Pumpe3,
+	            o_p2 => #o_Pumpe4,
+	            io_s_p1 := #s_Pumpe1,
+	            io_s_p2 := #s_Pumpe2);
 	
-	#IEC_TMR_0_Instance.TON(IN := #i_BetriebP1 AND NOT #s_zu_kalt,
-	                        PT := #s_Ventilator_pt,
-	                        Q => #o_Ventilator1,
-	                        ET => #s_Ventilator1_ET);
+	#IEC_TMR_0.TON(IN := #i_BetriebP1 AND NOT #s_zu_kalt,
+	               PT := #s_Ventilator_pt,
+	               Q => #o_Ventilator1,
+	               ET => #s_Ventilator1_ET);
 	
-	#IEC_TMR_1_Instance.TON(IN := #i_BetriebP2 AND NOT #s_zu_kalt,
-	                        PT := #s_Ventilator_pt,
-	                        Q => #o_Ventilator2,
-	                        ET => #s_Ventilator2_ET);
+	#IEC_TMR_1.TON(IN := #i_BetriebP2 AND NOT #s_zu_kalt,
+	               PT := #s_Ventilator_pt,
+	               Q => #o_Ventilator2,
+	               ET => #s_Ventilator2_ET);
 	
-	#IEC_TMR_2_Instance.TP(IN:=#i_AbsalzPulse,
-	                    PT:=#s_AbsalzPulsePT,
-	                    Q=>#s_AbsalzTP,
-	                    ET=>#s_AbsalzPulseET);
-	
+	#IEC_TMR_2.TP(IN := #i_AbsalzPulse,
+	              PT := #s_AbsalzPulsePT,
+	              Q => #s_AbsalzTP,
+	              ET => #s_AbsalzPulseET);
 	
 	#s_zu_kalt := #i_Vorlauftemperatur <= #i_Min;
 	#s_zu_warm := #i_Vorlauftemperatur >= #i_Max;
@@ -94,6 +99,8 @@ BEGIN
 	
 	#o_Ventilator1Sollwert := #s_Sollwert;
 	#o_Ventilator2Sollwert := #s_Sollwert;
+	#o_ZuKlappen1oeffnen := #o_Pumpe3;
+	#o_ZuKlappen2oeffnen := #o_Pumpe4;
 	
 END_FUNCTION_BLOCK
 

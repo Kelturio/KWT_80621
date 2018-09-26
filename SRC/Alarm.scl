@@ -1,0 +1,16 @@
+﻿FUNCTION_BLOCK "Alarm"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR 
+      "Steuerspannung Ein" : Int;
+   END_VAR
+
+
+BEGIN
+	#"Steuerspannung Ein" := BOOL_TO_INT("Steuerspannung Ein");
+	
+	
+	
+END_FUNCTION_BLOCK
+
