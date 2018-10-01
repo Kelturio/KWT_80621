@@ -7,7 +7,7 @@ VERSION : 0.1
       AlwaysRUN : "AlwaysRUN";
       Auto : "Auto";
       Hand : "Hand";
-      AutoMode : Bool := false;
+      AutoMode : Bool := true;
       Vorlauftemperatur : Real;
       Ruecklauftemperatur : Real;
    END_VAR
@@ -36,25 +36,25 @@ BEGIN
 	    "Pumpe 3" := 0;
 	    "Pumpe 4" := 0;
 	    //"Rundumleuchte Störung" := 0;
-	    "Reserve DQ 1" := 0;
+	    "Reserve DQ0.7" := 0;
 	    "ZU-Klappen 1 öffnen" := 0;
 	    "ZU-Klappen 2 öffnen" := 0;
 	    "Hebeanlage 1 öffnen" := 0;
 	    "Hebeanlage 2 öffnen" := 0;
 	    "Pumpe Hebeanlage 1" := 0;
 	    "Pumpe Hebeanlage 2" := 0;
-	    "Reserve DQ 2" := 0;
-	    "Reserve DQ 3" := 0;
-	    "Reserve DQ 4" := 0;
-	    "Reserve DQ 5" := 0;
+	    "Reserve DQ8.4" := 0;
+	    "Reserve DQ8.5" := 0;
+	    "Reserve DQ8.6" := 0;
+	    "Reserve DQ8.7" := 0;
 	    "Wasserbehälter Wassercontainer Nachfüllung" := 0;
-	    "Reserve DQ 7" := 0;
-	    "Reserve DQ 8" := 0;
-	    "Reserve DQ 9" := 0;
-	    "Reserve DQ 10" := 0;
-	    "Reserve DQ 11" := 0;
-	    "Reserve DQ 12" := 0;
-	    "Reserve DQ 13" := 0;
+	    "Reserve DQ9.1" := 0;
+	    "Reserve DQ9.2" := 0;
+	    "Reserve DQ9.3" := 0;
+	    "Reserve DQ9.4" := 0;
+	    "Reserve DQ9.5" := 0;
+	    "Reserve DQ9.6" := 0;
+	    "Reserve DQ9.7" := 0;
 	END_IF;
 	
 	IF #AutoMode THEN
