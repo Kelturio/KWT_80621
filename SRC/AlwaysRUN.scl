@@ -14,29 +14,50 @@ VERSION : 0.1
 
    VAR_TEMP 
       StorageTankRefillEt : Time;
+      tAlarmCount : Int;
    END_VAR
 
 
 BEGIN
-	#ScaleAnalogValues(i_Vorlauftemp := "Vorlauftemperatur",
-	                   i_Ruecklauftemp := "Ruecklauftemperatur",
-	                   o_Vorlauftemp => "Main_DB".Vorlauftemperatur,
-	                   o_Ruecklauftemp => "Main_DB".Ruecklauftemperatur);
+	#ScaleAnalogValues(i_Vorlauftemp := "Vorlauftemperatur Werk",
+	                   i_Ruecklauftemp := "Vorlauftemperatur Ofen",
+	                   o_Vorlauftemp => "Main_DB".FlowTemperaturePlant,
+	                   o_Ruecklauftemp => "Main_DB".FlowTemperatureFurnace);
 	
 	#RuntimeMeters();
 	
-	"M_Wasserbehälter OUT1" := "Wasserbehälter OUT1";
-	"M_Wasserbehälter OUT2" := "Wasserbehälter OUT2";
-	"M_Wasserbehälter OUT3" := "Wasserbehälter OUT3";
-	"M_Wasserbehälter OUT4" := "Wasserbehälter OUT4";
+	"WSB OUT1 M" := "WSB OUT1";
+	"WSB OUT2 M" := "WSB OUT2";
+	"WSB OUT3 M" := "WSB OUT3";
+	"WSB OUT4 M" := "WSB OUT4";
 	
-	#Alarm();
+	#Alarm(iCvOff := NOT "Steuerspannung Ein",
+	       iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
+	       iCt1FanErr := "KT 1 Ventilator Störung",
+	       iCt2FanErr := "KT 2 Ventilator Störung",
+	       iCt1RepairSwitchOff := NOT "KT 1 Ventilator RS",
+	       iCt2RepairSwitchOff := NOT "KT 2 Ventilator RS",
+	       iCt1SprayPipeOpen:="KT 1 Sprührohr öffnen",
+	       iCt2SprayPipeOpen:="KT 2 Sprührohr öffnen",
+	       iCt1SprayPipeIsOpen:="KT 1 Sprührohr geöffnet",
+	       iCt2SprayPipeIsOpen:="KT 2 Sprührohr geöffnet",
+	       iPlantPump1Err := "Werkspumpe 1 Störung",
+	       iPlantPump2Err := "Werkspumpe 2 Störung",
+	       iCoolWaterPump1Err := NOT "Kühlwasserpumpe 1 MSS OK",
+	       iCoolWaterPump2Err := NOT "Kühlwasserpumpe 2 MSS OK",
+	       iFurnacePump1Err := NOT "Ofenpumpe 1 MSS OK",
+	       iFurnacePump2Err := NOT "Ofenpumpe 2 MSS OK",
+	       iFlowTempPlant := "Main_DB".FlowTemperaturePlant,
+	       iFlowTempFurnace := "Main_DB".FlowTemperatureFurnace,
+	       iLiftSys1DeltaPressure := "HA 1 Differenzdruck",
+	       iLiftSys2DeltaPressure := "HA 2 Differenzdruck",
+	       oAlarmCount => #tAlarmCount,
+	       oAlarmLamp => "Rundumleuchte Störung");
 	
 	#IEC_TMR_0.TOF(IN := #StorageTankRefill,
 	               PT := #StorageTankRefillPt,
-	               Q => "Wasserbehälter Wassercontainer Nachfüllung",
+	               Q => "WSB Magnetventil",
 	               ET => #StorageTankRefillEt);
-	
 	
 END_FUNCTION_BLOCK
 

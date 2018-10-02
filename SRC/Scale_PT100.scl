@@ -13,7 +13,7 @@ VERSION : 0.1
 
 
 BEGIN
-	#t_norm := NORM_X(MIN := 0, VALUE := #value, MAX := "MaxAI10Bit");
-	#Scale_PT100 := SCALE_X(MIN := 0.0, VALUE := #t_norm, MAX := 100.0);
+	#t_norm := NORM_X(MIN := "AnalogMin", VALUE := #value, MAX := "AnalogMax");
+	#Scale_PT100 := LREAL_TO_REAL(SCALE_X(MIN := 0.0, VALUE := #t_norm, MAX := 100.0));
 END_FUNCTION
 

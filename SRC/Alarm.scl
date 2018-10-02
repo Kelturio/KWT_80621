@@ -2,6 +2,34 @@
 { S7_Optimized_Access := 'TRUE' }
 AUTHOR : Searinox
 VERSION : 0.1
+   VAR_INPUT 
+      iCvOff : Bool;   // Control Voltage Off / emergency stop
+      iFuseOutputsErr : Bool;   // Fuse Outputs Error
+      iCt1FanErr : Bool;   // Cooling Tower 1 Fan Error
+      iCt2FanErr : Bool;   // Cooling Tower 2 Fan Error
+      iCt1RepairSwitchOff : Bool;   // Cooling Tower 1 Repair Switch
+      iCt2RepairSwitchOff : Bool;   // Cooling Tower 2 Repair Switch
+      iCt1SprayPipeOpen : Bool;   // Cooling Tower 1 Spray Pipe open
+      iCt2SprayPipeOpen : Bool;   // Cooling Tower 2 Spray Pipe open
+      iCt1SprayPipeIsOpen : Bool;   // Cooling Tower 1 Spray Pipe is open
+      iCt2SprayPipeIsOpen : Bool;   // Cooling Tower 2 Spray Pipe is open
+      iPlantPump1Err : Bool;   // Plant Pump 1 Error
+      iPlantPump2Err : Bool;   // Plant Pump 2 Error
+      iCoolWaterPump1Err : Bool;   // Cooling Water Pump 1 Error
+      iCoolWaterPump2Err : Bool;   // Cooling Water Pump 2 Error
+      iFurnacePump1Err : Bool;   // Furnace Pump 1 Error
+      iFurnacePump2Err : Bool;   // Furnace Pump 2 Error
+      iFlowTempPlant : Real;   // Flow Temperature Plant
+      iFlowTempFurnace : Real;   // Flow Temperature Furnace
+      iLiftSys1DeltaPressure : Int;   // Lifting System 1 Delta Pressure
+      iLiftSys2DeltaPressure : Int;   // Lifting System 2 Delta Pressure
+   END_VAR
+
+   VAR_OUTPUT 
+      oAlarmCount : Int := 0;
+      oAlarmLamp : Bool := false;
+   END_VAR
+
    VAR 
       "Steuerspannung Ein" : Int;
       "Sicherung Ausgänge OK" : Int;
@@ -15,75 +43,98 @@ VERSION : 0.1
       "Kühlwasserpumpe 2 MSS OK" : Int;
       "Ofenpumpe 1 MSS OK" : Int;
       "Ofenpumpe 2 MSS OK" : Int;
-      s_alarms : Int;
-      FlowTemperaturePlant : Int;
-      FlowTemperatureFurnace : Int;
+      FlowTemperaturePlantHot : Int;
+      FlowTemperatureFurnaceHot : Int;
       "HA 1 Differenzdruck" : Int;
       "HA 2 Differenzdruck" : Int;
       SurgeTankRunDry : Int;
       SurgeTankOverflow : Int;
+      IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      IEC_TMR_1 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      SprayTubeOpenTimeout1 : Int;
+      SprayTubeOpenTimeout2 : Int;
    END_VAR
 
    VAR_TEMP 
-      PressureDeltaPerc1 : Int;
-      PressureDeltaPerc2 : Int;
+      tPressureDeltaPerc1 : Int;
+      tPressureDeltaPerc2 : Int;
+      tSprayTubeOpenTimer1 : Bool;
+      tSprayTubeOpenTimer1Et : Time;
+      tSprayTubeOpenTimer2 : Bool;
+      tSprayTubeOpenTimer2Et : Time;
    END_VAR
 
 
 BEGIN
 	REGION bool
-	    #"Steuerspannung Ein" := BOOL_TO_INT(NOT "Steuerspannung Ein");
-	    #"Sicherung Ausgänge OK" := BOOL_TO_INT(NOT "Sicherung Ausgänge OK");
-	    #"KT 1 Ventilator Störung" := BOOL_TO_INT("KT 1 Ventilator Störung");
-	    #"KT 2 Ventilator Störung" := BOOL_TO_INT("KT 2 Ventilator Störung");
-	    #"KT 1 Ventilator RS" := BOOL_TO_INT(NOT "KT 1 Ventilator RS");
-	    #"KT 2 Ventilator RS" := BOOL_TO_INT(NOT "KT 2 Ventilator RS");
-	    #"Werkspumpe 1 Störung" := BOOL_TO_INT("Werkspumpe 1 Störung");
-	    #"Werkspumpe 2 Störung" := BOOL_TO_INT("Werkspumpe 2 Störung");
-	    #"Kühlwasserpumpe 1 MSS OK" := BOOL_TO_INT(NOT "Kühlwasserpumpe 1 MSS OK");
-	    #"Kühlwasserpumpe 2 MSS OK" := BOOL_TO_INT(NOT "Kühlwasserpumpe 2 MSS OK");
-	    #"Ofenpumpe 1 MSS OK" := BOOL_TO_INT(NOT "Ofenpumpe 1 MSS OK");
-	    #"Ofenpumpe 2 MSS OK" := BOOL_TO_INT(NOT "Ofenpumpe 2 MSS OK");
+	    #"Steuerspannung Ein" := BOOL_TO_INT(#iCvOff);
+	    #"Sicherung Ausgänge OK" := BOOL_TO_INT(#iFuseOutputsErr);
+	    #"KT 1 Ventilator Störung" := BOOL_TO_INT(#iCt1FanErr);
+	    #"KT 2 Ventilator Störung" := BOOL_TO_INT(#iCt2FanErr);
+	    #"KT 1 Ventilator RS" := BOOL_TO_INT(#iCt1RepairSwitchOff);
+	    #"KT 2 Ventilator RS" := BOOL_TO_INT(#iCt2RepairSwitchOff);
+	    #"Werkspumpe 1 Störung" := BOOL_TO_INT(#iPlantPump1Err);
+	    #"Werkspumpe 2 Störung" := BOOL_TO_INT(#iPlantPump2Err);
+	    #"Kühlwasserpumpe 1 MSS OK" := BOOL_TO_INT(#iCoolWaterPump1Err);
+	    #"Kühlwasserpumpe 2 MSS OK" := BOOL_TO_INT(#iCoolWaterPump2Err);
+	    #"Ofenpumpe 1 MSS OK" := BOOL_TO_INT(#iFurnacePump1Err);
+	    #"Ofenpumpe 2 MSS OK" := BOOL_TO_INT(#iFurnacePump2Err);
 	END_REGION
 	REGION analog
 	    // temperatures
-	    #"FlowTemperaturePlant" := BOOL_TO_INT("Main_DB".FlowTemperaturePlant >= ("Main_DB".Auto.s_Max + "Retain_DB".Settings.MaxTempTransgression));
-	    #"FlowTemperatureFurnace" := BOOL_TO_INT("Main_DB".FlowTemperatureFurnace >= ("Main_DB".Auto.s_Max + "Retain_DB".Settings.MaxTempTransgression));
+	    #FlowTemperaturePlantHot := BOOL_TO_INT("Main_DB".FlowTemperaturePlant >= ("Main_DB".Auto.s_Max + "Retain_DB".Settings.MaxTempTransgression));
+	    #FlowTemperatureFurnaceHot := BOOL_TO_INT("Main_DB".FlowTemperatureFurnace >= ("Main_DB".Auto.s_Max + "Retain_DB".Settings.MaxTempTransgression));
 	    // pressures
-	    #"PressureDeltaPerc1" := "ScaleValueInt"(VALUE := "HA 1 Differenzdruck",
-	                                             XMIN := 0, XMAX := "MaxAI10Bit",
-	                                             YMIN := 0, YMAX := 100);
-	    #"HA 1 Differenzdruck" := BOOL_TO_INT(#"PressureDeltaPerc1" >= "Retain_DB".Settings.MaxPressureDeltaPerc1);
-	    #"PressureDeltaPerc2" := "ScaleValueInt"(VALUE := "HA 2 Differenzdruck",
-	                                             XMIN := 0, XMAX := "MaxAI10Bit",
-	                                             YMIN := 0, YMAX := 100);
-	    #"HA 2 Differenzdruck" := BOOL_TO_INT(#"PressureDeltaPerc2" >= "Retain_DB".Settings.MaxPressureDeltaPerc2);
+	    #tPressureDeltaPerc1 := "ScaleValueInt"(VALUE := #iLiftSys1DeltaPressure,
+	                                            XMIN := "AnalogMin", XMAX := "AnalogMax",
+	                                            YMIN := 0, YMAX := 100);
+	    #"HA 1 Differenzdruck" := BOOL_TO_INT(#"tPressureDeltaPerc1" >= "Retain_DB".Settings.MaxPressureDeltaPerc1);
+	    #tPressureDeltaPerc2 := "ScaleValueInt"(VALUE := #iLiftSys2DeltaPressure,
+	                                            XMIN := "AnalogMin", XMAX := "AnalogMax",
+	                                            YMIN := 0, YMAX := 100);
+	    #"HA 2 Differenzdruck" := BOOL_TO_INT(#"tPressureDeltaPerc2" >= "Retain_DB".Settings.MaxPressureDeltaPerc2);
 	    
-	    #"SurgeTankRunDry" := BOOL_TO_INT("WSB OUT Byte" <= "Main_DB".HMI.StorageTankLevel.P4);
-	    #"SurgeTankOverflow" := BOOL_TO_INT("WSB OUT Byte" >= "Main_DB".HMI.StorageTankLevel.P1);
+	    #SurgeTankRunDry := BOOL_TO_INT("WSB OUT Byte" <= "Main_DB".HMI.StorageTankLevel.P4);
+	    #SurgeTankOverflow := BOOL_TO_INT("WSB OUT Byte" >= "Main_DB".HMI.StorageTankLevel.P1);
+	END_REGION
+	REGION timeout
+	    #IEC_TMR_0.TON(IN := #iCt1SprayPipeOpen,
+	                   PT := "Retain_DB".Settings.SprayTubeOpenTimeout,
+	                   Q => #tSprayTubeOpenTimer1,
+	                   ET => #tSprayTubeOpenTimer1Et);
+	    #SprayTubeOpenTimeout1 := BOOL_TO_INT(#tSprayTubeOpenTimer1 AND NOT #iCt1SprayPipeIsOpen);
+	    #IEC_TMR_1.TON(IN := #iCt2SprayPipeOpen,
+	                   PT := "Retain_DB".Settings.SprayTubeOpenTimeout,
+	                   Q => #tSprayTubeOpenTimer2,
+	                   ET => #tSprayTubeOpenTimer2Et);
+	    #SprayTubeOpenTimeout2 := BOOL_TO_INT(#tSprayTubeOpenTimer2 AND NOT #iCt2SprayPipeIsOpen);
 	END_REGION
 	
-	#s_alarms := 0;
-	#s_alarms += #"Steuerspannung Ein";
-	#s_alarms += #"Sicherung Ausgänge OK";
-	#s_alarms += #"KT 1 Ventilator Störung";
-	#s_alarms += #"KT 1 Ventilator RS";
-	#s_alarms += #"KT 2 Ventilator Störung";
-	#s_alarms += #"KT 2 Ventilator RS";
-	#s_alarms += #"Werkspumpe 1 Störung";
-	#s_alarms += #"Werkspumpe 2 Störung";
-	#s_alarms += #"Kühlwasserpumpe 1 MSS OK";
-	#s_alarms += #"Kühlwasserpumpe 2 MSS OK";
-	#s_alarms += #"Ofenpumpe 1 MSS OK";
-	#s_alarms += #"Ofenpumpe 2 MSS OK";
-	#s_alarms += #"FlowTemperaturePlant";
-	#s_alarms += #"FlowTemperatureFurnace";
-	#s_alarms += #"HA 1 Differenzdruck";
-	#s_alarms += #"HA 2 Differenzdruck";
-	#s_alarms += #"SurgeTankRunDry";
-	#s_alarms += #"SurgeTankOverflow";
 	
-	"Rundumleuchte Störung" := #s_alarms > 0;
+	
+	#oAlarmCount := 0;
+	#oAlarmCount += #"Steuerspannung Ein";
+	#oAlarmCount += #"Sicherung Ausgänge OK";
+	#oAlarmCount += #"KT 1 Ventilator Störung";
+	#oAlarmCount += #"KT 1 Ventilator RS";
+	#oAlarmCount += #"KT 2 Ventilator Störung";
+	#oAlarmCount += #"KT 2 Ventilator RS";
+	#oAlarmCount += #"Werkspumpe 1 Störung";
+	#oAlarmCount += #"Werkspumpe 2 Störung";
+	#oAlarmCount += #"Kühlwasserpumpe 1 MSS OK";
+	#oAlarmCount += #"Kühlwasserpumpe 2 MSS OK";
+	#oAlarmCount += #"Ofenpumpe 1 MSS OK";
+	#oAlarmCount += #"Ofenpumpe 2 MSS OK";
+	#oAlarmCount += #FlowTemperaturePlantHot;
+	#oAlarmCount += #FlowTemperatureFurnaceHot;
+	#oAlarmCount += #"HA 1 Differenzdruck";
+	#oAlarmCount += #"HA 2 Differenzdruck";
+	#oAlarmCount += #SurgeTankRunDry;
+	#oAlarmCount += #SurgeTankOverflow;
+	#oAlarmCount += #SprayTubeOpenTimeout1;
+	#oAlarmCount += #SprayTubeOpenTimeout2;
+	
+	#oAlarmLamp := #oAlarmCount > 0;
 	
 	
 	// heizung klappen & endschalter offen zu 

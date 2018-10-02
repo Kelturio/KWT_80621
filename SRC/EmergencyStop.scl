@@ -1,0 +1,38 @@
+﻿FUNCTION_BLOCK "EmergencyStop"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR 
+      Static_1 : Bool;
+   END_VAR
+
+
+BEGIN
+	"KT 1 Ventilator" := 0;
+	"KT 2 Ventilator" := 0;
+	"Werkspumpe 1" := 0;
+	"Werkspumpe 2" := 0;
+	"Kühlwasserpumpe 1" := 0;
+	"Kühlwasserpumpe 2" := 0;
+	"Rundumleuchte Störung" := "Rundumleuchte Störung";
+	"Reserve DQ0.7" := 0;
+	"KT 1 Sprührohr öffnen" := 0;
+	"KT 2 Sprührohr öffnen" := 0;
+	"HA 1 Klappe Freigabe" := 0;
+	"HA 2 Klappe Freigabe" := 0;
+	"Ofenpumpe 1" := 0;
+	"Ofenpumpe 2" := 0;
+	"Reserve DQ8.4" := 0;
+	"Reserve DQ8.5" := 0;
+	"Reserve DQ8.6" := 0;
+	"Reserve DQ8.7" := 0;
+	"WSB Magnetventil" := 0;
+	"Reserve DQ9.1" := 0;
+	"Reserve DQ9.2" := 0;
+	"Reserve DQ9.3" := 0;
+	"Reserve DQ9.4" := 0;
+	"Reserve DQ9.5" := 0;
+	"Reserve DQ9.6" := 0;
+	"Reserve DQ9.7" := 0;
+END_FUNCTION_BLOCK
+

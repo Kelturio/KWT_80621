@@ -8,8 +8,8 @@ VERSION : 0.1
       Auto : "Auto";
       Hand : "Hand";
       AutoMode : Bool := true;
-      Vorlauftemperatur : Real;
-      Ruecklauftemperatur : Real;
+      FlowTemperaturePlant : Real;
+      FlowTemperatureFurnace : Real;
    END_VAR
    VAR RETAIN
       HMI : Struct
@@ -22,6 +22,9 @@ VERSION : 0.1
          StorageTankRefill : Bool;
       END_STRUCT;
    END_VAR
+   VAR 
+      EmergencyStop : "EmergencyStop";
+   END_VAR
 
 
 BEGIN
@@ -29,32 +32,7 @@ BEGIN
 	
 	IF NOT "Steuerspannung Ein" OR NOT "Sicherung Ausgänge OK" THEN
 	    #AutoMode := 0;
-	    "Ventilator 1" := 0;
-	    "Ventilator 2" := 0;
-	    "Pumpe 1" := 0;
-	    "Pumpe 2" := 0;
-	    "Pumpe 3" := 0;
-	    "Pumpe 4" := 0;
-	    //"Rundumleuchte Störung" := 0;
-	    "Reserve DQ0.7" := 0;
-	    "ZU-Klappen 1 öffnen" := 0;
-	    "ZU-Klappen 2 öffnen" := 0;
-	    "Hebeanlage 1 öffnen" := 0;
-	    "Hebeanlage 2 öffnen" := 0;
-	    "Pumpe Hebeanlage 1" := 0;
-	    "Pumpe Hebeanlage 2" := 0;
-	    "Reserve DQ8.4" := 0;
-	    "Reserve DQ8.5" := 0;
-	    "Reserve DQ8.6" := 0;
-	    "Reserve DQ8.7" := 0;
-	    "Wasserbehälter Wassercontainer Nachfüllung" := 0;
-	    "Reserve DQ9.1" := 0;
-	    "Reserve DQ9.2" := 0;
-	    "Reserve DQ9.3" := 0;
-	    "Reserve DQ9.4" := 0;
-	    "Reserve DQ9.5" := 0;
-	    "Reserve DQ9.6" := 0;
-	    "Reserve DQ9.7" := 0;
+	    #EmergencyStop();
 	END_IF;
 	
 	IF #AutoMode THEN
@@ -62,6 +40,5 @@ BEGIN
 	ELSE
 	    #Hand();
 	END_IF;
-	
 END_FUNCTION_BLOCK
 
