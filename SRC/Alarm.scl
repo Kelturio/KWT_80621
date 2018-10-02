@@ -5,58 +5,89 @@ VERSION : 0.1
    VAR 
       "Steuerspannung Ein" : Int;
       "Sicherung Ausgänge OK" : Int;
-      "Ventilator 1 Störung" : Int;
-      "Ventilator 1 Reparaturschalter ein" : Int;
-      "Ventilator 2 Störung" : Int;
-      "Ventilator 2 Reparaturschalter ein" : Int;
-      "Störung Pumpe 1" : Int;
-      "Störung Pumpe 2" : Int;
-      "Motorschutzschalter Pumpe 3 OK" : Int;
-      "Motorschutzschalter Pumpe 4 OK" : Int;
-      "Motorschutzschalter Hebeanlage 1" : Int;
-      "Motorschutzschalter Hebeanlage 2" : Int;
+      "KT 1 Ventilator Störung" : Int;
+      "KT 1 Ventilator RS" : Int;
+      "KT 2 Ventilator Störung" : Int;
+      "KT 2 Ventilator RS" : Int;
+      "Werkspumpe 1 Störung" : Int;
+      "Werkspumpe 2 Störung" : Int;
+      "Kühlwasserpumpe 1 MSS OK" : Int;
+      "Kühlwasserpumpe 2 MSS OK" : Int;
+      "Ofenpumpe 1 MSS OK" : Int;
+      "Ofenpumpe 2 MSS OK" : Int;
       s_alarms : Int;
-      VorlauftemperaturWerk : Int;
-      VorlauftemperaturOfen : Int;
+      FlowTemperaturePlant : Int;
+      FlowTemperatureFurnace : Int;
+      "HA 1 Differenzdruck" : Int;
+      "HA 2 Differenzdruck" : Int;
+      SurgeTankRunDry : Int;
+      SurgeTankOverflow : Int;
+   END_VAR
+
+   VAR_TEMP 
+      PressureDeltaPerc1 : Int;
+      PressureDeltaPerc2 : Int;
    END_VAR
 
 
 BEGIN
-	#"Steuerspannung Ein" := BOOL_TO_INT(NOT "Steuerspannung Ein");
-	#"Sicherung Ausgänge OK" := BOOL_TO_INT(NOT "Sicherung Ausgänge OK");
-	#"Ventilator 1 Störung" := BOOL_TO_INT("Ventilator 1 Störung");
-	#"Ventilator 1 Reparaturschalter ein" := BOOL_TO_INT(NOT "Ventilator 1 Reparaturschalter ein");
-	#"Ventilator 2 Störung" := BOOL_TO_INT("Ventilator 2 Störung");
-	#"Ventilator 2 Reparaturschalter ein" := BOOL_TO_INT(NOT "Ventilator 2 Reparaturschalter ein");
-	#"Störung Pumpe 1" := BOOL_TO_INT("Störung Pumpe 1");
-	#"Störung Pumpe 2" := BOOL_TO_INT("Störung Pumpe 2");
-	#"Motorschutzschalter Pumpe 3 OK" := BOOL_TO_INT(NOT "Motorschutzschalter Pumpe 3 OK");
-	#"Motorschutzschalter Pumpe 4 OK" := BOOL_TO_INT(NOT "Motorschutzschalter Pumpe 4 OK");
-	#"Motorschutzschalter Hebeanlage 1" := BOOL_TO_INT(NOT "Motorschutzschalter Hebeanlage 1");
-	#"Motorschutzschalter Hebeanlage 2" := BOOL_TO_INT(NOT "Motorschutzschalter Hebeanlage 2");
-	
-	#"VorlauftemperaturWerk" := BOOL_TO_INT("Main_DB".Vorlauftemperatur >= ("Main_DB".Auto.s_Max + 4));
-	#"VorlauftemperaturOfen" := BOOL_TO_INT("Main_DB".Ruecklauftemperatur >= ("Main_DB".Auto.s_Max + 4));
+	REGION bool
+	    #"Steuerspannung Ein" := BOOL_TO_INT(NOT "Steuerspannung Ein");
+	    #"Sicherung Ausgänge OK" := BOOL_TO_INT(NOT "Sicherung Ausgänge OK");
+	    #"KT 1 Ventilator Störung" := BOOL_TO_INT("KT 1 Ventilator Störung");
+	    #"KT 2 Ventilator Störung" := BOOL_TO_INT("KT 2 Ventilator Störung");
+	    #"KT 1 Ventilator RS" := BOOL_TO_INT(NOT "KT 1 Ventilator RS");
+	    #"KT 2 Ventilator RS" := BOOL_TO_INT(NOT "KT 2 Ventilator RS");
+	    #"Werkspumpe 1 Störung" := BOOL_TO_INT("Werkspumpe 1 Störung");
+	    #"Werkspumpe 2 Störung" := BOOL_TO_INT("Werkspumpe 2 Störung");
+	    #"Kühlwasserpumpe 1 MSS OK" := BOOL_TO_INT(NOT "Kühlwasserpumpe 1 MSS OK");
+	    #"Kühlwasserpumpe 2 MSS OK" := BOOL_TO_INT(NOT "Kühlwasserpumpe 2 MSS OK");
+	    #"Ofenpumpe 1 MSS OK" := BOOL_TO_INT(NOT "Ofenpumpe 1 MSS OK");
+	    #"Ofenpumpe 2 MSS OK" := BOOL_TO_INT(NOT "Ofenpumpe 2 MSS OK");
+	END_REGION
+	REGION analog
+	    // temperatures
+	    #"FlowTemperaturePlant" := BOOL_TO_INT("Main_DB".FlowTemperaturePlant >= ("Main_DB".Auto.s_Max + "Retain_DB".Settings.MaxTempTransgression));
+	    #"FlowTemperatureFurnace" := BOOL_TO_INT("Main_DB".FlowTemperatureFurnace >= ("Main_DB".Auto.s_Max + "Retain_DB".Settings.MaxTempTransgression));
+	    // pressures
+	    #"PressureDeltaPerc1" := "ScaleValueInt"(VALUE := "HA 1 Differenzdruck",
+	                                             XMIN := 0, XMAX := "MaxAI10Bit",
+	                                             YMIN := 0, YMAX := 100);
+	    #"HA 1 Differenzdruck" := BOOL_TO_INT(#"PressureDeltaPerc1" >= "Retain_DB".Settings.MaxPressureDeltaPerc1);
+	    #"PressureDeltaPerc2" := "ScaleValueInt"(VALUE := "HA 2 Differenzdruck",
+	                                             XMIN := 0, XMAX := "MaxAI10Bit",
+	                                             YMIN := 0, YMAX := 100);
+	    #"HA 2 Differenzdruck" := BOOL_TO_INT(#"PressureDeltaPerc2" >= "Retain_DB".Settings.MaxPressureDeltaPerc2);
+	    
+	    #"SurgeTankRunDry" := BOOL_TO_INT("WSB OUT Byte" <= "Main_DB".HMI.StorageTankLevel.P4);
+	    #"SurgeTankOverflow" := BOOL_TO_INT("WSB OUT Byte" >= "Main_DB".HMI.StorageTankLevel.P1);
+	END_REGION
 	
 	#s_alarms := 0;
 	#s_alarms += #"Steuerspannung Ein";
 	#s_alarms += #"Sicherung Ausgänge OK";
-	#s_alarms += #"Ventilator 1 Störung";
-	#s_alarms += #"Ventilator 1 Reparaturschalter ein";
-	#s_alarms += #"Ventilator 2 Störung";
-	#s_alarms += #"Ventilator 2 Reparaturschalter ein";
-	#s_alarms += #"Störung Pumpe 1";
-	#s_alarms += #"Störung Pumpe 2";
-	#s_alarms += #"Motorschutzschalter Pumpe 3 OK";
-	#s_alarms += #"Motorschutzschalter Pumpe 4 OK";
-	#s_alarms += #"Motorschutzschalter Hebeanlage 1";
-	#s_alarms += #"Motorschutzschalter Hebeanlage 2";
+	#s_alarms += #"KT 1 Ventilator Störung";
+	#s_alarms += #"KT 1 Ventilator RS";
+	#s_alarms += #"KT 2 Ventilator Störung";
+	#s_alarms += #"KT 2 Ventilator RS";
+	#s_alarms += #"Werkspumpe 1 Störung";
+	#s_alarms += #"Werkspumpe 2 Störung";
+	#s_alarms += #"Kühlwasserpumpe 1 MSS OK";
+	#s_alarms += #"Kühlwasserpumpe 2 MSS OK";
+	#s_alarms += #"Ofenpumpe 1 MSS OK";
+	#s_alarms += #"Ofenpumpe 2 MSS OK";
+	#s_alarms += #"FlowTemperaturePlant";
+	#s_alarms += #"FlowTemperatureFurnace";
+	#s_alarms += #"HA 1 Differenzdruck";
+	#s_alarms += #"HA 2 Differenzdruck";
+	#s_alarms += #"SurgeTankRunDry";
+	#s_alarms += #"SurgeTankOverflow";
 	
 	"Rundumleuchte Störung" := #s_alarms > 0;
 	
 	
+	// heizung klappen & endschalter offen zu 
 	//Trockenlauf & Überlauf
 	//ZU-Klappen 1 geöffnet
-	//Hebeanlage 1 Differenzdruck
 END_FUNCTION_BLOCK
 
