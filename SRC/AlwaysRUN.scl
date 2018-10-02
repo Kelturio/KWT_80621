@@ -3,61 +3,97 @@
 AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
 FAMILY : AKK
 VERSION : 0.1
+   VAR_INPUT 
+      iCvOff : Bool;   // Control Voltage Off / emergency stop
+      iFuseOutputsErr : Bool;   // Fuse Outputs Error
+      iCt1FanErr : Bool;   // Cooling Tower 1 Fan Error
+      iCt2FanErr : Bool;   // Cooling Tower 2 Fan Error
+      iCt1RepairSwitchOff : Bool;   // Cooling Tower 1 Repair Switch
+      iCt2RepairSwitchOff : Bool;   // Cooling Tower 2 Repair Switch
+      iCt1SprayPipeOpen : Bool;   // Cooling Tower 1 Spray Pipe open
+      iCt2SprayPipeOpen : Bool;   // Cooling Tower 2 Spray Pipe open
+      iCt1SprayPipeIsOpen : Bool;   // Cooling Tower 1 Spray Pipe is open
+      iCt2SprayPipeIsOpen : Bool;   // Cooling Tower 2 Spray Pipe is open
+      iPumpPlant1Err : Bool;   // Plant Pump 1 Error
+      iPumpPlant2Err : Bool;   // Plant Pump 2 Error
+      iPumpCoolWater1Err : Bool;   // Cooling Water Pump 1 Error
+      iPumpCoolWater2Err : Bool;   // Cooling Water Pump 2 Error
+      iPumpFurnace1Err : Bool;   // Furnace Pump 1 Error
+      iPumpFurnace2Err : Bool;   // Furnace Pump 2 Error
+      iFlowTempPlant : Int;   // Flow Temperature Plant
+      iFlowTempFurnace : Int;   // Flow Temperature Furnace
+      iLiftSys1DeltaPressure : Int;   // Lifting System 1 Delta Pressure
+      iLiftSys2DeltaPressure : Int;   // Lifting System 2 Delta Pressure
+   END_VAR
+
+   VAR_OUTPUT 
+      oFlowTempPlant : Real;
+      oFlowTempFurnace : Real;
+      oAlarmLamp : Bool;
+      oSurgeTankLevel : Int;
+   END_VAR
+
    VAR 
       ScaleAnalogValues : "ScaleAnalogValues";
       RuntimeMeters : "RuntimeMeters";
       Alarm : "Alarm";
       IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
-      StorageTankRefill : Bool;
-      StorageTankRefillPt : Time := T#5s;
+      sStorageTankRefill : Bool;
+      sStorageTankRefillPt : Time := T#5s;
    END_VAR
 
    VAR_TEMP 
-      StorageTankRefillEt : Time;
+      tStorageTankRefillEt : Time;
       tAlarmCount : Int;
    END_VAR
 
 
 BEGIN
-	#ScaleAnalogValues(i_Vorlauftemp := "Vorlauftemperatur Werk",
-	                   i_Ruecklauftemp := "Vorlauftemperatur Ofen",
-	                   o_Vorlauftemp => "Main_DB".FlowTemperaturePlant,
-	                   o_Ruecklauftemp => "Main_DB".FlowTemperatureFurnace);
+	#ScaleAnalogValues(i_Vorlauftemp := #iFlowTempPlant,
+	                   i_Ruecklauftemp := #iFlowTempFurnace,
+	                   o_Vorlauftemp => #oFlowTempPlant,
+	                   o_Ruecklauftemp => #oFlowTempFurnace);
 	
 	#RuntimeMeters();
 	
-	"WSB OUT1 M" := "WSB OUT1";
-	"WSB OUT2 M" := "WSB OUT2";
-	"WSB OUT3 M" := "WSB OUT3";
-	"WSB OUT4 M" := "WSB OUT4";
+	// "WSB OUT1 M" := "WSB OUT1";
+	// "WSB OUT2 M" := "WSB OUT2";
+	// "WSB OUT3 M" := "WSB OUT3";
+	// "WSB OUT4 M" := "WSB OUT4";
 	
-	#Alarm(iCvOff := NOT "Steuerspannung Ein",
-	       iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
-	       iCt1FanErr := "KT 1 Ventilator Störung",
-	       iCt2FanErr := "KT 2 Ventilator Störung",
-	       iCt1RepairSwitchOff := NOT "KT 1 Ventilator RS",
-	       iCt2RepairSwitchOff := NOT "KT 2 Ventilator RS",
-	       iCt1SprayPipeOpen:="KT 1 Sprührohr öffnen",
-	       iCt2SprayPipeOpen:="KT 2 Sprührohr öffnen",
-	       iCt1SprayPipeIsOpen:="KT 1 Sprührohr geöffnet",
-	       iCt2SprayPipeIsOpen:="KT 2 Sprührohr geöffnet",
-	       iPlantPump1Err := "Werkspumpe 1 Störung",
-	       iPlantPump2Err := "Werkspumpe 2 Störung",
-	       iCoolWaterPump1Err := NOT "Kühlwasserpumpe 1 MSS OK",
-	       iCoolWaterPump2Err := NOT "Kühlwasserpumpe 2 MSS OK",
-	       iFurnacePump1Err := NOT "Ofenpumpe 1 MSS OK",
-	       iFurnacePump2Err := NOT "Ofenpumpe 2 MSS OK",
-	       iFlowTempPlant := "Main_DB".FlowTemperaturePlant,
-	       iFlowTempFurnace := "Main_DB".FlowTemperatureFurnace,
-	       iLiftSys1DeltaPressure := "HA 1 Differenzdruck",
-	       iLiftSys2DeltaPressure := "HA 2 Differenzdruck",
+	#oSurgeTankLevel := 0;
+	#oSurgeTankLevel.%X0 := "WSB OUT1";
+	#oSurgeTankLevel.%X1 := "WSB OUT2";
+	#oSurgeTankLevel.%X2 := "WSB OUT3";
+	#oSurgeTankLevel.%X3 := "WSB OUT4";
+	
+	#Alarm(iCvOff := #iCvOff,
+	       iFuseOutputsErr := #iFuseOutputsErr,
+	       iCt1FanErr := #iCt1FanErr,
+	       iCt2FanErr := #iCt2FanErr,
+	       iCt1RepairSwitchOff := #iCt1RepairSwitchOff,
+	       iCt2RepairSwitchOff := #iCt2RepairSwitchOff,
+	       iCt1SprayPipeOpen:=#iCt1SprayPipeOpen,
+	       iCt2SprayPipeOpen:=#iCt2SprayPipeOpen,
+	       iCt1SprayPipeIsOpen:=#iCt1SprayPipeIsOpen,
+	       iCt2SprayPipeIsOpen:=#iCt2SprayPipeIsOpen,
+	       iPumpPlant1Err := #iPumpPlant1Err,
+	       iPumpPlant2Err := #iPumpPlant2Err,
+	       iPumpCoolWater1Err := #iPumpCoolWater1Err,
+	       iPumpCoolWater2Err := #iPumpCoolWater2Err,
+	       iPumpFurnace1Err := #iPumpFurnace1Err,
+	       iPumpFurnace2Err := #iPumpFurnace2Err,
+	       iFlowTempPlant := #oFlowTempPlant,
+	       iFlowTempFurnace := #oFlowTempFurnace,
+	       iLiftSys1DeltaPressure := #iLiftSys1DeltaPressure,
+	       iLiftSys2DeltaPressure := #iLiftSys2DeltaPressure,
 	       oAlarmCount => #tAlarmCount,
-	       oAlarmLamp => "Rundumleuchte Störung");
+	       oAlarmLamp => #oAlarmLamp);
 	
-	#IEC_TMR_0.TOF(IN := #StorageTankRefill,
-	               PT := #StorageTankRefillPt,
+	#IEC_TMR_0.TOF(IN := #sStorageTankRefill,
+	               PT := #sStorageTankRefillPt,
 	               Q => "WSB Magnetventil",
-	               ET => #StorageTankRefillEt);
+	               ET => #tStorageTankRefillEt);
 	
 END_FUNCTION_BLOCK
 

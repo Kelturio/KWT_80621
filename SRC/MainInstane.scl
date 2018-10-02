@@ -24,11 +24,35 @@ VERSION : 0.1
    END_VAR
    VAR 
       EmergencyStop : "EmergencyStop";
+      SurgeTankLevel : Int;
    END_VAR
 
 
 BEGIN
-	#AlwaysRUN();
+	#AlwaysRUN(iCvOff := NOT "Steuerspannung Ein",
+	           iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
+	           iCt1FanErr := "KT 1 Ventilator Störung",
+	           iCt2FanErr := "KT 2 Ventilator Störung",
+	           iCt1RepairSwitchOff := NOT "KT 1 Ventilator RS",
+	           iCt2RepairSwitchOff := NOT "KT 2 Ventilator RS",
+	           iCt1SprayPipeOpen := "KT 1 Sprührohr öffnen",
+	           iCt2SprayPipeOpen := "KT 2 Sprührohr öffnen",
+	           iCt1SprayPipeIsOpen := "KT 1 Sprührohr geöffnet",
+	           iCt2SprayPipeIsOpen := "KT 2 Sprührohr geöffnet",
+	           iPumpPlant1Err := "Werkspumpe 1 Störung",
+	           iPumpPlant2Err := "Werkspumpe 2 Störung",
+	           iPumpCoolWater1Err := NOT "Kühlwasserpumpe 1 MSS OK",
+	           iPumpCoolWater2Err := NOT "Kühlwasserpumpe 2 MSS OK",
+	           iPumpFurnace1Err := NOT "Ofenpumpe 1 MSS OK",
+	           iPumpFurnace2Err := NOT "Ofenpumpe 2 MSS OK",
+	           iFlowTempPlant := "Vorlauftemperatur Werk",
+	           iFlowTempFurnace := "Vorlauftemperatur Ofen",
+	           iLiftSys1DeltaPressure := "HA 1 Differenzdruck",
+	           iLiftSys2DeltaPressure := "HA 2 Differenzdruck",
+	           oFlowTempPlant => #FlowTemperaturePlant,
+	           oFlowTempFurnace => #FlowTemperatureFurnace,
+	           oAlarmLamp => "Rundumleuchte Störung",
+	           oSurgeTankLevel => #SurgeTankLevel);
 	
 	IF NOT "Steuerspannung Ein" OR NOT "Sicherung Ausgänge OK" THEN
 	    #AutoMode := 0;

@@ -23,6 +23,7 @@ VERSION : 0.1
       iFlowTempFurnace : Real;   // Flow Temperature Furnace
       iLiftSys1DeltaPressure : Int;   // Lifting System 1 Delta Pressure
       iLiftSys2DeltaPressure : Int;   // Lifting System 2 Delta Pressure
+      iSurgeTankLevel : Int;
    END_VAR
 
    VAR_OUTPUT 
@@ -94,8 +95,8 @@ BEGIN
 	                                            YMIN := 0, YMAX := 100);
 	    #sPressureDeltaPerc2 := BOOL_TO_INT(#"tPressureDeltaPerc2" >= "Retain_DB".Settings.MaxPressureDeltaPerc2);
 	    
-	    #sSurgeTankRunDry := BOOL_TO_INT("WSB OUT Byte" <= "Main_DB".HMI.StorageTankLevel.P4);
-	    #sSurgeTankOverflow := BOOL_TO_INT("WSB OUT Byte" >= "Main_DB".HMI.StorageTankLevel.P1);
+	    #sSurgeTankRunDry := BOOL_TO_INT(#iSurgeTankLevel <= "Main_DB".HMI.StorageTankLevel.P4);
+	    #sSurgeTankOverflow := BOOL_TO_INT(#iSurgeTankLevel >= "Main_DB".HMI.StorageTankLevel.P1);
 	END_REGION
 	REGION timeout
 	    #IEC_TMR_0.TON(IN := #iCt1SprayPipeOpen,

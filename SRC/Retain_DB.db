@@ -9,6 +9,12 @@ NON_RETAIN
          MaxPressureDeltaPerc2 { S7_SetPoint := 'True'} : Int;   // Maximum pressure difference in percent before error
          MaxTempTransgression { S7_SetPoint := 'True'} : Real;   // Maximum temperature overrun of setpoint in centigrade before error
          SprayTubeOpenTimeout { S7_SetPoint := 'True'} : Time;   // Maximum time until spray tube must be open before error
+         SurgeTankLevel : Struct
+            RunDry { S7_SetPoint := 'True'} : Int;   // position 4, e.g. minimum value reached
+            SetPointLower : Int;   // position 3, e.g. lower preset value reached
+            SetPointUpper { S7_SetPoint := 'True'} : Int;   // position 2, e.g. upper preset value reached
+            Overflow { S7_SetPoint := 'True'} : Int;   // position 1, e.g. maximum value reached
+         END_STRUCT;
       END_STRUCT;
    END_VAR
 
@@ -18,6 +24,10 @@ BEGIN
    Settings.MaxPressureDeltaPerc2 := 50;
    Settings.MaxTempTransgression := 4.0;
    Settings.SprayTubeOpenTimeout := T#15s;
+   Settings.SurgeTankLevel.RunDry := 2;
+   Settings.SurgeTankLevel.SetPointLower := 4;
+   Settings.SurgeTankLevel.SetPointUpper := 6;
+   Settings.SurgeTankLevel.Overflow := 14;
 
 END_DATA_BLOCK
 
