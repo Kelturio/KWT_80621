@@ -292,7 +292,7 @@ IGuiTemplate
 		qm_SymIOSelBackFillColor: "#ffa5cfd6"
 		qm_SymIOAltBackFillColor: "#ffe7e7ef"
 		qm_SymIOSelForeColor:"#ffffffff"
-		qm_NoOfSymIoTextListItems:1
+		qm_NoOfSymIoTextListItems:4
 		qm_hasScrollIndicator: false
 	}
 	IGuiIOField

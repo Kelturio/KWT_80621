@@ -4,13 +4,59 @@ AUTHOR : Searinox
 VERSION : 0.1
    VAR 
       "Steuerspannung Ein" : Int;
+      "Sicherung Ausgänge OK" : Int;
+      "Ventilator 1 Störung" : Int;
+      "Ventilator 1 Reparaturschalter ein" : Int;
+      "Ventilator 2 Störung" : Int;
+      "Ventilator 2 Reparaturschalter ein" : Int;
+      "Störung Pumpe 1" : Int;
+      "Störung Pumpe 2" : Int;
+      "Motorschutzschalter Pumpe 3 OK" : Int;
+      "Motorschutzschalter Pumpe 4 OK" : Int;
+      "Motorschutzschalter Hebeanlage 1" : Int;
+      "Motorschutzschalter Hebeanlage 2" : Int;
+      s_alarms : Int;
+      VorlauftemperaturWerk : Int;
+      VorlauftemperaturOfen : Int;
    END_VAR
 
 
 BEGIN
-	#"Steuerspannung Ein" := BOOL_TO_INT("Steuerspannung Ein");
+	#"Steuerspannung Ein" := BOOL_TO_INT(NOT "Steuerspannung Ein");
+	#"Sicherung Ausgänge OK" := BOOL_TO_INT(NOT "Sicherung Ausgänge OK");
+	#"Ventilator 1 Störung" := BOOL_TO_INT("Ventilator 1 Störung");
+	#"Ventilator 1 Reparaturschalter ein" := BOOL_TO_INT(NOT "Ventilator 1 Reparaturschalter ein");
+	#"Ventilator 2 Störung" := BOOL_TO_INT("Ventilator 2 Störung");
+	#"Ventilator 2 Reparaturschalter ein" := BOOL_TO_INT(NOT "Ventilator 2 Reparaturschalter ein");
+	#"Störung Pumpe 1" := BOOL_TO_INT("Störung Pumpe 1");
+	#"Störung Pumpe 2" := BOOL_TO_INT("Störung Pumpe 2");
+	#"Motorschutzschalter Pumpe 3 OK" := BOOL_TO_INT(NOT "Motorschutzschalter Pumpe 3 OK");
+	#"Motorschutzschalter Pumpe 4 OK" := BOOL_TO_INT(NOT "Motorschutzschalter Pumpe 4 OK");
+	#"Motorschutzschalter Hebeanlage 1" := BOOL_TO_INT(NOT "Motorschutzschalter Hebeanlage 1");
+	#"Motorschutzschalter Hebeanlage 2" := BOOL_TO_INT(NOT "Motorschutzschalter Hebeanlage 2");
+	
+	#"VorlauftemperaturWerk" := BOOL_TO_INT("Main_DB".Vorlauftemperatur >= ("Main_DB".Auto.s_Max + 4));
+	#"VorlauftemperaturOfen" := BOOL_TO_INT("Main_DB".Ruecklauftemperatur >= ("Main_DB".Auto.s_Max + 4));
+	
+	#s_alarms := 0;
+	#s_alarms += #"Steuerspannung Ein";
+	#s_alarms += #"Sicherung Ausgänge OK";
+	#s_alarms += #"Ventilator 1 Störung";
+	#s_alarms += #"Ventilator 1 Reparaturschalter ein";
+	#s_alarms += #"Ventilator 2 Störung";
+	#s_alarms += #"Ventilator 2 Reparaturschalter ein";
+	#s_alarms += #"Störung Pumpe 1";
+	#s_alarms += #"Störung Pumpe 2";
+	#s_alarms += #"Motorschutzschalter Pumpe 3 OK";
+	#s_alarms += #"Motorschutzschalter Pumpe 4 OK";
+	#s_alarms += #"Motorschutzschalter Hebeanlage 1";
+	#s_alarms += #"Motorschutzschalter Hebeanlage 2";
+	
+	"Rundumleuchte Störung" := #s_alarms > 0;
 	
 	
-	
+	//Trockenlauf & Überlauf
+	//ZU-Klappen 1 geöffnet
+	//Hebeanlage 1 Differenzdruck
 END_FUNCTION_BLOCK
 
