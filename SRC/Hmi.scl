@@ -1,0 +1,57 @@
+﻿FUNCTION_BLOCK "Hmi"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR_INPUT 
+      iPumpPlant1Q : Bool;
+      iPumpPlant1Run : Bool;
+      iPumpPlant1Err : Bool;
+      iPumpPlant2Q : Bool;
+      iPumpPlant2Run : Bool;
+      iPumpPlant2Err : Bool;
+      iPumpCoolWater1Q : Bool;
+      iPumpCoolWater1Run : Bool;
+      iPumpCoolWater1Err : Bool;
+      iPumpCoolWater2Q : Bool;
+      iPumpCoolWater2Run : Bool;
+      iPumpCoolWater2Err : Bool;
+      iPumpFurnace1Q : Bool;
+      iPumpFurnace1Run : Bool;
+      iPumpFurnace1Err : Bool;
+      iPumpFurnace2Q : Bool;
+      iPumpFurnace2Run : Bool;
+      iPumpFurnace2Err : Bool;
+      iCt1FanQ : Bool;
+      iCt1FanRun : Bool;
+      iCt1FanErr : Bool;
+      iCt2FanQ : Bool;
+      iCt2FanRun : Bool;
+      iCt2FanErr : Bool;
+   END_VAR
+
+   VAR 
+      sPumpPlant1 : Int := -1;
+      sPumpPlant2 : Int;
+      sPumpCoolWater1 : Int;
+      sPumpCoolWater2 : Int;
+      sPumpFurnace1 : Int;
+      sPumpFurnace2 : Int;
+      sAnimationFrame : Int;
+      sCt1Fan : Int;
+      sCt2Fan : Int;
+   END_VAR
+
+
+BEGIN
+	#sPumpPlant1 := "HmiPump"(iPumpQ:=#iPumpPlant1Q, iPumpRun:=#iPumpPlant1Run, iPumpErr:=#iPumpPlant1Err);
+	#sPumpPlant2 := "HmiPump"(iPumpQ := #iPumpPlant2Q, iPumpRun := #iPumpPlant2Run, iPumpErr := #iPumpPlant2Err);
+	#sPumpCoolWater1 := "HmiPump"(iPumpQ := #iPumpCoolWater1Q, iPumpRun := #iPumpCoolWater1Run, iPumpErr := #iPumpCoolWater1Err);
+	#sPumpCoolWater2 := "HmiPump"(iPumpQ := #iPumpCoolWater2Q, iPumpRun := #iPumpCoolWater2Run, iPumpErr := #iPumpCoolWater2Err);
+	#sPumpFurnace1 := "HmiPump"(iPumpQ := #iPumpFurnace1Q, iPumpRun := #iPumpFurnace1Run, iPumpErr := #iPumpFurnace1Err);
+	#sPumpFurnace2 := "HmiPump"(iPumpQ := #iPumpFurnace2Q, iPumpRun := #iPumpFurnace2Run, iPumpErr := #iPumpFurnace2Err);
+	#sCt1Fan := "HmiFan"(iFanQ := #iCt1FanQ, iFanRun := #iCt1FanRun, iFanErr := #iCt1FanErr, iAnimationFrame := #sAnimationFrame);
+	#sCt2Fan := "HmiFan"(iFanQ := #iCt2FanQ, iFanRun := #iCt2FanRun, iFanErr := #iCt2FanErr, iAnimationFrame := #sAnimationFrame);
+	
+	
+END_FUNCTION_BLOCK
+
