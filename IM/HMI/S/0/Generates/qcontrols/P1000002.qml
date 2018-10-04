@@ -66,7 +66,7 @@ IGuiPage
 		objId: 268435487
 		x: 20
 		y: 90
-		width: 138
+		width: 157
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -87,7 +87,7 @@ IGuiPage
 		objId: 268435488
 		x: 20
 		y: 110
-		width: 133
+		width: 152
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -108,7 +108,7 @@ IGuiPage
 		objId: 268435489
 		x: 20
 		y: 130
-		width: 229
+		width: 122
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -129,7 +129,7 @@ IGuiPage
 		objId: 268435490
 		x: 20
 		y: 150
-		width: 138
+		width: 157
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -150,7 +150,7 @@ IGuiPage
 		objId: 268435491
 		x: 20
 		y: 170
-		width: 133
+		width: 152
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -171,7 +171,7 @@ IGuiPage
 		objId: 268435492
 		x: 20
 		y: 190
-		width: 229
+		width: 122
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -192,7 +192,7 @@ IGuiPage
 		objId: 268435493
 		x: 20
 		y: 210
-		width: 116
+		width: 157
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -213,7 +213,7 @@ IGuiPage
 		objId: 268435494
 		x: 20
 		y: 230
-		width: 111
+		width: 152
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -234,7 +234,7 @@ IGuiPage
 		objId: 268435495
 		x: 20
 		y: 250
-		width: 116
+		width: 157
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -255,7 +255,7 @@ IGuiPage
 		objId: 268435496
 		x: 20
 		y: 270
-		width: 111
+		width: 152
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -276,7 +276,7 @@ IGuiPage
 		objId: 268435497
 		x: 20
 		y: 290
-		width: 41
+		width: 97
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -297,7 +297,7 @@ IGuiPage
 		objId: 268435498
 		x: 20
 		y: 310
-		width: 81
+		width: 97
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -318,7 +318,7 @@ IGuiPage
 		objId: 268435499
 		x: 20
 		y: 330
-		width: 82
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -339,7 +339,7 @@ IGuiPage
 		objId: 268435500
 		x: 20
 		y: 350
-		width: 82
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -360,7 +360,7 @@ IGuiPage
 		objId: 268435501
 		x: 20
 		y: 370
-		width: 60
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -381,7 +381,7 @@ IGuiPage
 		objId: 268435502
 		x: 20
 		y: 390
-		width: 60
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -402,7 +402,7 @@ IGuiPage
 		objId: 268435503
 		x: 20
 		y: 410
-		width: 60
+		width: 134
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -423,7 +423,7 @@ IGuiPage
 		objId: 268435504
 		x: 20
 		y: 430
-		width: 60
+		width: 134
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -465,7 +465,7 @@ IGuiPage
 		objId: 268435506
 		x: 20
 		y: 470
-		width: 93
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -486,7 +486,7 @@ IGuiPage
 		objId: 268435507
 		x: 20
 		y: 490
-		width: 135
+		width: 148
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -507,7 +507,7 @@ IGuiPage
 		objId: 268435508
 		x: 20
 		y: 510
-		width: 135
+		width: 148
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -528,7 +528,7 @@ IGuiPage
 		objId: 268435509
 		x: 270
 		y: 50
-		width: 220
+		width: 186
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -549,7 +549,7 @@ IGuiPage
 		objId: 268435510
 		x: 270
 		y: 70
-		width: 220
+		width: 186
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -570,7 +570,7 @@ IGuiPage
 		objId: 268435511
 		x: 270
 		y: 90
-		width: 232
+		width: 142
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -591,7 +591,7 @@ IGuiPage
 		objId: 268435512
 		x: 270
 		y: 110
-		width: 232
+		width: 142
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -612,7 +612,7 @@ IGuiPage
 		objId: 268435513
 		x: 270
 		y: 130
-		width: 111
+		width: 185
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -633,7 +633,7 @@ IGuiPage
 		objId: 268435514
 		x: 270
 		y: 150
-		width: 111
+		width: 185
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -654,7 +654,7 @@ IGuiPage
 		objId: 268435515
 		x: 270
 		y: 170
-		width: 191
+		width: 141
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -675,7 +675,7 @@ IGuiPage
 		objId: 268435516
 		x: 270
 		y: 190
-		width: 191
+		width: 141
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -696,7 +696,7 @@ IGuiPage
 		objId: 268435517
 		x: 270
 		y: 210
-		width: 149
+		width: 162
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -717,7 +717,7 @@ IGuiPage
 		objId: 268435518
 		x: 270
 		y: 230
-		width: 149
+		width: 162
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -738,7 +738,7 @@ IGuiPage
 		objId: 268435519
 		x: 270
 		y: 250
-		width: 200
+		width: 143
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -759,7 +759,7 @@ IGuiPage
 		objId: 268435520
 		x: 270
 		y: 270
-		width: 223
+		width: 166
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -780,7 +780,7 @@ IGuiPage
 		objId: 268435521
 		x: 270
 		y: 290
-		width: 200
+		width: 143
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -801,7 +801,7 @@ IGuiPage
 		objId: 268435522
 		x: 270
 		y: 310
-		width: 223
+		width: 166
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -864,7 +864,7 @@ IGuiPage
 		objId: 268435525
 		x: 270
 		y: 370
-		width: 139
+		width: 142
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -885,7 +885,7 @@ IGuiPage
 		objId: 268435526
 		x: 270
 		y: 390
-		width: 139
+		width: 142
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -906,7 +906,7 @@ IGuiPage
 		objId: 268435527
 		x: 270
 		y: 410
-		width: 140
+		width: 90
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -927,7 +927,7 @@ IGuiPage
 		objId: 268435528
 		x: 270
 		y: 430
-		width: 140
+		width: 90
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -948,7 +948,7 @@ IGuiPage
 		objId: 268435529
 		x: 270
 		y: 450
-		width: 93
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -969,7 +969,7 @@ IGuiPage
 		objId: 268435530
 		x: 270
 		y: 470
-		width: 93
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -990,7 +990,7 @@ IGuiPage
 		objId: 268435531
 		x: 270
 		y: 490
-		width: 93
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1011,7 +1011,7 @@ IGuiPage
 		objId: 268435532
 		x: 270
 		y: 510
-		width: 93
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1032,7 +1032,7 @@ IGuiPage
 		objId: 268435533
 		x: 270
 		y: 530
-		width: 302
+		width: 123
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1053,7 +1053,7 @@ IGuiPage
 		objId: 268435534
 		x: 270
 		y: 550
-		width: 93
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1074,7 +1074,7 @@ IGuiPage
 		objId: 268435535
 		x: 270
 		y: 570
-		width: 93
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1095,7 +1095,7 @@ IGuiPage
 		objId: 268435536
 		x: 270
 		y: 590
-		width: 93
+		width: 101
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1200,7 +1200,7 @@ IGuiPage
 		objId: 268435541
 		x: 550
 		y: 50
-		width: 137
+		width: 125
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1221,7 +1221,7 @@ IGuiPage
 		objId: 268435542
 		x: 550
 		y: 70
-		width: 145
+		width: 70
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1242,7 +1242,7 @@ IGuiPage
 		objId: 268435543
 		x: 550
 		y: 90
-		width: 145
+		width: 70
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1263,7 +1263,7 @@ IGuiPage
 		objId: 268435544
 		x: 550
 		y: 110
-		width: 145
+		width: 70
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1284,7 +1284,7 @@ IGuiPage
 		objId: 268435545
 		x: 550
 		y: 130
-		width: 145
+		width: 70
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1305,7 +1305,7 @@ IGuiPage
 		objId: 268435546
 		x: 550
 		y: 150
-		width: 89
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1326,7 +1326,7 @@ IGuiPage
 		objId: 268435547
 		x: 550
 		y: 170
-		width: 97
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1347,7 +1347,7 @@ IGuiPage
 		objId: 268435548
 		x: 550
 		y: 190
-		width: 97
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1368,7 +1368,7 @@ IGuiPage
 		objId: 268435549
 		x: 550
 		y: 210
-		width: 97
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1389,7 +1389,7 @@ IGuiPage
 		objId: 268435550
 		x: 550
 		y: 230
-		width: 97
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1410,7 +1410,7 @@ IGuiPage
 		objId: 268435551
 		x: 550
 		y: 250
-		width: 97
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1431,7 +1431,7 @@ IGuiPage
 		objId: 268435552
 		x: 550
 		y: 270
-		width: 97
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1452,7 +1452,7 @@ IGuiPage
 		objId: 268435553
 		x: 550
 		y: 290
-		width: 97
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1473,7 +1473,7 @@ IGuiPage
 		objId: 268435554
 		x: 550
 		y: 310
-		width: 97
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1494,7 +1494,7 @@ IGuiPage
 		objId: 268435555
 		x: 550
 		y: 330
-		width: 97
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1515,7 +1515,7 @@ IGuiPage
 		objId: 268435556
 		x: 550
 		y: 350
-		width: 97
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1536,7 +1536,7 @@ IGuiPage
 		objId: 268435557
 		x: 720
 		y: 50
-		width: 127
+		width: 165
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1557,7 +1557,7 @@ IGuiPage
 		objId: 268435558
 		x: 720
 		y: 90
-		width: 143
+		width: 161
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1578,7 +1578,7 @@ IGuiPage
 		objId: 268435559
 		x: 720
 		y: 130
-		width: 192
+		width: 135
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1599,7 +1599,7 @@ IGuiPage
 		objId: 268435560
 		x: 720
 		y: 170
-		width: 192
+		width: 135
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1620,7 +1620,7 @@ IGuiPage
 		objId: 268435561
 		x: 720
 		y: 210
-		width: 93
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1641,7 +1641,7 @@ IGuiPage
 		objId: 268435562
 		x: 720
 		y: 250
-		width: 93
+		width: 105
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1662,7 +1662,7 @@ IGuiPage
 		objId: 268435563
 		x: 720
 		y: 290
-		width: 139
+		width: 158
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1683,7 +1683,7 @@ IGuiPage
 		objId: 268435564
 		x: 720
 		y: 330
-		width: 139
+		width: 158
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1704,7 +1704,7 @@ IGuiPage
 		objId: 268435565
 		x: 720
 		y: 370
-		width: 202
+		width: 192
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1725,7 +1725,7 @@ IGuiPage
 		objId: 268435566
 		x: 720
 		y: 410
-		width: 202
+		width: 192
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/35#2#4#128#0#0"
 		qm_Border.top: 0
@@ -1830,7 +1830,7 @@ IGuiPage
 		objId: 33554449
 		x: 950
 		y: 210
-		width: 55
+		width: 63
 		height: 20
 		qm_ImageSource: "image://QSmartImageProvider/36#2#4#128#0#0"
 		qm_Border.top: 0
