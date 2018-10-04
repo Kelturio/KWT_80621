@@ -36,6 +36,14 @@ VERSION : 0.1
       iPumpFurnace1Run : Bool;
       iPumpFurnace2Q : Bool;
       iPumpFurnace2Run : Bool;
+      iSurgeTankLevelOut1 : Bool;
+      iSurgeTankLevelOut2 : Bool;
+      iSurgeTankLevelOut3 : Bool;
+      iSurgeTankLevelOut4 : Bool;
+      iCt1FanQ : Bool;
+      iCt1FanRun : Bool;
+      iCt2FanQ : Bool;
+      iCt2FanRun : Bool;
    END_VAR
 
    VAR_OUTPUT 
@@ -68,16 +76,11 @@ BEGIN
 	
 	#RuntimeMeters();
 	
-	// "WSB OUT1 M" := "WSB OUT1";
-	// "WSB OUT2 M" := "WSB OUT2";
-	// "WSB OUT3 M" := "WSB OUT3";
-	// "WSB OUT4 M" := "WSB OUT4";
-	
 	#oSurgeTankLevel := 0;
-	#oSurgeTankLevel.%X0 := "WSB OUT1";
-	#oSurgeTankLevel.%X1 := "WSB OUT2";
-	#oSurgeTankLevel.%X2 := "WSB OUT3";
-	#oSurgeTankLevel.%X3 := "WSB OUT4";
+	#oSurgeTankLevel.%X0 := #iSurgeTankLevelOut1;
+	#oSurgeTankLevel.%X1 := #iSurgeTankLevelOut2;
+	#oSurgeTankLevel.%X2 := #iSurgeTankLevelOut3;
+	#oSurgeTankLevel.%X3 := #iSurgeTankLevelOut4;
 	
 	#Alarm(iCvOff := #iCvOff,
 	       iFuseOutputsErr := #iFuseOutputsErr,
@@ -99,8 +102,10 @@ BEGIN
 	       iFlowTempFurnace := #oFlowTempFurnace,
 	       iLiftSys1DeltaPressure := #iLiftSys1DeltaPressure,
 	       iLiftSys2DeltaPressure := #iLiftSys2DeltaPressure,
+	       iSurgeTankLevel:=#oSurgeTankLevel,
 	       oAlarmCount => #tAlarmCount,
 	       oAlarmLamp => #oAlarmLamp);
+	
 	
 	"HmiDb"(iPumpPlant1Q:=#iPumpPlant1Q,
 	        iPumpPlant1Run:=#iPumpPlant1Run,
@@ -119,7 +124,13 @@ BEGIN
 	        iPumpFurnace1Err:=#iPumpFurnace1Err,
 	        iPumpFurnace2Q:=#iPumpFurnace2Q,
 	        iPumpFurnace2Run:=#iPumpFurnace2Run,
-	        iPumpFurnace2Err:=#iPumpFurnace2Err);
+	        iPumpFurnace2Err:=#iPumpFurnace2Err,
+	        iCt1FanQ:=#iCt1FanQ,
+	        iCt1FanRun:=#iCt1FanRun,
+	        iCt1FanErr:=#iCt1FanErr,
+	        iCt2FanQ:=#iCt2FanQ,
+	        iCt2FanRun:=#iCt2FanRun,
+	        iCt2FanErr:=#iCt2FanErr);
 	
 	
 	#IEC_TMR_0.TOF(IN := #sStorageTankRefill,

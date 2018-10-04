@@ -1,0 +1,32 @@
+﻿FUNCTION "HmiFan" : Int
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR_INPUT 
+      iFanQ : Bool;
+      iFanRun : Bool;
+      iFanErr : Bool;
+      iAnimationFrame : Int;
+   END_VAR
+
+
+BEGIN
+	IF #iFanErr THEN
+	    #HmiFan := 4;
+	ELSIF #iFanQ AND NOT #iFanRun THEN
+	    #HmiFan := 3;
+	ELSIF #iFanQ AND #iFanRun THEN
+	    #HmiFan := 2;
+	ELSIF NOT #iFanQ AND #iFanRun THEN
+	    #HmiFan := 2;
+	ELSIF NOT #iFanQ AND NOT #iFanRun THEN
+	    #HmiFan := 1;
+	ELSE
+	    #HmiFan := 404;
+	END_IF;
+	
+	IF #HmiFan <> 404 THEN
+	    #HmiFan := #HmiFan * 10 + #iAnimationFrame;
+	END_IF;
+END_FUNCTION
+
