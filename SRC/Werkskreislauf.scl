@@ -4,16 +4,16 @@ AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
 FAMILY : AKK
 VERSION : 0.1
    VAR_INPUT 
-      i_Strang : Bool;
-      i_Betrieb1 : Bool;
-      i_Betrieb2 : Bool;
-      i_Stoerung1 : Bool;   // Störung
-      i_Stoerung2 : Bool;   // Störung
+      iBranch : Bool;
+      iPumpPlant1Run : Bool;
+      iPumpPlant2Run : Bool;
+      iPumpPlant1Err : Bool;   // Störung
+      iPumpPlant2Err : Bool;   // Störung
    END_VAR
 
    VAR_OUTPUT 
-      o_Pumpe1 : Bool;
-      o_Pumpe2 : Bool;
+      oPumpPlant1 : Bool;
+      oPumpPlant2 : Bool;
    END_VAR
 
    VAR 
@@ -25,15 +25,15 @@ VERSION : 0.1
 
 
 BEGIN
-	#Baustein_1(i_strang := #i_Strang,
+	#Baustein_1(i_strang := #iBranch,
 	            i_beide := "AlwaysFALSE",
-	            i_err1 := #i_Stoerung1,
-	            i_err2 := #i_Stoerung2,
-	            i_run1 := #i_Betrieb1,
-	            i_run2 := #i_Betrieb2,
+	            i_err1 := #iPumpPlant1Err,
+	            i_err2 := #iPumpPlant2Err,
+	            i_run1 := #iPumpPlant1Run,
+	            i_run2 := #iPumpPlant2Run,
 	            i_tof_pt := #s_Nachlaufzeit,
-	            o_p1 => #o_Pumpe1,
-	            o_p2 => #o_Pumpe2,
+	            o_p1 => #oPumpPlant1,
+	            o_p2 => #oPumpPlant2,
 	            io_s_p1 := #s_p1,
 	            io_s_p2 := #s_p2);
 END_FUNCTION_BLOCK

@@ -12,6 +12,7 @@ VERSION : 0.1
 
 
 BEGIN
+	#HmiFan := 0;
 	IF #iFanErr OR #iRepairSwitchOff THEN
 	    #HmiFan := 41;
 	ELSIF #iFanQ AND NOT #iFanRun THEN

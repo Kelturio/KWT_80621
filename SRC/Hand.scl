@@ -3,21 +3,30 @@
 AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
 FAMILY : AKK
 VERSION : 0.1
+   VAR_OUTPUT 
+      oCt1FanSetPoint : Int;
+      oCt2FanSetPoint : Int;
+   END_VAR
+
    VAR 
-      static_Vent1SollP : Int;
-      static_Vent2SollP : Int;
+      sCt1FanSetPointPerc : Int;
+      sCt2FanSetPointPerc : Int;
    END_VAR
 
 
 BEGIN
-	"KT 1 Ventilator Sollwert" := "ScaleValueInt"(VALUE := #static_Vent1SollP,
-	                                              XMIN := 0, XMAX := 100,
-	                                              YMIN := "AnalogMin", YMAX := "AnalogMax");
-	"KT 2 Ventilator Sollwert" := "ScaleValueInt"(VALUE := #static_Vent2SollP,
-	                                              XMIN := 0, XMAX := 100,
-	                                              YMIN := "AnalogMin", YMAX := "AnalogMax");
+	#oCt1FanSetPoint := "ScaleValueInt"(VALUE := #sCt1FanSetPointPerc,
+	                                    XMIN := 0,
+	                                    XMAX := 100,
+	                                    YMIN := "AnalogMin",
+	                                    YMAX := "AnalogMax");
+	#oCt2FanSetPoint := "ScaleValueInt"(VALUE := #sCt2FanSetPointPerc,
+	                                    XMIN := 0,
+	                                    XMAX := 100,
+	                                    YMIN := "AnalogMin",
+	                                    YMAX := "AnalogMax");
 	
-	"Main_DB".AlwaysRUN.StorageTankRefill :=
+	"Main_DB".AlwaysRUN.sStorageTankRefill :=
 	"Main_DB".HMI.StorageTankRefill AND "WSB OUT Byte" <= "Main_DB".HMI.StorageTankLevel.P2;
 END_FUNCTION_BLOCK
 

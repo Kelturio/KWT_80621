@@ -4,47 +4,47 @@ AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
 FAMILY : AKK
 VERSION : 0.1
    VAR_INPUT 
-      i_Strang : Bool;   // Strang
-      i_Vorlauftemperatur : Real;   // Vorlauftemperatur
-      i_Min : Real;
-      i_Max : Real;
-      i_BetriebP1 : Bool;
-      i_BetriebP2 : Bool;
-      i_StoerungP1 : Bool;
-      i_StoerungP2 : Bool;
-      i_AbsalzPulse : Bool;
-      i_ZuKlappen1offen : Bool;
-      i_ZuKlappen2offen : Bool;
+      iBranch : Bool;   // Strang
+      iFlowTempPlant : Real;   // Vorlauftemperatur
+      iSetPointMin : Real;
+      iSetPointMax : Real;
+      iPumpCoolWater1Run : Bool;
+      iPumpCoolWater2Run : Bool;
+      iPumpCoolWater1Err : Bool;
+      iPumpCoolWater1Err_1 : Bool;
+      iBleedingUnitCirculatingPumpRun : Bool;
+      iCt1SprayPipeIsOpen : Bool;
+      iCt2SprayPipeIsOpen : Bool;
    END_VAR
 
    VAR_OUTPUT 
-      o_Pumpe3 : Bool;
-      o_Pumpe4 : Bool;
-      o_Ventilator1 : Bool;
-      o_Ventilator2 : Bool;
-      o_Ventilator1Sollwert : Int;
-      o_Ventilator2Sollwert : Int;
-      o_ZuKlappen1oeffnen : Bool;
-      o_ZuKlappen2oeffnen : Bool;
+      oPumpCoolWater1 : Bool;
+      oPumpCoolWater2 : Bool;
+      oCt1Fan : Bool;
+      oCt2Fan : Bool;
+      oCt1FanSetPoint : Int;
+      oCt2FanSetPoint : Int;
+      oCt1SprayPipeOpen : Bool;
+      oCt2SprayPipeOpen : Bool;
    END_VAR
 
    VAR 
-      s_Pumpe1 : Bool;
-      s_Pumpe2 : Bool;
-      s_zu_kalt : Bool;
-      s_zu_warm : Bool;
-      s_Sollwert : Int;
-      s_Ventilator_pt : Time := T#30S;
-      s_Beide_Pumpen : Bool;
-      s_Nachlaufzeit : Time := T#10S;
+      sPump1 : Bool;
+      sPump2 : Bool;
+      sTooCold : Bool;
+      sTooHot : Bool;
+      sSetPoint : Int;
+      sVentilatoPt : Time := T#30S;
+      sBothPump : Bool;
+      sOverRunTime : Time := T#10S;
       Baustein_1 : "Baustein_1";
       IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
       IEC_TMR_1 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
-      s_Ventilator1_ET : Time;
-      s_Ventilator2_ET : Time;
-      s_SET_POINT_MIN : Int := 0;
-      s_SET_POINT_MAX : Int := 27648;
-      s_MaxThreshold : Real := 1.0;
+      sVentilator1Et : Time;
+      sVentilator2Et : Time;
+      sSetPointMin : Int := 0;
+      sSetPointMax : Int := 27648;
+      sMaxThreshold : Real := 1.0;
       IEC_TMR_2 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
       s_AbsalzPulsePT : Time := T#5m;
       s_AbsalzTP : Bool;
@@ -53,54 +53,54 @@ VERSION : 0.1
 
 
 BEGIN
-	#s_Beide_Pumpen := #i_Vorlauftemperatur > (#i_Max + #s_MaxThreshold) OR #s_AbsalzTP;
+	#sBothPump := #iFlowTempPlant > (#iSetPointMax + #sMaxThreshold) OR #s_AbsalzTP;
 	
-	#Baustein_1(i_strang := #i_Strang,
-	            i_beide := #s_Beide_Pumpen,
-	            i_err1 := #i_StoerungP1,
-	            i_err2 := #i_StoerungP2,
-	            i_run1 := #i_BetriebP1,
-	            i_run2 := #i_BetriebP2,
-	            i_tof_pt := #s_Nachlaufzeit,
-	            o_p1 => #o_Pumpe3,
-	            o_p2 => #o_Pumpe4,
-	            io_s_p1 := #s_Pumpe1,
-	            io_s_p2 := #s_Pumpe2);
+	#Baustein_1(i_strang := #iBranch,
+	            i_beide := #sBothPump,
+	            i_err1 := #iPumpCoolWater1Err,
+	            i_err2 := #iPumpCoolWater1Err_1,
+	            i_run1 := #iPumpCoolWater1Run,
+	            i_run2 := #iPumpCoolWater2Run,
+	            i_tof_pt := #sOverRunTime,
+	            o_p1 => #oPumpCoolWater1,
+	            o_p2 => #oPumpCoolWater2,
+	            io_s_p1 := #sPump1,
+	            io_s_p2 := #sPump2);
 	
-	#IEC_TMR_0.TON(IN := #i_BetriebP1 AND NOT #s_zu_kalt,
-	               PT := #s_Ventilator_pt,
-	               Q => #o_Ventilator1,
-	               ET => #s_Ventilator1_ET);
+	#IEC_TMR_0.TON(IN := #iPumpCoolWater1Run AND NOT #sTooCold,
+	               PT := #sVentilatoPt,
+	               Q => #oCt1Fan,
+	               ET => #sVentilator1Et);
 	
-	#IEC_TMR_1.TON(IN := #i_BetriebP2 AND NOT #s_zu_kalt,
-	               PT := #s_Ventilator_pt,
-	               Q => #o_Ventilator2,
-	               ET => #s_Ventilator2_ET);
+	#IEC_TMR_1.TON(IN := #iPumpCoolWater2Run AND NOT #sTooCold,
+	               PT := #sVentilatoPt,
+	               Q => #oCt2Fan,
+	               ET => #sVentilator2Et);
 	
-	#IEC_TMR_2.TP(IN := #i_AbsalzPulse,
+	#IEC_TMR_2.TP(IN := #iBleedingUnitCirculatingPumpRun,
 	              PT := #s_AbsalzPulsePT,
 	              Q => #s_AbsalzTP,
 	              ET => #s_AbsalzPulseET);
 	
-	#s_zu_kalt := #i_Vorlauftemperatur <= #i_Min;
-	#s_zu_warm := #i_Vorlauftemperatur >= #i_Max;
+	#sTooCold := #iFlowTempPlant <= #iSetPointMin;
+	#sTooHot := #iFlowTempPlant >= #iSetPointMax;
 	
-	IF #s_zu_warm THEN
-	    #s_Sollwert := #s_SET_POINT_MAX;
-	ELSIF #s_zu_kalt THEN
-	    #s_Sollwert := #s_SET_POINT_MIN;
+	IF #sTooHot THEN
+	    #sSetPoint := #sSetPointMax;
+	ELSIF #sTooCold THEN
+	    #sSetPoint := #sSetPointMin;
 	ELSE
-	    #s_Sollwert := "ScaleValueRealToInt"(VALUE := #i_Vorlauftemperatur,
-	                                         XMIN := #i_Min,
-	                                         XMAX := #i_Max,
-	                                         YMIN := #s_SET_POINT_MIN,
-	                                         YMAX := #s_SET_POINT_MAX);
+	    #sSetPoint := "ScaleValueRealToInt"(VALUE := #iFlowTempPlant,
+	                                        XMIN := #iSetPointMin,
+	                                        XMAX := #iSetPointMax,
+	                                        YMIN := #sSetPointMin,
+	                                        YMAX := #sSetPointMax);
 	END_IF;
 	
-	#o_Ventilator1Sollwert := #s_Sollwert;
-	#o_Ventilator2Sollwert := #s_Sollwert;
-	#o_ZuKlappen1oeffnen := #o_Pumpe3;
-	#o_ZuKlappen2oeffnen := #o_Pumpe4;
+	#oCt1FanSetPoint := #sSetPoint;
+	#oCt2FanSetPoint := #sSetPoint;
+	#oCt1SprayPipeOpen := #oPumpCoolWater1;
+	#oCt2SprayPipeOpen := #oPumpCoolWater2;
 	
 END_FUNCTION_BLOCK
 
