@@ -4,18 +4,18 @@ AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
 FAMILY : AKK
 VERSION : 0.1
    VAR_INPUT 
-      i_Vorlauftemp : Int;
-      i_Ruecklauftemp : Int;
+      iFlowTempPlant : Int;
+      iFlowTempFurnace : Int;
    END_VAR
 
    VAR_OUTPUT 
-      o_Vorlauftemp : Real;
-      o_Ruecklauftemp : Real;
+      oFlowTempPlant : Real;
+      oFlowTempFurnace : Real;
    END_VAR
 
 
 BEGIN
-	#o_Vorlauftemp := "Scale_PT100"(#i_Vorlauftemp);
-	#o_Ruecklauftemp := "Scale_PT100"(#i_Ruecklauftemp);
+	#oFlowTempPlant := "Scale_PT100"(#iFlowTempPlant);
+	#oFlowTempFurnace := "Scale_PT100"(#iFlowTempFurnace);
 END_FUNCTION_BLOCK
 

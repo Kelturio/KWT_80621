@@ -3,45 +3,57 @@
 AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
 FAMILY : AKK
 VERSION : 0.1
+   VAR_INPUT 
+      iPlcRun : Bool;
+      iPumpPlant1Run : Bool;
+      iPumpPlant2Run : Bool;
+      iPumpCoolWater1Run : Bool;
+      iPumpCoolWater2Run : Bool;
+      iPumpFurnace1Run : Bool;
+      iPumpFurnace2Run : Bool;
+      iCt1FanRun : Bool;
+      iCt2FanRun : Bool;
+      iRtm9Run : Bool;
+   END_VAR
+
    VAR 
       SRTM : Array[0..9] of "SRTM";
    END_VAR
 
    VAR_TEMP 
-      i : Int;
-      t_CLK : Bool;
+      tNr : Int;
+      tClk : Bool;
    END_VAR
 
 
 BEGIN
-	FOR #i := 0 TO 9 DO
-	    CASE #i OF
+	FOR #tNr := 0 TO 9 DO
+	    CASE #tNr OF
 	        0:
-	            #t_CLK := "AlwaysTRUE";
+	            #tClk := #iPlcRun;
 	        1:
-	            #t_CLK := "Betrieb Pumpe 1";
+	            #tClk := #iPumpPlant1Run;
 	        2:
-	            #t_CLK := "Betrieb Pumpe 2";
+	            #tClk := #iPumpPlant2Run;
 	        3:
-	            #t_CLK := "Pumpe 3";
+	            #tClk := #iPumpCoolWater1Run;
 	        4:
-	            #t_CLK := "Pumpe 4";
+	            #tClk := #iPumpCoolWater2Run;
 	        5:
-	            #t_CLK := "Pumpe Hebeanlage 1";
+	            #tClk := #iPumpFurnace1Run;
 	        6:
-	            #t_CLK := "Pumpe Hebeanlage 2";
+	            #tClk := #iPumpFurnace2Run;
 	        7:
-	            #t_CLK := "Ventilator 1 Betrieb";
+	            #tClk := #iCt1FanRun;
 	        8:
-	            #t_CLK := "Ventilator 2 Betrieb";
+	            #tClk := #iCt2FanRun;
 	        9:
-	            #t_CLK := "AlwaysFALSE";
+	            #tClk := #iRtm9Run;
 	        ELSE
-	            #t_CLK := "AlwaysFALSE";
+	            #tClk := FALSE;
 	    END_CASE;
-	    #SRTM[#i](i_CLK := #t_CLK,
-	              i_NR := #i);
+	    #SRTM[#tNr](iClk := #tClk,
+	                iNr := INT_TO_UINT(#tNr));
 	END_FOR;
-	
 END_FUNCTION_BLOCK
 

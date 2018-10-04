@@ -27,30 +27,71 @@ VERSION : 0.1
       iCt2FanQ : Bool;
       iCt2FanRun : Bool;
       iCt2FanErr : Bool;
+      iCt1RepairSwitchOff : Bool;
+      iCt2RepairSwitchOff : Bool;
    END_VAR
 
    VAR 
-      sPumpPlant1 : Int := -1;
+      sPumpPlant1 : Int;
       sPumpPlant2 : Int;
       sPumpCoolWater1 : Int;
       sPumpCoolWater2 : Int;
       sPumpFurnace1 : Int;
       sPumpFurnace2 : Int;
-      sAnimationFrame : Int;
+      sAnimationFrame : Int := 1;
       sCt1Fan : Int;
       sCt2Fan : Int;
+      IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      sTimer0Start : Bool := true;
+      sTimer0Pt : Time := T#100ms;
+      sTimer0Q : Bool;
    END_VAR
 
 
 BEGIN
-	#sPumpPlant1 := "HmiPump"(iPumpQ:=#iPumpPlant1Q, iPumpRun:=#iPumpPlant1Run, iPumpErr:=#iPumpPlant1Err);
-	#sPumpPlant2 := "HmiPump"(iPumpQ := #iPumpPlant2Q, iPumpRun := #iPumpPlant2Run, iPumpErr := #iPumpPlant2Err);
-	#sPumpCoolWater1 := "HmiPump"(iPumpQ := #iPumpCoolWater1Q, iPumpRun := #iPumpCoolWater1Run, iPumpErr := #iPumpCoolWater1Err);
-	#sPumpCoolWater2 := "HmiPump"(iPumpQ := #iPumpCoolWater2Q, iPumpRun := #iPumpCoolWater2Run, iPumpErr := #iPumpCoolWater2Err);
-	#sPumpFurnace1 := "HmiPump"(iPumpQ := #iPumpFurnace1Q, iPumpRun := #iPumpFurnace1Run, iPumpErr := #iPumpFurnace1Err);
-	#sPumpFurnace2 := "HmiPump"(iPumpQ := #iPumpFurnace2Q, iPumpRun := #iPumpFurnace2Run, iPumpErr := #iPumpFurnace2Err);
-	#sCt1Fan := "HmiFan"(iFanQ := #iCt1FanQ, iFanRun := #iCt1FanRun, iFanErr := #iCt1FanErr, iAnimationFrame := #sAnimationFrame);
-	#sCt2Fan := "HmiFan"(iFanQ := #iCt2FanQ, iFanRun := #iCt2FanRun, iFanErr := #iCt2FanErr, iAnimationFrame := #sAnimationFrame);
+	#sPumpPlant1 := "HmiPump"(iPumpQ := #iPumpPlant1Q,
+	                          iPumpRun := #iPumpPlant1Run,
+	                          iPumpErr := #iPumpPlant1Err);
+	#sPumpPlant2 := "HmiPump"(iPumpQ := #iPumpPlant2Q,
+	                          iPumpRun := #iPumpPlant2Run,
+	                          iPumpErr := #iPumpPlant2Err);
+	
+	#sPumpCoolWater1 := "HmiPump"(iPumpQ := #iPumpCoolWater1Q,
+	                              iPumpRun := #iPumpCoolWater1Run,
+	                              iPumpErr := #iPumpCoolWater1Err);
+	#sPumpCoolWater2 := "HmiPump"(iPumpQ := #iPumpCoolWater2Q,
+	                              iPumpRun := #iPumpCoolWater2Run,
+	                              iPumpErr := #iPumpCoolWater2Err);
+	
+	#sPumpFurnace1 := "HmiPump"(iPumpQ := #iPumpFurnace1Q,
+	                            iPumpRun := #iPumpFurnace1Run,
+	                            iPumpErr := #iPumpFurnace1Err);
+	#sPumpFurnace2 := "HmiPump"(iPumpQ := #iPumpFurnace2Q,
+	                            iPumpRun := #iPumpFurnace2Run,
+	                            iPumpErr := #iPumpFurnace2Err);
+	
+	#sCt1Fan := "HmiFan"(iFanQ := #iCt1FanQ,
+	                     iFanRun := #iCt1FanRun,
+	                     iFanErr := #iCt1FanErr,
+	                     iRepairSwitchOff:=#iCt1RepairSwitchOff,
+	                     iAnimationFrame := #sAnimationFrame);
+	#sCt2Fan := "HmiFan"(iFanQ := #iCt2FanQ,
+	                     iFanRun := #iCt2FanRun,
+	                     iFanErr := #iCt2FanErr,
+	                     iRepairSwitchOff:=#iCt2RepairSwitchOff,
+	                     iAnimationFrame := #sAnimationFrame);
+	
+	#IEC_TMR_0.TON(IN := #sTimer0Start,
+	               PT := #sTimer0Pt,
+	               Q => #sTimer0Q);
+	
+	IF #sTimer0Q THEN
+	    RESET_TIMER(#IEC_TMR_0);
+	    #sAnimationFrame += 1;
+	    IF #sAnimationFrame = 5 THEN
+	        #sAnimationFrame := 1;
+	    END_IF;
+	END_IF;
 	
 	
 END_FUNCTION_BLOCK

@@ -5,46 +5,45 @@ AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
 FAMILY : AKK
 VERSION : 0.1
    VAR_INPUT 
-      i_CLK : Bool;   // Incoming signal, the edge of which is to be queried
-      i_NR : UInt;   // Number of the operating hours counter
+      iClk : Bool;   // Incoming signal, the edge of which is to be queried
+      iNr : UInt;   // Number of the operating hours counter
    END_VAR
 
    VAR 
       R_TRIG {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;   // Detect positive signal edge
       F_TRIG {OriginalPartName := 'F_TRIG_1200'; LibVersion := '1.0'} : F_TRIG;   // Detect negative signal edge
-      RTM_MODE : "RTM_MODE";   // Job IDs
-      s_MODE : Byte;   // Job ID
-      s_PV : DInt;   // New value for the operating hours counter
-      s_CQ : Bool;   // Status of the operating hours counter (1: running)
-      s_RET_VAL : Int;   // If an error occurs while the instruction is being executed, the return value contains an error code.
-      s_CV : DInt;   // Current value of the operating hours counter
+      RtmMode : "RTM_MODE";   // Job IDs
+      sMode : Byte;   // Job ID
+      sPv : DInt;   // New value for the operating hours counter
+      sCq : Bool;   // Status of the operating hours counter (1: running)
+      sRetVal : Int;   // If an error occurs while the instruction is being executed, the return value contains an error code.
+      sCv : DInt;   // Current value of the operating hours counter
    END_VAR
 
    VAR_TEMP 
-      t_R_TRIG_Q : Bool;   // Result of positive edge evaluation
-      t_F_TRIG_Q : Bool;   // Result of negative edge evaluation
+      tRTrigQ : Bool;   // Result of positive edge evaluation
+      tFTrigQ : Bool;   // Result of negative edge evaluation
    END_VAR
 
 
 BEGIN
-	#R_TRIG(CLK := #i_CLK,
-	        Q => #t_R_TRIG_Q);
-	#F_TRIG(CLK := #i_CLK,
-	        Q => #t_F_TRIG_Q);
+	#R_TRIG(CLK := #iClk,
+	        Q => #tRTrigQ);
+	#F_TRIG(CLK := #iClk,
+	        Q => #tFTrigQ);
 	
-	IF #t_R_TRIG_Q THEN
-	    #s_MODE := #RTM_MODE.START;
-	ELSIF #t_F_TRIG_Q THEN
-	    #s_MODE := #RTM_MODE.STOP;
+	IF #tRTrigQ THEN
+	    #sMode := #RtmMode.START;
+	ELSIF #tFTrigQ THEN
+	    #sMode := #RtmMode.STOP;
 	ELSE
-	    #s_MODE := #RTM_MODE.FETCH;
+	    #sMode := #RtmMode.FETCH;
 	END_IF;
 	
-	#s_RET_VAL := RTM(NR := #i_NR,
-	                  MODE := #s_MODE,
-	                  PV := #s_PV,
-	                  CQ => #s_CQ,
-	                  CV => #s_CV);
-	
+	#sRetVal := RTM(NR := #iNr,
+	                MODE := #sMode,
+	                PV := #sPv,
+	                CQ => #sCq,
+	                CV => #sCv);
 END_FUNCTION_BLOCK
 

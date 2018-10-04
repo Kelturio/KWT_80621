@@ -69,12 +69,21 @@ VERSION : 0.1
 
 
 BEGIN
-	#ScaleAnalogValues(i_Vorlauftemp := #iFlowTempPlant,
-	                   i_Ruecklauftemp := #iFlowTempFurnace,
-	                   o_Vorlauftemp => #oFlowTempPlant,
-	                   o_Ruecklauftemp => #oFlowTempFurnace);
+	#ScaleAnalogValues(iFlowTempPlant := #iFlowTempPlant,
+	                   iFlowTempFurnace := #iFlowTempFurnace,
+	                   oFlowTempPlant => #oFlowTempPlant,
+	                   oFlowTempFurnace => #oFlowTempFurnace);
 	
-	#RuntimeMeters();
+	#RuntimeMeters(iPlcRun := TRUE,
+	               iPumpPlant1Run := #iPumpPlant1Run,
+	               iPumpPlant2Run := #iPumpPlant2Run,
+	               iPumpCoolWater1Run := #iPumpCoolWater1Run,
+	               iPumpCoolWater2Run := #iPumpCoolWater2Run,
+	               iPumpFurnace1Run := #iPumpFurnace1Run,
+	               iPumpFurnace2Run := #iPumpFurnace2Run,
+	               iCt1FanRun := #iCt1FanRun,
+	               iCt2FanRun := #iCt2FanRun,
+	               iRtm9Run := FALSE);
 	
 	#oSurgeTankLevel := 0;
 	#oSurgeTankLevel.%X0 := #iSurgeTankLevelOut1;
@@ -88,10 +97,10 @@ BEGIN
 	       iCt2FanErr := #iCt2FanErr,
 	       iCt1RepairSwitchOff := #iCt1RepairSwitchOff,
 	       iCt2RepairSwitchOff := #iCt2RepairSwitchOff,
-	       iCt1SprayPipeOpen:=#iCt1SprayPipeOpen,
-	       iCt2SprayPipeOpen:=#iCt2SprayPipeOpen,
-	       iCt1SprayPipeIsOpen:=#iCt1SprayPipeIsOpen,
-	       iCt2SprayPipeIsOpen:=#iCt2SprayPipeIsOpen,
+	       iCt1SprayPipeOpen := #iCt1SprayPipeOpen,
+	       iCt2SprayPipeOpen := #iCt2SprayPipeOpen,
+	       iCt1SprayPipeIsOpen := #iCt1SprayPipeIsOpen,
+	       iCt2SprayPipeIsOpen := #iCt2SprayPipeIsOpen,
 	       iPumpPlant1Err := #iPumpPlant1Err,
 	       iPumpPlant2Err := #iPumpPlant2Err,
 	       iPumpCoolWater1Err := #iPumpCoolWater1Err,
@@ -102,41 +111,40 @@ BEGIN
 	       iFlowTempFurnace := #oFlowTempFurnace,
 	       iLiftSys1DeltaPressure := #iLiftSys1DeltaPressure,
 	       iLiftSys2DeltaPressure := #iLiftSys2DeltaPressure,
-	       iSurgeTankLevel:=#oSurgeTankLevel,
+	       iSurgeTankLevel := #oSurgeTankLevel,
 	       oAlarmCount => #tAlarmCount,
 	       oAlarmLamp => #oAlarmLamp);
 	
-	
-	"HmiDb"(iPumpPlant1Q:=#iPumpPlant1Q,
-	        iPumpPlant1Run:=#iPumpPlant1Run,
-	        iPumpPlant1Err:=#iPumpPlant1Err,
-	        iPumpPlant2Q:=#iPumpPlant2Q,
-	        iPumpPlant2Run:=#iPumpPlant2Run,
-	        iPumpPlant2Err:=#iPumpPlant2Err,
-	        iPumpCoolWater1Q:=#iPumpCoolWater1Q,
-	        iPumpCoolWater1Run:=#iPumpCoolWater1Run,
-	        iPumpCoolWater1Err:=#iPumpCoolWater1Err,
-	        iPumpCoolWater2Q:=#iPumpCoolWater2Q,
-	        iPumpCoolWater2Run:=#iPumpCoolWater2Run,
-	        iPumpCoolWater2Err:=#iPumpCoolWater2Err,
-	        iPumpFurnace1Q:=#iPumpFurnace1Q,
-	        iPumpFurnace1Run:=#iPumpFurnace1Run,
-	        iPumpFurnace1Err:=#iPumpFurnace1Err,
-	        iPumpFurnace2Q:=#iPumpFurnace2Q,
-	        iPumpFurnace2Run:=#iPumpFurnace2Run,
-	        iPumpFurnace2Err:=#iPumpFurnace2Err,
-	        iCt1FanQ:=#iCt1FanQ,
-	        iCt1FanRun:=#iCt1FanRun,
-	        iCt1FanErr:=#iCt1FanErr,
-	        iCt2FanQ:=#iCt2FanQ,
-	        iCt2FanRun:=#iCt2FanRun,
-	        iCt2FanErr:=#iCt2FanErr);
-	
+	"HmiDb"(iPumpPlant1Q := #iPumpPlant1Q,
+	        iPumpPlant1Run := #iPumpPlant1Run,
+	        iPumpPlant1Err := #iPumpPlant1Err,
+	        iPumpPlant2Q := #iPumpPlant2Q,
+	        iPumpPlant2Run := #iPumpPlant2Run,
+	        iPumpPlant2Err := #iPumpPlant2Err,
+	        iPumpCoolWater1Q := #iPumpCoolWater1Q,
+	        iPumpCoolWater1Run := #iPumpCoolWater1Run,
+	        iPumpCoolWater1Err := #iPumpCoolWater1Err,
+	        iPumpCoolWater2Q := #iPumpCoolWater2Q,
+	        iPumpCoolWater2Run := #iPumpCoolWater2Run,
+	        iPumpCoolWater2Err := #iPumpCoolWater2Err,
+	        iPumpFurnace1Q := #iPumpFurnace1Q,
+	        iPumpFurnace1Run := #iPumpFurnace1Run,
+	        iPumpFurnace1Err := #iPumpFurnace1Err,
+	        iPumpFurnace2Q := #iPumpFurnace2Q,
+	        iPumpFurnace2Run := #iPumpFurnace2Run,
+	        iPumpFurnace2Err := #iPumpFurnace2Err,
+	        iCt1FanQ := #iCt1FanQ,
+	        iCt1FanRun := #iCt1FanRun,
+	        iCt1FanErr := #iCt1FanErr,
+	        iCt2FanQ := #iCt2FanQ,
+	        iCt2FanRun := #iCt2FanRun,
+	        iCt2FanErr := #iCt2FanErr,
+	        iCt1RepairSwitchOff := #iCt1RepairSwitchOff,
+	        iCt2RepairSwitchOff := #iCt2RepairSwitchOff);
 	
 	#IEC_TMR_0.TOF(IN := #sStorageTankRefill,
 	               PT := #sStorageTankRefillPt,
 	               Q => "WSB Magnetventil",
 	               ET => #tStorageTankRefillEt);
-	
 END_FUNCTION_BLOCK
 

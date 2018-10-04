@@ -6,27 +6,28 @@ VERSION : 0.1
       iFanQ : Bool;
       iFanRun : Bool;
       iFanErr : Bool;
+      iRepairSwitchOff : Bool;
       iAnimationFrame : Int;
    END_VAR
 
 
 BEGIN
-	IF #iFanErr THEN
-	    #HmiFan := 4;
+	IF #iFanErr OR #iRepairSwitchOff THEN
+	    #HmiFan := 41;
 	ELSIF #iFanQ AND NOT #iFanRun THEN
-	    #HmiFan := 3;
+	    #HmiFan := 31;
 	ELSIF #iFanQ AND #iFanRun THEN
-	    #HmiFan := 2;
+	    #HmiFan := 20;
 	ELSIF NOT #iFanQ AND #iFanRun THEN
-	    #HmiFan := 2;
+	    #HmiFan := 20;
 	ELSIF NOT #iFanQ AND NOT #iFanRun THEN
-	    #HmiFan := 1;
+	    #HmiFan := 11;
 	ELSE
 	    #HmiFan := 404;
 	END_IF;
 	
-	IF #HmiFan <> 404 THEN
-	    #HmiFan := #HmiFan * 10 + #iAnimationFrame;
+	IF #HmiFan = 20 THEN
+	    #HmiFan := #HmiFan + #iAnimationFrame;
 	END_IF;
 END_FUNCTION
 
