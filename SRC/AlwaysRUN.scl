@@ -24,6 +24,18 @@ VERSION : 0.1
       iFlowTempFurnace : Int;   // Flow Temperature Furnace
       iLiftSys1DeltaPressure : Int;   // Lifting System 1 Delta Pressure
       iLiftSys2DeltaPressure : Int;   // Lifting System 2 Delta Pressure
+      iPumpPlant1Q : Bool;
+      iPumpPlant1Run : Bool;
+      iPumpPlant2Q : Bool;
+      iPumpPlant2Run : Bool;
+      iPumpCoolWater1Q : Bool;
+      iPumpCoolWater1Run : Bool;
+      iPumpCoolWater2Q : Bool;
+      iPumpCoolWater2Run : Bool;
+      iPumpFurnace1Q : Bool;
+      iPumpFurnace1Run : Bool;
+      iPumpFurnace2Q : Bool;
+      iPumpFurnace2Run : Bool;
    END_VAR
 
    VAR_OUTPUT 
@@ -89,6 +101,26 @@ BEGIN
 	       iLiftSys2DeltaPressure := #iLiftSys2DeltaPressure,
 	       oAlarmCount => #tAlarmCount,
 	       oAlarmLamp => #oAlarmLamp);
+	
+	"HmiDb"(iPumpPlant1Q:=#iPumpPlant1Q,
+	        iPumpPlant1Run:=#iPumpPlant1Run,
+	        iPumpPlant1Err:=#iPumpPlant1Err,
+	        iPumpPlant2Q:=#iPumpPlant2Q,
+	        iPumpPlant2Run:=#iPumpPlant2Run,
+	        iPumpPlant2Err:=#iPumpPlant2Err,
+	        iPumpCoolWater1Q:=#iPumpCoolWater1Q,
+	        iPumpCoolWater1Run:=#iPumpCoolWater1Run,
+	        iPumpCoolWater1Err:=#iPumpCoolWater1Err,
+	        iPumpCoolWater2Q:=#iPumpCoolWater2Q,
+	        iPumpCoolWater2Run:=#iPumpCoolWater2Run,
+	        iPumpCoolWater2Err:=#iPumpCoolWater2Err,
+	        iPumpFurnace1Q:=#iPumpFurnace1Q,
+	        iPumpFurnace1Run:=#iPumpFurnace1Run,
+	        iPumpFurnace1Err:=#iPumpFurnace1Err,
+	        iPumpFurnace2Q:=#iPumpFurnace2Q,
+	        iPumpFurnace2Run:=#iPumpFurnace2Run,
+	        iPumpFurnace2Err:=#iPumpFurnace2Err);
+	
 	
 	#IEC_TMR_0.TOF(IN := #sStorageTankRefill,
 	               PT := #sStorageTankRefillPt,

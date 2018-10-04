@@ -1,0 +1,25 @@
+﻿FUNCTION "HmiPump" : Int
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR_INPUT 
+      iPumpQ : Bool;
+      iPumpRun : Bool;
+      iPumpErr : Bool;
+   END_VAR
+
+
+BEGIN
+	IF #iPumpErr THEN
+	    #HmiPump := 3;
+	ELSIF #iPumpQ AND NOT #iPumpRun THEN
+	    #HmiPump := 2;
+	ELSIF #iPumpQ AND #iPumpRun THEN
+	    #HmiPump := 1;
+	ELSIF NOT #iPumpQ AND NOT #iPumpRun THEN
+	    #HmiPump := 0;
+	ELSE
+	    #HmiPump := -1;
+	END_IF;
+END_FUNCTION
+
