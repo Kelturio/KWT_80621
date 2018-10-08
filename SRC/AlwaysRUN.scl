@@ -50,7 +50,8 @@ VERSION : 0.1
       oFlowTempPlant : Real;
       oFlowTempFurnace : Real;
       oAlarmLamp : Bool;
-      oSurgeTankLevel : Int;
+      oSurgeTankLevel : Int := 0;
+      oSurgeTankRefill : Bool;
    END_VAR
 
    VAR 
@@ -58,8 +59,10 @@ VERSION : 0.1
       RuntimeMeters : "RuntimeMeters";
       Alarm : "Alarm";
       IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
-      sStorageTankRefill : Bool;
+      sStorageTankRefillStart : Bool;
       sStorageTankRefillPt : Time := T#5s;
+      sSprayPipeOpenTimeout1 : Bool;
+      sSprayPipeOpenTimeout2 : Bool;
    END_VAR
 
    VAR_TEMP 
@@ -69,6 +72,17 @@ VERSION : 0.1
 
 
 BEGIN
+	#oSurgeTankLevel := 0;
+	#oSurgeTankLevel.%X0 := #iSurgeTankLevelOut1;
+	#oSurgeTankLevel.%X1 := #iSurgeTankLevelOut2;
+	#oSurgeTankLevel.%X2 := #iSurgeTankLevelOut3;
+	#oSurgeTankLevel.%X3 := #iSurgeTankLevelOut4;
+	
+	#IEC_TMR_0.TOF(IN := #sStorageTankRefillStart,
+	               PT := #sStorageTankRefillPt,
+	               Q => #oSurgeTankRefill,
+	               ET => #tStorageTankRefillEt);
+	
 	#ScaleAnalogValues(iFlowTempPlant := #iFlowTempPlant,
 	                   iFlowTempFurnace := #iFlowTempFurnace,
 	                   oFlowTempPlant => #oFlowTempPlant,
@@ -84,12 +98,6 @@ BEGIN
 	               iCt1FanRun := #iCt1FanRun,
 	               iCt2FanRun := #iCt2FanRun,
 	               iRtm9Run := FALSE);
-	
-	#oSurgeTankLevel := 0;
-	#oSurgeTankLevel.%X0 := #iSurgeTankLevelOut1;
-	#oSurgeTankLevel.%X1 := #iSurgeTankLevelOut2;
-	#oSurgeTankLevel.%X2 := #iSurgeTankLevelOut3;
-	#oSurgeTankLevel.%X3 := #iSurgeTankLevelOut4;
 	
 	#Alarm(iCvOff := #iCvOff,
 	       iFuseOutputsErr := #iFuseOutputsErr,
@@ -113,7 +121,9 @@ BEGIN
 	       iLiftSys2DeltaPressure := #iLiftSys2DeltaPressure,
 	       iSurgeTankLevel := #oSurgeTankLevel,
 	       oAlarmCount => #tAlarmCount,
-	       oAlarmLamp => #oAlarmLamp);
+	       oAlarmLamp => #oAlarmLamp,
+	       oSprayPipeOpenTimeout1 => #sSprayPipeOpenTimeout1,
+	       oSprayPipeOpenTimeout2 => #sSprayPipeOpenTimeout2);
 	
 	"HmiDb"(iPumpPlant1Q := #iPumpPlant1Q,
 	        iPumpPlant1Run := #iPumpPlant1Run,
@@ -140,11 +150,12 @@ BEGIN
 	        iCt2FanRun := #iCt2FanRun,
 	        iCt2FanErr := #iCt2FanErr,
 	        iCt1RepairSwitchOff := #iCt1RepairSwitchOff,
-	        iCt2RepairSwitchOff := #iCt2RepairSwitchOff);
-	
-	#IEC_TMR_0.TOF(IN := #sStorageTankRefill,
-	               PT := #sStorageTankRefillPt,
-	               Q => "WSB Magnetventil",
-	               ET => #tStorageTankRefillEt);
+	        iCt2RepairSwitchOff := #iCt2RepairSwitchOff,
+	        iCt1SprayPipeOpen := #iCt1SprayPipeOpen,
+	        iCt1SprayPipeIsOpen := #iCt1SprayPipeIsOpen,
+	        iCt1SprayPipeErr := #sSprayPipeOpenTimeout1,
+	        iCt2SprayPipeOpen := #iCt2SprayPipeOpen,
+	        iCt2SprayPipeIsOpen := #iCt2SprayPipeIsOpen,
+	        iCt2SprayPipeErr := #sSprayPipeOpenTimeout2);
 END_FUNCTION_BLOCK
 

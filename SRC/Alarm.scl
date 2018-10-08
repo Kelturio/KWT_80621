@@ -29,6 +29,8 @@ VERSION : 0.1
    VAR_OUTPUT 
       oAlarmCount : Int := 0;
       oAlarmLamp : Bool := false;
+      oSprayPipeOpenTimeout1 : Bool;
+      oSprayPipeOpenTimeout2 : Bool;
    END_VAR
 
    VAR 
@@ -52,17 +54,17 @@ VERSION : 0.1
       sSurgeTankOverflow : Int;
       IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
       IEC_TMR_1 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
-      sSprayTubeOpenTimeout1 : Int;
-      sSprayTubeOpenTimeout2 : Int;
+      sSprayPipeOpenTimeout1 : Int;
+      sSprayPipeOpenTimeout2 : Int;
    END_VAR
 
    VAR_TEMP 
       tPressureDeltaPerc1 : Int;
       tPressureDeltaPerc2 : Int;
-      tSprayTubeOpenTimer1 : Bool;
-      tSprayTubeOpenTimer1Et : Time;
-      tSprayTubeOpenTimer2 : Bool;
-      tSprayTubeOpenTimer2Et : Time;
+      tSprayPipeOpenTimer1 : Bool;
+      tSprayPipeOpenTimer1Et : Time;
+      tSprayPipeOpenTimer2 : Bool;
+      tSprayPipeOpenTimer2Et : Time;
    END_VAR
 
 
@@ -83,8 +85,8 @@ BEGIN
 	END_REGION
 	REGION analog
 	    // temperatures
-	    #sFlowTemperaturePlantHot := BOOL_TO_INT("Main_DB".FlowTemperaturePlant >= ("Main_DB".Auto.s_Max + "Retain_DB".Settings.MaxTempTransgression));
-	    #sFlowTemperatureFurnaceHot := BOOL_TO_INT("Main_DB".FlowTemperatureFurnace >= ("Main_DB".Auto.s_Max + "Retain_DB".Settings.MaxTempTransgression));
+	    #sFlowTemperaturePlantHot := BOOL_TO_INT("Main_DB".FlowTemperaturePlant >= ("Main_DB".Auto.sSetPointMax + "Retain_DB".Settings.MaxTempTransgression));
+	    #sFlowTemperatureFurnaceHot := BOOL_TO_INT("Main_DB".FlowTemperatureFurnace >= ("Main_DB".Auto.sSetPointMax + "Retain_DB".Settings.MaxTempTransgression));
 	    // pressures
 	    #tPressureDeltaPerc1 := "ScaleValueInt"(VALUE := #iLiftSys1DeltaPressure,
 	                                            XMIN := "AnalogMin", XMAX := "AnalogMax",
@@ -95,20 +97,20 @@ BEGIN
 	                                            YMIN := 0, YMAX := 100);
 	    #sPressureDeltaPerc2 := BOOL_TO_INT(#"tPressureDeltaPerc2" >= "Retain_DB".Settings.MaxPressureDeltaPerc2);
 	    
-	    #sSurgeTankRunDry := BOOL_TO_INT(#iSurgeTankLevel <= "Main_DB".HMI.StorageTankLevel.P4);
-	    #sSurgeTankOverflow := BOOL_TO_INT(#iSurgeTankLevel >= "Main_DB".HMI.StorageTankLevel.P1);
+	    #sSurgeTankRunDry := BOOL_TO_INT(#iSurgeTankLevel <= "Retain_DB".Settings.SurgeTankLevel.RunDry);
+	    #sSurgeTankOverflow := BOOL_TO_INT(#iSurgeTankLevel >= "Retain_DB".Settings.SurgeTankLevel.Overflow);
 	END_REGION
 	REGION timeout
 	    #IEC_TMR_0.TON(IN := #iCt1SprayPipeOpen,
-	                   PT := "Retain_DB".Settings.SprayTubeOpenTimeout,
-	                   Q => #tSprayTubeOpenTimer1,
-	                   ET => #tSprayTubeOpenTimer1Et);
-	    #sSprayTubeOpenTimeout1 := BOOL_TO_INT(#tSprayTubeOpenTimer1 AND NOT #iCt1SprayPipeIsOpen);
+	                   PT := "Retain_DB".Settings.SprayPipeOpenTimeout,
+	                   Q => #tSprayPipeOpenTimer1,
+	                   ET => #tSprayPipeOpenTimer1Et);
+	    #sSprayPipeOpenTimeout1 := BOOL_TO_INT(#tSprayPipeOpenTimer1 AND NOT #iCt1SprayPipeIsOpen);
 	    #IEC_TMR_1.TON(IN := #iCt2SprayPipeOpen,
-	                   PT := "Retain_DB".Settings.SprayTubeOpenTimeout,
-	                   Q => #tSprayTubeOpenTimer2,
-	                   ET => #tSprayTubeOpenTimer2Et);
-	    #sSprayTubeOpenTimeout2 := BOOL_TO_INT(#tSprayTubeOpenTimer2 AND NOT #iCt2SprayPipeIsOpen);
+	                   PT := "Retain_DB".Settings.SprayPipeOpenTimeout,
+	                   Q => #tSprayPipeOpenTimer2,
+	                   ET => #tSprayPipeOpenTimer2Et);
+	    #sSprayPipeOpenTimeout2 := BOOL_TO_INT(#tSprayPipeOpenTimer2 AND NOT #iCt2SprayPipeIsOpen);
 	END_REGION
 	
 	#oAlarmCount := 0;
@@ -130,11 +132,11 @@ BEGIN
 	#oAlarmCount += #sPressureDeltaPerc2;
 	#oAlarmCount += #sSurgeTankRunDry;
 	#oAlarmCount += #sSurgeTankOverflow;
-	#oAlarmCount += #sSprayTubeOpenTimeout1;
-	#oAlarmCount += #sSprayTubeOpenTimeout2;
+	#oAlarmCount += #sSprayPipeOpenTimeout1;
+	#oAlarmCount += #sSprayPipeOpenTimeout2;
 	
 	#oAlarmLamp := #oAlarmCount > 0;
-	
-	// heizung klappen & endschalter offen zu 
+	#oSprayPipeOpenTimeout1 := #sSprayPipeOpenTimeout1 > 0;
+	#oSprayPipeOpenTimeout2 := #sSprayPipeOpenTimeout2 > 0;
 END_FUNCTION_BLOCK
 
