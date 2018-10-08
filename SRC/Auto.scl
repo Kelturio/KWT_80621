@@ -16,6 +16,8 @@ VERSION : 0.1
       iBleedingUnitCirculatingPumpRun : Bool;
       iCt1SprayPipeIsOpen : Bool;
       iCt2SprayPipeIsOpen : Bool;
+      iSurgeTankLevel : Int;
+      iSurgeTankLevelSetPointUpper : Int;
    END_VAR
 
    VAR_OUTPUT 
@@ -58,7 +60,7 @@ BEGIN
 	#t_ret_val := RD_SYS_T(#t_dtl_out);
 	#sBranch := #t_dtl_out.DAY MOD 2 = 0;
 	
-	"Main_DB".AlwaysRUN.sStorageTankRefill := "WSB OUT Byte" <= "Main_DB".HMI.StorageTankLevel.P2;
+	"Main_DB".AlwaysRUN.sStorageTankRefillStart := #iSurgeTankLevel <= #iSurgeTankLevelSetPointUpper;
 	
 	#Werkskreislauf(iBranch := #sBranch,
 	                iPumpPlant1Run := #iPumpPlant1Run,

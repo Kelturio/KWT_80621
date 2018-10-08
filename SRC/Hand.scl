@@ -3,6 +3,11 @@
 AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
 FAMILY : AKK
 VERSION : 0.1
+   VAR_INPUT 
+      iSurgeTankLevel : Int;
+      iSurgeTankLevelSetPointUpper : Int;
+   END_VAR
+
    VAR_OUTPUT 
       oCt1FanSetPoint : Int;
       oCt2FanSetPoint : Int;
@@ -26,7 +31,7 @@ BEGIN
 	                                    YMIN := "AnalogMin",
 	                                    YMAX := "AnalogMax");
 	
-	"Main_DB".AlwaysRUN.sStorageTankRefill :=
-	"Main_DB".HMI.StorageTankRefill AND "WSB OUT Byte" <= "Main_DB".HMI.StorageTankLevel.P2;
+	"Main_DB".AlwaysRUN.sStorageTankRefillStart :=
+	"Main_DB".HMI.StorageTankRefill AND #iSurgeTankLevel <= #iSurgeTankLevelSetPointUpper;
 END_FUNCTION_BLOCK
 

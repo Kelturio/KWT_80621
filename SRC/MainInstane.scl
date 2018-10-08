@@ -7,7 +7,7 @@ VERSION : 0.1
       AlwaysRUN : "AlwaysRUN";
       Auto : "Auto";
       Hand : "Hand";
-      AutoMode : Bool := true;
+      sAutoMode : Bool := true;
       FlowTemperaturePlant : Real;
       FlowTemperatureFurnace : Real;
    END_VAR
@@ -24,7 +24,7 @@ VERSION : 0.1
    END_VAR
    VAR 
       EmergencyStop : "EmergencyStop";
-      SurgeTankLevel : Int;
+      sSurgeTankLevel : Int;
    END_VAR
 
 
@@ -72,14 +72,15 @@ BEGIN
 	           oFlowTempPlant => #FlowTemperaturePlant,
 	           oFlowTempFurnace => #FlowTemperatureFurnace,
 	           oAlarmLamp => "Rundumleuchte Störung",
-	           oSurgeTankLevel => #SurgeTankLevel);
+	           oSurgeTankLevel => #sSurgeTankLevel,
+	           oSurgeTankRefill => "WSB Magnetventil");
 	
 	IF NOT "Steuerspannung Ein" OR NOT "Sicherung Ausgänge OK" THEN
-	    #AutoMode := 0;
+	    #sAutoMode := 0;
 	    #EmergencyStop();
 	END_IF;
 	
-	IF #AutoMode THEN
+	IF #sAutoMode THEN
 	    #Auto(iPumpPlant1Run := "Werkspumpe 1 Betrieb",
 	          iPumpPlant1Err := "Werkspumpe 1 Störung",
 	          iPumpPlant2Run := "Werkspumpe 2 Betrieb",
@@ -92,6 +93,8 @@ BEGIN
 	          iBleedingUnitCirculatingPumpRun := "Absalzanlage läuft",
 	          iCt1SprayPipeIsOpen := "KT 1 Sprührohr geöffnet",
 	          iCt2SprayPipeIsOpen := "KT 2 Sprührohr geöffnet",
+	          iSurgeTankLevel := #sSurgeTankLevel,
+	          iSurgeTankLevelSetPointUpper:="Retain_DB".Settings.SurgeTankLevel.SetPointUpper,
 	          oPumpPlant1 => "Werkspumpe 1",
 	          oPumpPlant2 => "Werkspumpe 2",
 	          oPumpCoolWater1 => "Kühlwasserpumpe 1",
@@ -103,7 +106,9 @@ BEGIN
 	          oCt1SprayPipeOpen => "KT 1 Sprührohr öffnen",
 	          oCt2SprayPipeOpen => "KT 2 Sprührohr öffnen");
 	ELSE
-	    #Hand(oCt1FanSetPoint => "KT 1 Ventilator Sollwert",
+	    #Hand(iSurgeTankLevel := #sSurgeTankLevel,
+	          iSurgeTankLevelSetPointUpper:="Retain_DB".Settings.SurgeTankLevel.SetPointUpper,
+	          oCt1FanSetPoint => "KT 1 Ventilator Sollwert",
 	          oCt2FanSetPoint => "KT 2 Ventilator Sollwert");
 	END_IF;
 END_FUNCTION_BLOCK
