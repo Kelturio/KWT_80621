@@ -29,6 +29,13 @@ VERSION : 0.1
       iCt2FanErr : Bool;
       iCt1RepairSwitchOff : Bool;
       iCt2RepairSwitchOff : Bool;
+      iCt1SprayPipeOpen : Bool;
+      iCt1SprayPipeIsOpen : Bool;
+      iCt1SprayPipeErr : Bool;
+      iCt2SprayPipeOpen : Bool;
+      iCt2SprayPipeIsOpen : Bool;
+      iCt2SprayPipeErr : Bool;
+      iAutoMode : Bool;
    END_VAR
 
    VAR 
@@ -45,6 +52,8 @@ VERSION : 0.1
       sTimer0Start : Bool := true;
       sTimer0Pt : Time := T#100ms;
       sTimer0Q : Bool;
+      sCt1SprayPipe : Int;
+      sCt2SprayPipe : Int;
    END_VAR
 
 
@@ -81,6 +90,33 @@ BEGIN
 	                     iRepairSwitchOff:=#iCt2RepairSwitchOff,
 	                     iAnimationFrame := #sAnimationFrame);
 	
+	IF #iCt1SprayPipeErr THEN
+	    #sCt1SprayPipe := 3;
+	ELSIF #iCt1SprayPipeOpen AND NOT #iCt1SprayPipeIsOpen THEN
+	    #sCt1SprayPipe := 2;
+	ELSIF #iCt1SprayPipeOpen AND #iCt1SprayPipeIsOpen THEN
+	    #sCt1SprayPipe := 1;
+	ELSIF NOT #iCt1SprayPipeOpen AND #iCt1SprayPipeIsOpen THEN
+	    #sCt1SprayPipe := 1;
+	ELSIF NOT #iCt1SprayPipeOpen AND NOT #iCt1SprayPipeIsOpen THEN
+	    #sCt1SprayPipe := 0;
+	ELSE
+	    #sCt1SprayPipe := 404;
+	END_IF;
+	IF #iCt2SprayPipeErr THEN
+	    #sCt2SprayPipe := 3;
+	ELSIF #iCt2SprayPipeOpen AND NOT #iCt2SprayPipeIsOpen THEN
+	    #sCt2SprayPipe := 2;
+	ELSIF #iCt2SprayPipeOpen AND #iCt2SprayPipeIsOpen THEN
+	    #sCt2SprayPipe := 1;
+	ELSIF NOT #iCt2SprayPipeOpen AND #iCt2SprayPipeIsOpen THEN
+	    #sCt2SprayPipe := 1;
+	ELSIF NOT #iCt2SprayPipeOpen AND NOT #iCt2SprayPipeIsOpen THEN
+	    #sCt2SprayPipe := 0;
+	ELSE
+	    #sCt2SprayPipe := 404;
+	END_IF;
+	
 	#IEC_TMR_0.TON(IN := #sTimer0Start,
 	               PT := #sTimer0Pt,
 	               Q => #sTimer0Q);
@@ -92,6 +128,12 @@ BEGIN
 	        #sAnimationFrame := 1;
 	    END_IF;
 	END_IF;
+	
+	IF #iAutoMode THEN
+	    // Statement section IF
+	    ;
+	END_IF;
+	
 	
 	
 END_FUNCTION_BLOCK

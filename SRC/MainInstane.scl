@@ -63,6 +63,7 @@ BEGIN
 	           iCt1FanRun := "KT 1 Ventilator Betrieb",
 	           iCt2FanQ := "KT 2 Ventilator",
 	           iCt2FanRun := "KT 2 Ventilator Betrieb",
+	           iAutoMode := #sAutoMode,
 	           oFlowTempPlant => #FlowTemperaturePlant,
 	           oFlowTempFurnace => #FlowTemperatureFurnace,
 	           oAlarmLamp => "Rundumleuchte Störung",
@@ -88,7 +89,7 @@ BEGIN
 	          iCt1SprayPipeIsOpen := "KT 1 Sprührohr geöffnet",
 	          iCt2SprayPipeIsOpen := "KT 2 Sprührohr geöffnet",
 	          iSurgeTankLevel := #sSurgeTankLevel,
-	          iSurgeTankLevelSetPointUpper:="Retain_DB".Settings.SurgeTankLevel.SetPointUpper,
+	          iSurgeTankLevelSetPointUpper := "Retain_DB".Settings.SurgeTankLevel.SetPointUpper,
 	          oPumpPlant1 => "Werkspumpe 1",
 	          oPumpPlant2 => "Werkspumpe 2",
 	          oPumpCoolWater1 => "Kühlwasserpumpe 1",
@@ -101,7 +102,7 @@ BEGIN
 	          oCt2SprayPipeOpen => "KT 2 Sprührohr öffnen");
 	ELSE
 	    #Hand(iSurgeTankLevel := #sSurgeTankLevel,
-	          iSurgeTankLevelSetPointUpper:="Retain_DB".Settings.SurgeTankLevel.SetPointUpper,
+	          iSurgeTankLevelSetPointUpper := "Retain_DB".Settings.SurgeTankLevel.SetPointUpper,
 	          oCt1FanSetPoint => "KT 1 Ventilator Sollwert",
 	          oCt2FanSetPoint => "KT 2 Ventilator Sollwert");
 	END_IF;

@@ -44,6 +44,7 @@ VERSION : 0.1
       iCt1FanRun : Bool;
       iCt2FanQ : Bool;
       iCt2FanRun : Bool;
+      iAutoMode : Bool;
    END_VAR
 
    VAR_OUTPUT 
@@ -156,6 +157,7 @@ BEGIN
 	        iCt1SprayPipeErr := #sSprayPipeOpenTimeout1,
 	        iCt2SprayPipeOpen := #iCt2SprayPipeOpen,
 	        iCt2SprayPipeIsOpen := #iCt2SprayPipeIsOpen,
-	        iCt2SprayPipeErr := #sSprayPipeOpenTimeout2);
+	        iCt2SprayPipeErr := #sSprayPipeOpenTimeout2,
+	        iAutoMode:=#iAutoMode);
 END_FUNCTION_BLOCK
 
