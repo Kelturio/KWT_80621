@@ -96,7 +96,7 @@ BEGIN
 	                                            XMIN := "AnalogMin", XMAX := "AnalogMax",
 	                                            YMIN := 0, YMAX := 100);
 	    #sPressureDeltaPerc2 := BOOL_TO_INT(#"tPressureDeltaPerc2" >= "Retain_DB".Settings.MaxPressureDeltaPerc2);
-	    
+	    // levels
 	    #sSurgeTankRunDry := BOOL_TO_INT(#iSurgeTankLevel <= "Retain_DB".Settings.SurgeTankLevel.RunDry);
 	    #sSurgeTankOverflow := BOOL_TO_INT(#iSurgeTankLevel >= "Retain_DB".Settings.SurgeTankLevel.Overflow);
 	END_REGION

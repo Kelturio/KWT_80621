@@ -13,12 +13,6 @@ VERSION : 0.1
    END_VAR
    VAR RETAIN
       HMI : Struct
-         StorageTankLevel : Struct
-            P1 : Int := 14;   // position 1, e.g. maximum value reached
-            P2 : Int := 6;   // position 2, e.g. upper preset value reached
-            P3 : Int := 4;   // position 3, e.g. lower preset value reached
-            P4 : Int := 2;   // position 4, e.g. minimum value reached
-         END_STRUCT;
          StorageTankRefill : Bool;
       END_STRUCT;
    END_VAR
