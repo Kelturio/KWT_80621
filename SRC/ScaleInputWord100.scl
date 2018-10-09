@@ -1,0 +1,13 @@
+﻿FUNCTION "ScaleInputWord100" : "Val"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iVal : Int;
+   END_VAR
+
+
+BEGIN
+	#ScaleInputWord100.R := "ScaleValueIntToReal100"(#iVal);
+	#ScaleInputWord100.I := REAL_TO_INT(#ScaleInputWord100.R);
+END_FUNCTION
+
