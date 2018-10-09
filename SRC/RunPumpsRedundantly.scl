@@ -1,0 +1,51 @@
+﻿FUNCTION_BLOCK "RunPumpsRedundantly"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
+FAMILY : AKK
+VERSION : 0.1
+   VAR_INPUT 
+      i_strang { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Strang
+      i_beide { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Beide Pumpen
+      i_err1 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      i_err2 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      i_run1 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      i_run2 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;
+      i_tof_pt { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Time;   // Nachlaufzeit
+   END_VAR
+
+   VAR_OUTPUT 
+      o_p1 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Ausgang P1
+      o_p2 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Ausgang P2
+   END_VAR
+
+   VAR_IN_OUT 
+      io_s_p1 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // static im caller
+      io_s_p2 { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // static im caller
+   END_VAR
+
+   VAR 
+      i_IEC_TMR_1 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : IEC_TIMER;
+      i_IEC_TMR_2 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'; ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : IEC_TIMER;
+   END_VAR
+
+   VAR_TEMP 
+      t_err_p1 : Bool;
+      t_err_p2 : Bool;
+   END_VAR
+
+
+BEGIN
+	#t_err_p1 := #io_s_p1 AND (#i_err1 OR NOT #i_run1);
+	#t_err_p2 := #io_s_p2 AND (#i_err2 OR NOT #i_run2);
+	
+	#io_s_p1 := #i_strang = 1 OR #t_err_p2 OR #i_beide;
+	#io_s_p2 := #i_strang = 0 OR #t_err_p1 OR #i_beide;
+	
+	#i_IEC_TMR_1.TOF(IN := #io_s_p1,
+	                 PT := #i_tof_pt,
+	                 Q => #o_p1);
+	#i_IEC_TMR_2.TOF(IN := #io_s_p2,
+	                 PT := #i_tof_pt,
+	                 Q => #o_p2);
+END_FUNCTION_BLOCK
+
