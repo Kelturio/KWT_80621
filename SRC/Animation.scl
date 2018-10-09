@@ -1,0 +1,27 @@
+﻿FUNCTION_BLOCK "Animation"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR_INPUT 
+      iTimer0Pt : Time := T#100ms;
+   END_VAR
+
+   VAR 
+      IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      sFrame : Int;
+   END_VAR
+
+
+BEGIN
+	#IEC_TMR_0.TON(IN := TRUE,
+	               PT := #iTimer0Pt);
+	
+	IF #IEC_TMR_0.Q THEN
+	    RESET_TIMER(#IEC_TMR_0);
+	    #sFrame += 1;
+	    IF #sFrame = 5 THEN
+	        #sFrame := 1;
+	    END_IF;
+	END_IF;
+END_FUNCTION_BLOCK
+
