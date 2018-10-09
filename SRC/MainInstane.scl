@@ -75,10 +75,12 @@ BEGIN
 	
 	#sSprayPipe1.Q := "KT 1 Sprührohr öffnen";
 	#sSprayPipe1.IsOpen := "KT 1 Sprührohr geöffnet";
+	#sSprayPipe1.Timeout := "Retain_DB".Settings.SprayPipeOpenTimeout;
 	//#sSprayPipe1.HasError := 
 	
 	#sSprayPipe2.Q := "KT 2 Sprührohr öffnen";
 	#sSprayPipe2.IsOpen := "KT 2 Sprührohr geöffnet";
+	#sSprayPipe2.Timeout := "Retain_DB".Settings.SprayPipeOpenTimeout;
 	//#sSprayPipe2.HasError := 
 	
 	#sSurgeTankRefill.Q := "WSB Magnetventil";
