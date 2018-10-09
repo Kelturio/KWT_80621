@@ -13,8 +13,6 @@ VERSION : 0.1
       iCt2SprayPipeIsOpen : Bool;   // Cooling Tower 2 Spray Pipe is open
       iFlowTempPlant : Real;   // Flow Temperature Plant
       iFlowTempFurnace : Real;   // Flow Temperature Furnace
-      iLiftSys1DeltaPressure : Int;   // Lifting System 1 Delta Pressure
-      iLiftSys2DeltaPressure : Int;   // Lifting System 2 Delta Pressure
       iSurgeTankLevel : Int;
       iFan1 : "Fan";
       iFan2 : "Fan";
@@ -27,6 +25,8 @@ VERSION : 0.1
       iSprayPipe1 : "Valve";
       iSprayPipe2 : "Valve";
       iSurgeTankRefill : "Valve";
+      iLiftingSys1 : "LiftingSys";
+      iLiftingSys2 : "LiftingSys";
    END_VAR
 
    VAR_OUTPUT 
@@ -62,8 +62,6 @@ VERSION : 0.1
    END_VAR
 
    VAR_TEMP 
-      tPressureDeltaPerc1 : Int;
-      tPressureDeltaPerc2 : Int;
       tSprayPipeOpenTimer1 : Bool;
       tSprayPipeOpenTimer1Et : Time;
       tSprayPipeOpenTimer2 : Bool;
@@ -88,29 +86,27 @@ BEGIN
 	END_REGION
 	REGION analog
 	    // temperatures
-	    #sFlowTempPlantHot
-	    := BOOL_TO_INT(#iFlowTempPlant
-	                   >= ("Main_DB".Auto.sSetPointMax
-	                   + "Retain_DB".Settings.MaxTempTransgression));
-	    #sFlowTempFurnaceHot
-	    := BOOL_TO_INT(#iFlowTempFurnace
-	                   >= ("Main_DB".Auto.sSetPointMax
-	                   + "Retain_DB".Settings.MaxTempTransgression));
+	    #sFlowTempPlantHot := BOOL_TO_INT(#iFlowTempPlant >=
+	                                      ("Main_DB".Auto.sSetPointMax +
+	                                      "Retain_DB".Settings.MaxTempTransgression));
+	    #sFlowTempFurnaceHot := BOOL_TO_INT(#iFlowTempFurnace >=
+	                                        ("Main_DB".Auto.sSetPointMax +
+	                                        "Retain_DB".Settings.MaxTempTransgression));
 	    // pressures
-	    #tPressureDeltaPerc1 := "ScaleValueInt"(VALUE := #iLiftSys1DeltaPressure,
+	    (*    #tPressureDeltaPerc1 := "ScaleValueInt"(VALUE := #iLiftingSys1.DeltaPressure,
 	                                            XMIN := "AnalogMin",
 	                                            XMAX := "AnalogMax",
-	                                            YMIN := 0, YMAX := 100);
-	    #sPressureDeltaPerc1
-	    := BOOL_TO_INT(#"tPressureDeltaPerc1"
-	                   >= "Retain_DB".Settings.MaxPressureDeltaPerc1);
-	    #tPressureDeltaPerc2 := "ScaleValueInt"(VALUE := #iLiftSys2DeltaPressure,
+	                                            YMIN := 0,
+	                                            YMAX := 100); *)
+	    #sPressureDeltaPerc1 := BOOL_TO_INT(#iLiftingSys1.DeltaPressure.Val.Perc >=
+	                                        #iLiftingSys1.DeltaPressure.Alarm.Max.Perc);
+	(*    #tPressureDeltaPerc2 := "ScaleValueInt"(VALUE := #iLiftingSys2.DeltaPressure,
 	                                            XMIN := "AnalogMin",
 	                                            XMAX := "AnalogMax",
-	                                            YMIN := 0, YMAX := 100);
-	    #sPressureDeltaPerc2
-	    := BOOL_TO_INT(#"tPressureDeltaPerc2"
-	                   >= "Retain_DB".Settings.MaxPressureDeltaPerc2);
+	                                            YMIN := 0,
+	                                            YMAX := 100); *)
+	    #sPressureDeltaPerc2 := BOOL_TO_INT(#iLiftingSys2.DeltaPressure.Val.Perc >=
+	                                        #iLiftingSys2.DeltaPressure.Alarm.Max.Perc);
 	    // levels
 	    #sSurgeTankRunDry
 	    := BOOL_TO_INT(#iSurgeTankLevel
