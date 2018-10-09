@@ -5,25 +5,25 @@ VERSION : 0.1
    VAR_INPUT 
       iCvOff : Bool;   // Control Voltage Off / emergency stop
       iFuseOutputsErr : Bool;   // Fuse Outputs Error
-      iCt1FanErr : Bool;   // Cooling Tower 1 Fan Error
-      iCt2FanErr : Bool;   // Cooling Tower 2 Fan Error
       iCt1RepairSwitchOff : Bool;   // Cooling Tower 1 Repair Switch
       iCt2RepairSwitchOff : Bool;   // Cooling Tower 2 Repair Switch
       iCt1SprayPipeOpen : Bool;   // Cooling Tower 1 Spray Pipe open
       iCt2SprayPipeOpen : Bool;   // Cooling Tower 2 Spray Pipe open
       iCt1SprayPipeIsOpen : Bool;   // Cooling Tower 1 Spray Pipe is open
       iCt2SprayPipeIsOpen : Bool;   // Cooling Tower 2 Spray Pipe is open
-      iPumpPlant1Err : Bool;   // Plant Pump 1 Error
-      iPumpPlant2Err : Bool;   // Plant Pump 2 Error
-      iPumpCoolWater1Err : Bool;   // Cooling Water Pump 1 Error
-      iPumpCoolWater2Err : Bool;   // Cooling Water Pump 2 Error
-      iPumpFurnace1Err : Bool;   // Furnace Pump 1 Error
-      iPumpFurnace2Err : Bool;   // Furnace Pump 2 Error
       iFlowTempPlant : Real;   // Flow Temperature Plant
       iFlowTempFurnace : Real;   // Flow Temperature Furnace
       iLiftSys1DeltaPressure : Int;   // Lifting System 1 Delta Pressure
       iLiftSys2DeltaPressure : Int;   // Lifting System 2 Delta Pressure
       iSurgeTankLevel : Int;
+      iFan1 : "Fan";
+      iFan2 : "Fan";
+      iPumpPlant1 : "Pump";
+      iPumpPlant2 : "Pump";
+      iPumpCoolWater1 : "Pump";
+      iPumpCoolWater2 : "Pump";
+      iPumpFurnace1 : "Pump";
+      iPumpFurnace2 : "Pump";
    END_VAR
 
    VAR_OUTPUT 
@@ -72,21 +72,25 @@ BEGIN
 	REGION bool
 	    #sCvOff := BOOL_TO_INT(#iCvOff);
 	    #sFuseOutputsErr := BOOL_TO_INT(#iFuseOutputsErr);
-	    #sCt1FanErr := BOOL_TO_INT(#iCt1FanErr);
-	    #sCt2FanErr := BOOL_TO_INT(#iCt2FanErr);
+	    #sCt1FanErr := BOOL_TO_INT(#iFan1.HasError);
+	    #sCt2FanErr := BOOL_TO_INT(#iFan2.HasError);
 	    #sCt1RepairSwitchOff := BOOL_TO_INT(#iCt1RepairSwitchOff);
 	    #sCt2RepairSwitchOff := BOOL_TO_INT(#iCt2RepairSwitchOff);
-	    #sPumpPlant1Err := BOOL_TO_INT(#iPumpPlant1Err);
-	    #sPumpPlant2Err := BOOL_TO_INT(#iPumpPlant2Err);
-	    #sPumpCoolWater1Err := BOOL_TO_INT(#iPumpCoolWater1Err);
-	    #sPumpCoolWater2Err := BOOL_TO_INT(#iPumpCoolWater2Err);
-	    #sPumpFurnace1Err := BOOL_TO_INT(#iPumpFurnace1Err);
-	    #sPumpFurnace2Err := BOOL_TO_INT(#iPumpFurnace2Err);
+	    #sPumpPlant1Err := BOOL_TO_INT(#iPumpPlant1.HasError);
+	    #sPumpPlant2Err := BOOL_TO_INT(#iPumpPlant2.HasError);
+	    #sPumpCoolWater1Err := BOOL_TO_INT(#iPumpCoolWater1.HasError);
+	    #sPumpCoolWater2Err := BOOL_TO_INT(#iPumpCoolWater2.HasError);
+	    #sPumpFurnace1Err := BOOL_TO_INT(#iPumpFurnace1.HasError);
+	    #sPumpFurnace2Err := BOOL_TO_INT(#iPumpFurnace2.HasError);
 	END_REGION
 	REGION analog
 	    // temperatures
-	    #sFlowTemperaturePlantHot := BOOL_TO_INT("Main_DB".FlowTemperaturePlant >= ("Main_DB".Auto.sSetPointMax + "Retain_DB".Settings.MaxTempTransgression));
-	    #sFlowTemperatureFurnaceHot := BOOL_TO_INT("Main_DB".FlowTemperatureFurnace >= ("Main_DB".Auto.sSetPointMax + "Retain_DB".Settings.MaxTempTransgression));
+	    #sFlowTemperaturePlantHot := BOOL_TO_INT("Main_DB".FlowTemperaturePlant
+	                                             >= ("Main_DB".Auto.sSetPointMax
+	                                             + "Retain_DB".Settings.MaxTempTransgression));
+	    #sFlowTemperatureFurnaceHot := BOOL_TO_INT("Main_DB".FlowTemperatureFurnace
+	                                               >= ("Main_DB".Auto.sSetPointMax
+	                                               + "Retain_DB".Settings.MaxTempTransgression));
 	    // pressures
 	    #tPressureDeltaPerc1 := "ScaleValueInt"(VALUE := #iLiftSys1DeltaPressure,
 	                                            XMIN := "AnalogMin", XMAX := "AnalogMax",
