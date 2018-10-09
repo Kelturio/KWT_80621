@@ -25,6 +25,8 @@ VERSION : 0.1
       sPumpCoolWater2 : "Pump";
       sPumpFurnace1 : "Pump";
       sPumpFurnace2 : "Pump";
+      sFan1 : "Fan";
+      sFan2 : "Fan";
    END_VAR
 
 
@@ -53,12 +55,20 @@ BEGIN
 	#sPumpFurnace2.IsRunning := "Ofenpumpe 2 Betrieb";
 	#sPumpFurnace2.HasError := NOT "Ofenpumpe 2 MSS OK";
 	
+	#sFan1.Q := "KT 1 Ventilator";
+	#sFan1.IsRunning := "KT 1 Ventilator Betrieb";
+	#sFan1.HasError := "KT 1 Ventilator Störung" OR NOT "KT 1 Ventilator RS ein";
+	
+	#sFan2.Q := "KT 2 Ventilator";
+	#sFan2.IsRunning := "KT 2 Ventilator Betrieb";
+	#sFan2.HasError := "KT 2 Ventilator Störung" OR NOT "KT 2 Ventilator RS ein";
+	
 	#AlwaysRUN(iCvOff := NOT "Steuerspannung Ein",
 	           iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
 	           iCt1FanErr := "KT 1 Ventilator Störung",
 	           iCt2FanErr := "KT 2 Ventilator Störung",
-	           iCt1RepairSwitchOff := NOT "KT 1 Ventilator RS",
-	           iCt2RepairSwitchOff := NOT "KT 2 Ventilator RS",
+	           iCt1RepairSwitchOff := NOT "KT 1 Ventilator RS ein",
+	           iCt2RepairSwitchOff := NOT "KT 2 Ventilator RS ein",
 	           iCt1SprayPipeOpen := "KT 1 Sprührohr öffnen",
 	           iCt2SprayPipeOpen := "KT 2 Sprührohr öffnen",
 	           iCt1SprayPipeIsOpen := "KT 1 Sprührohr geöffnet",
