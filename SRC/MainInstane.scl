@@ -29,6 +29,7 @@ VERSION : 0.1
       sFan2 : "Fan";
       sSprayPipe1 : "Valve";
       sSprayPipe2 : "Valve";
+      sSurgeTankRefill : "Valve";
    END_VAR
 
 
@@ -73,6 +74,10 @@ BEGIN
 	#sSprayPipe2.IsOpen := "KT 2 Sprührohr geöffnet";
 	//#sSprayPipe2.HasError := 
 	
+	#sSurgeTankRefill.Q := "WSB Magnetventil";
+	#sSurgeTankRefill.IsOpen := "WSB Magnetventil";
+	//sSurgeTankRefill.HasError := 
+	
 	#AlwaysRUN(iCvOff := NOT "Steuerspannung Ein",
 	           iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
 	           iCt1RepairSwitchOff := NOT "KT 1 Ventilator RS ein",
@@ -100,6 +105,7 @@ BEGIN
 	           iFan2 := #sFan2,
 	           iSprayPipe1 := #sSprayPipe1,
 	           iSprayPipe2 := #sSprayPipe2,
+	           iSurgeTankRefill := #sSurgeTankRefill,
 	           oFlowTempPlant => #FlowTemperaturePlant,
 	           oFlowTempFurnace => #FlowTemperatureFurnace,
 	           oAlarmLamp => "Rundumleuchte Störung",
