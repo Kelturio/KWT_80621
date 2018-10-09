@@ -1,0 +1,14 @@
+﻿TYPE "RtmMode"
+VERSION : 0.1
+   STRUCT
+      FETCH { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Byte := 16#0;   // 0: Read out (the status is then written to CQ and the current value to CV). After the operating hours counter has reached (2^31) - 1 hours, it stops at the highest value that can be displayed and outputs an "Overflow" error message.
+      START { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Byte := 16#1;   // 1: start (at the last counter value)
+      STOP { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Byte := 16#2;   // 2: stop
+      SET { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Byte := 16#4;   // 4: set to the value specified in the parameter PV
+      SET_START { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Byte := 16#5;   // 5: set to the value specified in the parameter PV and start
+      SET_STOP { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Byte := 16#6;   // 6: set to the value specified in the parameter PV and stop
+      SAVE_MC { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Byte := 16#7;   // 7: save all RTM values in the CPU to the MC (Memory Card)
+   END_STRUCT;
+
+END_TYPE
+
