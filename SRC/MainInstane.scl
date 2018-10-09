@@ -30,6 +30,9 @@ VERSION : 0.1
       sSprayPipe1 : "Valve";
       sSprayPipe2 : "Valve";
       sSurgeTankRefill : "Valve";
+      sAnimationPt : Time := T#100ms;
+      sAnimationRange : "Range";
+      sAnimationFrame : Int := 1;
    END_VAR
 
 
@@ -61,10 +64,12 @@ BEGIN
 	#sFan1.Q := "KT 1 Ventilator";
 	#sFan1.IsRunning := "KT 1 Ventilator Betrieb";
 	#sFan1.HasError := "KT 1 Ventilator Störung" OR NOT "KT 1 Ventilator RS ein";
+	#sFan1.AnimationFrame := #sAnimationFrame;
 	
 	#sFan2.Q := "KT 2 Ventilator";
 	#sFan2.IsRunning := "KT 2 Ventilator Betrieb";
 	#sFan2.HasError := "KT 2 Ventilator Störung" OR NOT "KT 2 Ventilator RS ein";
+	#sFan2.AnimationFrame := #sAnimationFrame;
 	
 	#sSprayPipe1.Q := "KT 1 Sprührohr öffnen";
 	#sSprayPipe1.IsOpen := "KT 1 Sprührohr geöffnet";
@@ -106,11 +111,14 @@ BEGIN
 	           iSprayPipe1 := #sSprayPipe1,
 	           iSprayPipe2 := #sSprayPipe2,
 	           iSurgeTankRefill := #sSurgeTankRefill,
+	           iAnimationPt := #sAnimationPt,
+	           iAnimationRange := #sAnimationRange,
 	           oFlowTempPlant => #FlowTemperaturePlant,
 	           oFlowTempFurnace => #FlowTemperatureFurnace,
 	           oAlarmLamp => "Rundumleuchte Störung",
 	           oSurgeTankLevel => #sSurgeTankLevel,
-	           oSurgeTankRefill => "WSB Magnetventil");
+	           oSurgeTankRefill => "WSB Magnetventil",
+	           oAnimationFrame => #sAnimationFrame);
 	
 	IF NOT "Steuerspannung Ein" OR NOT "Sicherung Ausgänge OK" THEN
 	    #sAutoMode := 0;
