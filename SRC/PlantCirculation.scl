@@ -22,21 +22,21 @@ VERSION : 0.1
       s_p1 : Bool;
       s_p2 : Bool;
       s_Nachlaufzeit : Time := T#10S;
-      Baustein_1 : "Baustein_1";
+      RunPumpsRedundantly : "RunPumpsRedundantly";
    END_VAR
 
 
 BEGIN
-	#Baustein_1(i_strang := #iBranch,
-	            i_beide := FALSE,
-	            i_err1 := #iPumpPlant1Err,
-	            i_err2 := #iPumpPlant2Err,
-	            i_run1 := #iPumpPlant1Run,
-	            i_run2 := #iPumpPlant2Run,
-	            i_tof_pt := #s_Nachlaufzeit,
-	            o_p1 => #oPumpPlant1,
-	            o_p2 => #oPumpPlant2,
-	            io_s_p1 := #s_p1,
-	            io_s_p2 := #s_p2);
+	#RunPumpsRedundantly(i_strang := #iBranch,
+	                     i_beide := FALSE,
+	                     i_err1 := #iPumpPlant1Err,
+	                     i_err2 := #iPumpPlant2Err,
+	                     i_run1 := #iPumpPlant1Run,
+	                     i_run2 := #iPumpPlant2Run,
+	                     i_tof_pt := #s_Nachlaufzeit,
+	                     o_p1 => #oPumpPlant1,
+	                     o_p2 => #oPumpPlant2,
+	                     io_s_p1 := #s_p1,
+	                     io_s_p2 := #s_p2);
 END_FUNCTION_BLOCK
 
