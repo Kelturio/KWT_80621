@@ -6,6 +6,7 @@ VERSION : 0.1
       HasError : Bool;
       RepairSwitch : Bool;
       SetPoint : Int;
+      AnimationFrame : Int := 1;
    END_STRUCT;
 
 END_TYPE
