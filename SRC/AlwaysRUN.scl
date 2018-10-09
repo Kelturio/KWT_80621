@@ -31,6 +31,9 @@ VERSION : 0.1
       iFan2 : "Fan";
       iSprayPipe1 : "Valve";
       iSprayPipe2 : "Valve";
+      iSurgeTankRefill : "Valve";
+      iAnimationPt : Time;
+      iAnimationRange : "Range";
    END_VAR
 
    VAR_OUTPUT 
@@ -39,6 +42,7 @@ VERSION : 0.1
       oAlarmLamp : Bool;
       oSurgeTankLevel : Int := 0;
       oSurgeTankRefill : Bool;
+      oAnimationFrame : Int;
    END_VAR
 
    VAR 
@@ -50,6 +54,7 @@ VERSION : 0.1
       sStorageTankRefillPt : Time := T#5s;
       sSprayPipeOpenTimeout1 : Bool;
       sSprayPipeOpenTimeout2 : Bool;
+      Animation : "Animation";
    END_VAR
 
    VAR_TEMP 
@@ -104,6 +109,10 @@ BEGIN
 	       oSprayPipeOpenTimeout1 => #sSprayPipeOpenTimeout1,
 	       oSprayPipeOpenTimeout2 => #sSprayPipeOpenTimeout2);
 	
+	#Animation(iPt := #iAnimationPt,
+	           iRange := #iAnimationRange,
+	           oFrame => #oAnimationFrame);
+	
 	"HmiDb"(iFan1:=#iFan1,
 	        iFan2:=#iFan2,
 	        iPumpPlant1 := #iPumpPlant1,
@@ -147,6 +156,7 @@ BEGIN
 	        iCt2SprayPipeIsOpen := #iCt2SprayPipeIsOpen,
 	        iCt2SprayPipeErr := #sSprayPipeOpenTimeout2,
 	        iAutoMode := #iAutoMode,
-	        iSurgeTankRefill:=#iSurgeTankRefill);
+	        iSurgeTankRefill:=#iSurgeTankRefill,
+	        iSurgeTankRefillx:=#iSurgeTankRefill);
 END_FUNCTION_BLOCK
 
