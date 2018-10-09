@@ -1,0 +1,9 @@
+﻿TYPE "Temperature"
+VERSION : 0.1
+   STRUCT
+      Val : "Val";
+      Limits : "Limits";
+   END_STRUCT;
+
+END_TYPE
+
