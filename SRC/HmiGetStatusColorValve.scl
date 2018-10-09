@@ -3,15 +3,13 @@
 AUTHOR : Searinox
 VERSION : 0.1
    VAR_INPUT 
-      iValveQ : Bool;
-      iValveOpen : Bool;
-      iValveErr : Bool;
+      iValve : "Valve";
    END_VAR
 
 
 BEGIN
-	#HmiGetStatusColorValve := "HmiGetStatusColor"(iQ := #iValveQ,
-	                                               iRun := #iValveOpen,
-	                                               iErr := #iValveErr);
+	#HmiGetStatusColorValve := "HmiGetStatusColor"(iQ := #iValve.Q,
+	                                               iRun := #iValve.IsOpen,
+	                                               iErr := #iValve.HasError);
 END_FUNCTION
 
