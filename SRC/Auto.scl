@@ -18,6 +18,12 @@ VERSION : 0.1
       iCt2SprayPipeIsOpen : Bool;
       iSurgeTankLevel : Int;
       iSurgeTankLevelSetPointUpper : Int;
+      iPumpPlant1 : "Pump";
+      iPumpPlant2 : "Pump";
+      iPumpCoolWater1 : "Pump";
+      iPumpCoolWater2 : "Pump";
+      iPumpFurnace1 : "Pump";
+      iPumpFurnace2 : "Pump";
    END_VAR
 
    VAR_OUTPUT 
