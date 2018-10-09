@@ -27,6 +27,8 @@ VERSION : 0.1
       sPumpFurnace2 : "Pump";
       sFan1 : "Fan";
       sFan2 : "Fan";
+      sSprayPipe1 : "Valve";
+      sSprayPipe2 : "Valve";
    END_VAR
 
 
@@ -63,6 +65,14 @@ BEGIN
 	#sFan2.IsRunning := "KT 2 Ventilator Betrieb";
 	#sFan2.HasError := "KT 2 Ventilator Störung" OR NOT "KT 2 Ventilator RS ein";
 	
+	#sSprayPipe1.Q := "KT 1 Sprührohr öffnen";
+	#sSprayPipe1.IsOpen := "KT 1 Sprührohr geöffnet";
+	//#sSprayPipe1.HasError := 
+	
+	#sSprayPipe2.Q := "KT 2 Sprührohr öffnen";
+	#sSprayPipe2.IsOpen := "KT 2 Sprührohr geöffnet";
+	//#sSprayPipe2.HasError := 
+	
 	#AlwaysRUN(iCvOff := NOT "Steuerspannung Ein",
 	           iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
 	           iCt1RepairSwitchOff := NOT "KT 1 Ventilator RS ein",
@@ -88,6 +98,8 @@ BEGIN
 	           iPumpFurnace2 := #sPumpFurnace2,
 	           iFan1 := #sFan1,
 	           iFan2 := #sFan2,
+	           iSprayPipe1 := #sSprayPipe1,
+	           iSprayPipe2 := #sSprayPipe2,
 	           oFlowTempPlant => #FlowTemperaturePlant,
 	           oFlowTempFurnace => #FlowTemperatureFurnace,
 	           oAlarmLamp => "Rundumleuchte Störung",
