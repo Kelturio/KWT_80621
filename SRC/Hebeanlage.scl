@@ -37,7 +37,7 @@ VERSION : 0.1
       s_P1 : Bool;
       s_P2 : Bool;
       s_Nachlaufzeit : Time := T#10S;
-      Baustein_1 : "Baustein_1";
+      RunPumpsRedundantly : "RunPumpsRedundantly";
       s_zu_kalt : Bool;
       s_zu_warm : Bool;
       s_Sollwert : Int;
@@ -51,17 +51,17 @@ VERSION : 0.1
 BEGIN
 	#s_Beide_Pumpen := #Temp > (#TempMax + #s_MaxThreshold);
 	
-	#Baustein_1(i_strang := #Strang,
-	            i_beide := #s_Beide_Pumpen,
-	            i_err1 := #Motorschutzschalter_H1,
-	            i_err2 := #Motorschutzschalter_H2,
-	            i_run1 := #Betrieb_P1,
-	            i_run2 := #Betrieb_P2,
-	            i_tof_pt := #s_Nachlaufzeit,
-	            o_p1 => #Pumpe_H1,
-	            o_p2 => #Pumpe_H2,
-	            io_s_p1 := #s_P1,
-	            io_s_p2 := #s_P2);
+	#RunPumpsRedundantly(i_strang := #Strang,
+	                     i_beide := #s_Beide_Pumpen,
+	                     i_err1 := #Motorschutzschalter_H1,
+	                     i_err2 := #Motorschutzschalter_H2,
+	                     i_run1 := #Betrieb_P1,
+	                     i_run2 := #Betrieb_P2,
+	                     i_tof_pt := #s_Nachlaufzeit,
+	                     o_p1 => #Pumpe_H1,
+	                     o_p2 => #Pumpe_H2,
+	                     io_s_p1 := #s_P1,
+	                     io_s_p2 := #s_P2);
 	
 	#s_zu_kalt := #Temp <= #TempMin;
 	#s_zu_warm := #Temp >= #TempMax;
@@ -91,6 +91,5 @@ BEGIN
 	
 	#"Hebeanlage 1 öffnen" := 1;
 	#"Hebeanlage 2 öffnen" := 1;
-	
 END_FUNCTION_BLOCK
 
