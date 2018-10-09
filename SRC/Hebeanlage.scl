@@ -5,6 +5,8 @@ FAMILY : AKK
 VERSION : 0.1
    VAR_INPUT 
       Strang : Bool;
+      iPumpFurnace1 : "Pump";
+      iPumpFurnace2 : "Pump";
       Temp : Real;
       TempMin : Real;
       TempMax : Real;
