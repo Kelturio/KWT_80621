@@ -22,7 +22,7 @@ VERSION : 0.1
       iCt2SprayPipeIsOpen : Bool;
       iCt2SprayPipeErr : Bool;
       iAutoMode : Bool;
-      iSurgeTankRefill : Bool;
+      iSurgeTankRefill : "Valve";
    END_VAR
 
    VAR 
@@ -64,18 +64,13 @@ BEGIN
 	#sPumpFurnace1 := "HmiGetStatusColorPump"(iPump := #iPumpFurnace1);
 	#sPumpFurnace2 := "HmiGetStatusColorPump"(iPump := #iPumpFurnace2);
 	
-	#sCt1Fan := "HmiGetStatusColorFan"(iFan:=#iFan1,
-	                                   iAnimationFrame := #sAnimationFrame);
-	#sCt2Fan := "HmiGetStatusColorFan"(iFan:=#iFan2,
-	                                   iAnimationFrame := #sAnimationFrame);
+	#sCt1Fan := "HmiGetStatusColorFan"(iFan := #iFan1);
+	#sCt2Fan := "HmiGetStatusColorFan"(iFan := #iFan2);
 	
-	#sCt1SprayPipe := "HmiGetStatusColorValve"(iValve:=#iSprayPipe1);
-	#sCt2SprayPipe := "HmiGetStatusColorValve"(iValve:=#iSprayPipe2);
+	#sCt1SprayPipe := "HmiGetStatusColorValve"(iValve := #iSprayPipe1);
+	#sCt2SprayPipe := "HmiGetStatusColorValve"(iValve := #iSprayPipe2);
 	
-	#sSurgeTankRefill := "HmiGetStatusColorValve"(iValveQ := #iSurgeTankRefill,
-	                                              iValveOpen := #iSurgeTankRefill,
-	                                              iValveErr := FALSE,
-	                                              iValve:=_block_udt_in_);
+	#sSurgeTankRefill := "HmiGetStatusColorValve"(iValve := #iSurgeTankRefill);
 	
 	#IEC_TMR_0.TON(IN := #sTimer0Start,
 	               PT := #sTimer0Pt,
