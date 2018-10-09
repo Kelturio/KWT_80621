@@ -36,6 +36,8 @@ VERSION : 0.1
       iAnimationRange : "Range";
       iLiftingSys1 : "LiftingSys";
       iLiftingSys2 : "LiftingSys";
+      iTempPlant : "Temperature";
+      iTempFurnace : "Temperature";
    END_VAR
 
    VAR_OUTPUT 
@@ -97,8 +99,6 @@ BEGIN
 	       iFuseOutputsErr := #iFuseOutputsErr,
 	       iCt1RepairSwitchOff := #iCt1RepairSwitchOff,
 	       iCt2RepairSwitchOff := #iCt2RepairSwitchOff,
-	       iFlowTempPlant := #oFlowTempPlant,
-	       iFlowTempFurnace := #oFlowTempFurnace,
 	       iSurgeTankLevel := #oSurgeTankLevel,
 	       iFan1 := #iFan1,
 	       iFan2 := #iFan2,
@@ -113,6 +113,8 @@ BEGIN
 	       iSurgeTankRefill := #iSurgeTankRefill,
 	       iLiftingSys1 := #iLiftingSys1,
 	       iLiftingSys2 := #iLiftingSys2,
+	       iTempPlant:=#iTempPlant,
+	       iTempFurnace:=#iTempFurnace,
 	       oAlarmCount => #tAlarmCount,
 	       oAlarmLamp => #oAlarmLamp,
 	       oSprayPipeOpenTimeout1 => #sSprayPipeOpenTimeout1,
