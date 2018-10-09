@@ -51,6 +51,8 @@ VERSION : 0.1
       iPumpCoolWater2 : "Pump";
       iPumpFurnace1 : "Pump";
       iPumpFurnace2 : "Pump";
+      iFan1 : "Fan";
+      iFan2 : "Fan";
    END_VAR
 
    VAR_OUTPUT 
