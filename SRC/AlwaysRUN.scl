@@ -38,6 +38,7 @@ VERSION : 0.1
       iLiftingSys2 : "LiftingSys";
       iTempPlant : "Temperature";
       iTempFurnace : "Temperature";
+      iSurgeTank : "Tank";
    END_VAR
 
    VAR_OUTPUT 
@@ -113,8 +114,9 @@ BEGIN
 	       iSurgeTankRefill := #iSurgeTankRefill,
 	       iLiftingSys1 := #iLiftingSys1,
 	       iLiftingSys2 := #iLiftingSys2,
-	       iTempPlant:=#iTempPlant,
-	       iTempFurnace:=#iTempFurnace,
+	       iTempPlant := #iTempPlant,
+	       iTempFurnace := #iTempFurnace,
+	       iSurgeTank := #iSurgeTank,
 	       oAlarmCount => #tAlarmCount,
 	       oAlarmLamp => #oAlarmLamp,
 	       oSprayPipeOpenTimeout1 => #sSprayPipeOpenTimeout1,
