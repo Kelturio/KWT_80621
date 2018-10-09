@@ -39,7 +39,7 @@ VERSION : 0.1
       sVentilatoPt : Time := T#30S;
       sBothPump : Bool;
       sOverRunTime : Time := T#10S;
-      Baustein_1 : "Baustein_1";
+      RunPumpsRedundantly : "RunPumpsRedundantly";
       IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
       IEC_TMR_1 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
       sVentilator1Et : Time;
@@ -57,17 +57,17 @@ VERSION : 0.1
 BEGIN
 	#sBothPump := #iFlowTempPlant > (#iSetPointMax + #sMaxThreshold) OR #s_AbsalzTP;
 	
-	#Baustein_1(i_strang := #iBranch,
-	            i_beide := #sBothPump,
-	            i_err1 := #iPumpCoolWater1Err,
-	            i_err2 := #iPumpCoolWater1Err_1,
-	            i_run1 := #iPumpCoolWater1Run,
-	            i_run2 := #iPumpCoolWater2Run,
-	            i_tof_pt := #sOverRunTime,
-	            o_p1 => #oPumpCoolWater1,
-	            o_p2 => #oPumpCoolWater2,
-	            io_s_p1 := #sPump1,
-	            io_s_p2 := #sPump2);
+	#RunPumpsRedundantly(i_strang := #iBranch,
+	                     i_beide := #sBothPump,
+	                     i_err1 := #iPumpCoolWater1Err,
+	                     i_err2 := #iPumpCoolWater1Err_1,
+	                     i_run1 := #iPumpCoolWater1Run,
+	                     i_run2 := #iPumpCoolWater2Run,
+	                     i_tof_pt := #sOverRunTime,
+	                     o_p1 => #oPumpCoolWater1,
+	                     o_p2 => #oPumpCoolWater2,
+	                     io_s_p1 := #sPump1,
+	                     io_s_p2 := #sPump2);
 	
 	#IEC_TMR_0.TON(IN := #iPumpCoolWater1Run AND NOT #sTooCold,
 	               PT := #sVentilatoPt,
