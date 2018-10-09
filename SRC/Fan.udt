@@ -4,6 +4,7 @@ VERSION : 0.1
       Q : Bool;
       IsRunning : Bool;
       HasError : Bool;
+      RepairSwitch : Bool;
       SetPoint : Int;
    END_STRUCT;
 
