@@ -13,16 +13,8 @@ VERSION : 0.1
       iPumpFurnace2 : "Pump";
       iSprayPipe1 : "Valve";
       iSprayPipe2 : "Valve";
-      iCt1RepairSwitchOff : Bool;
-      iCt2RepairSwitchOff : Bool;
-      iCt1SprayPipeOpen : Bool;
-      iCt1SprayPipeIsOpen : Bool;
-      iCt1SprayPipeErr : Bool;
-      iCt2SprayPipeOpen : Bool;
-      iCt2SprayPipeIsOpen : Bool;
-      iCt2SprayPipeErr : Bool;
-      iAutoMode : Bool;
       iSurgeTankRefill : "Valve";
+      iAutoMode : Bool;
    END_VAR
 
    VAR 
