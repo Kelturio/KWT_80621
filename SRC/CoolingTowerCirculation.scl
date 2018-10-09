@@ -5,6 +5,8 @@ FAMILY : AKK
 VERSION : 0.1
    VAR_INPUT 
       iBranch : Bool;   // Strang
+      iPumpCoolWater1 : "Pump";
+      iPumpCoolWater2 : "Pump";
       iFlowTempPlant : Real;   // Vorlauftemperatur
       iSetPointMin : Real;
       iSetPointMax : Real;
