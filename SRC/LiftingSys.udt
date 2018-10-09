@@ -1,18 +1,7 @@
 ﻿TYPE "LiftingSys"
 VERSION : 0.1
    STRUCT
-      Val : Struct
-         "Int" : Int;
-         Perc : Int;
-      END_STRUCT;
-      Alarm : Struct
-         Min : Struct
-            Perc : Bool;
-         END_STRUCT;
-         Max : Struct
-            Perc : Int;
-         END_STRUCT;
-      END_STRUCT;
+      DeltaPressure : "DeltaPressure";
    END_STRUCT;
 
 END_TYPE
