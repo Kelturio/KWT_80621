@@ -46,8 +46,8 @@ VERSION : 0.1
       sSetPointMax : Real := 27.0;
    END_VAR
    VAR 
-      Werkskreislauf : "Werkskreislauf";
-      Kuehlturmkreislauf : "Kuehlturmkreislauf";
+      PlantCirculation : "PlantCirculation";
+      CoolingTowerCirculation : "CoolingTowerCirculation";
       sMaxCapMin : Real := 0.0;
       sMaxCapMax : Real := 100.0;
       sMaxInitVal : Real := 27.0;
@@ -68,33 +68,37 @@ BEGIN
 	
 	"Main_DB".AlwaysRUN.sStorageTankRefillStart := #iSurgeTankLevel <= #iSurgeTankLevelSetPointUpper;
 	
-	#Werkskreislauf(iBranch := #sBranch,
-	                iPumpPlant1Run := #iPumpPlant1Run,
-	                iPumpPlant2Run := #iPumpPlant2Run,
-	                iPumpPlant1Err := #iPumpPlant1Err,
-	                iPumpPlant2Err := #iPumpPlant2Err,
-	                oPumpPlant1 => #oPumpPlant1,
-	                oPumpPlant2 => #oPumpPlant2);
+	#PlantCirculation(iBranch := #sBranch,
+	                  iPumpPlant1Run := #iPumpPlant1Run,
+	                  iPumpPlant2Run := #iPumpPlant2Run,
+	                  iPumpPlant1Err := #iPumpPlant1Err,
+	                  iPumpPlant2Err := #iPumpPlant2Err,
+	                  iPumpPlant1 := #iPumpPlant1,
+	                  iPumpPlant2 := #iPumpPlant2,
+	                  oPumpPlant1 => #oPumpPlant1,
+	                  oPumpPlant2 => #oPumpPlant2);
 	
-	#Kuehlturmkreislauf(iBranch := #sBranch,
-	                    iFlowTempPlant := #iFlowTempPlant,
-	                    iSetPointMin := #sSetPointMin,
-	                    iSetPointMax := #sSetPointMax,
-	                    iPumpCoolWater1Run := #iPumpCoolWater1Run,
-	                    iPumpCoolWater2Run := #iPumpCoolWater2Run,
-	                    iPumpCoolWater1Err := #iPumpCoolWater1Err,
-	                    iPumpCoolWater1Err_1 := #iPumpCoolWater2Err,
-	                    iBleedingUnitCirculatingPumpRun := #iBleedingUnitCirculatingPumpRun,
-	                    iCt1SprayPipeIsOpen := #iCt1SprayPipeIsOpen,
-	                    iCt2SprayPipeIsOpen := #iCt2SprayPipeIsOpen,
-	                    oPumpCoolWater1 => #oPumpCoolWater1,
-	                    oPumpCoolWater2 => #oPumpCoolWater2,
-	                    oCt1Fan => #oCt1Fan,
-	                    oCt2Fan => #oCt2Fan,
-	                    oCt1FanSetPoint => #oCt1FanSetPoint,
-	                    oCt2FanSetPoint => #oCt2FanSetPoint,
-	                    oCt1SprayPipeOpen => #oCt1SprayPipeOpen,
-	                    oCt2SprayPipeOpen => #oCt2SprayPipeOpen);
+	#CoolingTowerCirculation(iBranch := #sBranch,
+	                         iPumpCoolWater1 := #iPumpCoolWater1,
+	                         iPumpCoolWater2 := #iPumpCoolWater2,
+	                         iFlowTempPlant := #iFlowTempPlant,
+	                         iSetPointMin := #sSetPointMin,
+	                         iSetPointMax := #sSetPointMax,
+	                         iPumpCoolWater1Run := #iPumpCoolWater1Run,
+	                         iPumpCoolWater2Run := #iPumpCoolWater2Run,
+	                         iPumpCoolWater1Err := #iPumpCoolWater1Err,
+	                         iPumpCoolWater1Err_1 := #iPumpCoolWater2Err,
+	                         iBleedingUnitCirculatingPumpRun := #iBleedingUnitCirculatingPumpRun,
+	                         iCt1SprayPipeIsOpen := #iCt1SprayPipeIsOpen,
+	                         iCt2SprayPipeIsOpen := #iCt2SprayPipeIsOpen,
+	                         oPumpCoolWater1 => #oPumpCoolWater1,
+	                         oPumpCoolWater2 => #oPumpCoolWater2,
+	                         oCt1Fan => #oCt1Fan,
+	                         oCt2Fan => #oCt2Fan,
+	                         oCt1FanSetPoint => #oCt1FanSetPoint,
+	                         oCt2FanSetPoint => #oCt2FanSetPoint,
+	                         oCt1SprayPipeOpen => #oCt1SprayPipeOpen,
+	                         oCt2SprayPipeOpen => #oCt2SprayPipeOpen);
 	
 	IF #sSetPointMax < #sMaxCapMin OR #sSetPointMax > #sMaxCapMax THEN
 	    #sSetPointMax := #sMaxInitVal;
