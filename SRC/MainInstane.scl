@@ -89,21 +89,21 @@ BEGIN
 	#sSurgeTankRefill.IsOpen := "WSB Magnetventil";
 	//sSurgeTankRefill.HasError := 
 	//
-	#sLiftingSys1.DeltaPressure.Val."Int" := "HA 1 Differenzdruck";
+	#sLiftingSys1.DeltaPressure.Val._Int := "HA 1 Differenzdruck";
 	#sLiftingSys1.DeltaPressure.Val.Perc := "ScaleValueInt"(VALUE := "HA 1 Differenzdruck",
 	                                                        XMIN := "AnalogMin",
 	                                                        XMAX := "AnalogMax",
 	                                                        YMIN := 0,
 	                                                        YMAX := 100);
-	#sLiftingSys1.DeltaPressure.Alarm.Max.Perc := "Retain_DB".Settings.MaxPressureDeltaPerc1;
+	#sLiftingSys1.DeltaPressure.Limits.Max.Perc := "Retain_DB".Settings.MaxPressureDeltaPerc1;
 	
-	#sLiftingSys2.DeltaPressure.Val."Int" := "HA 2 Differenzdruck";
+	#sLiftingSys2.DeltaPressure.Val._Int := "HA 2 Differenzdruck";
 	#sLiftingSys2.DeltaPressure.Val.Perc := "ScaleValueInt"(VALUE := "HA 2 Differenzdruck",
 	                                                        XMIN := "AnalogMin",
 	                                                        XMAX := "AnalogMax",
 	                                                        YMIN := 0,
 	                                                        YMAX := 100);
-	#sLiftingSys2.DeltaPressure.Alarm.Max.Perc := "Retain_DB".Settings.MaxPressureDeltaPerc1;
+	#sLiftingSys2.DeltaPressure.Limits.Max.Perc := "Retain_DB".Settings.MaxPressureDeltaPerc1;
 	
 	#AlwaysRUN(iCvOff := NOT "Steuerspannung Ein",
 	           iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
