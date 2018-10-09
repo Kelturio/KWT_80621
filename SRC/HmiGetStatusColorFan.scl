@@ -4,7 +4,6 @@ AUTHOR : Searinox
 VERSION : 0.1
    VAR_INPUT 
       iFan : "Fan";
-      iAnimationFrame : Int;
    END_VAR
 
 
@@ -25,7 +24,7 @@ BEGIN
 	END_IF;
 	
 	IF #HmiGetStatusColorFan = 20 THEN
-	    #HmiGetStatusColorFan := #HmiGetStatusColorFan + #iAnimationFrame;
+	    #HmiGetStatusColorFan := #HmiGetStatusColorFan + #iFan.AnimationFrame;
 	END_IF;
 END_FUNCTION
 
