@@ -1,0 +1,10 @@
+﻿TYPE "Fan"
+VERSION : 0.1
+   STRUCT
+      Q : Bool;
+      IsRunning : Bool;
+      HasError : Bool;
+   END_STRUCT;
+
+END_TYPE
+
