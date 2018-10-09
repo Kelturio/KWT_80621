@@ -39,7 +39,7 @@ VERSION : 0.1
       s_zu_kalt : Bool;
       s_zu_warm : Bool;
       s_Sollwert : Int;
-      s_SET_POINT_MIN : Int := 0;
+      s_SET_POINT_MIN : Int := 2765;
       s_SET_POINT_MAX : Int := 27648;
       s_Beide_Pumpen : Bool;
       s_MaxThreshold : Real := 1.0;
