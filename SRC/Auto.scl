@@ -107,6 +107,8 @@ BEGIN
 	#sSetPointMin := #sSetPointMax - #sMinToMaxZone;
 	
 	#Hebeanlage(Strang := #sBranch,
+	            iPumpFurnace1 := #iPumpFurnace1,
+	            iPumpFurnace2 := #iPumpFurnace2,
 	            Temp := "Main_DB".FlowTemperatureFurnace,
 	            TempMin := #sSetPointMin,
 	            TempMax := #sSetPointMax + 1,
