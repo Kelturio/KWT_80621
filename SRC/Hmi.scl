@@ -32,13 +32,8 @@ VERSION : 0.1
       sPumpCoolWater2 : Int;
       sPumpFurnace1 : Int;
       sPumpFurnace2 : Int;
-      sAnimationFrame : Int := 1;
       sCt1Fan : Int;
       sCt2Fan : Int;
-      IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
-      sTimer0Start : Bool := true;
-      sTimer0Pt : Time := T#100ms;
-      sTimer0Q : Bool;
       sCt1SprayPipe : Int;
       sCt2SprayPipe : Int;
       sAutoMode : Bool := false;
