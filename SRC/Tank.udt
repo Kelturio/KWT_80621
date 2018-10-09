@@ -2,12 +2,9 @@
 VERSION : 0.1
    STRUCT
       Val : "Val";
-      Levels : Struct
-         RunDry { S7_SetPoint := 'True'} : Int := 2;   // position 4, e.g. minimum value reached
-         SetPointLower { S7_SetPoint := 'True'} : Int := 4;   // position 3, e.g. lower preset value reached
-         SetPointUpper { S7_SetPoint := 'True'} : Int := 6;   // position 2, e.g. upper preset value reached
-         Overflow { S7_SetPoint := 'True'} : Int := 14;   // position 1, e.g. maximum value reached
-      END_STRUCT;
+      SetPoint : "SetPoint";
+      Limits : "Limits";
+      Levels : "Levels";
    END_STRUCT;
 
 END_TYPE
