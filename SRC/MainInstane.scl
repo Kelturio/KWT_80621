@@ -91,37 +91,35 @@ BEGIN
 	#sSurgeTankRefill.IsOpen := "WSB Magnetventil";
 	//sSurgeTankRefill.HasError := 
 	//
-	#sLiftingSys1.DeltaPressure.Val."Int" := "HA 1 Differenzdruck";
-	#sLiftingSys1.DeltaPressure.Val.IntPerc := "ScaleValueInt"(VALUE := "HA 1 Differenzdruck",
-	                                                        XMIN := "AnalogMin",
-	                                                        XMAX := "AnalogMax",
-	                                                        YMIN := 0,
-	                                                        YMAX := 100);
-	#sLiftingSys1.DeltaPressure.Limits.Max.IntPerc := "Retain_DB".Settings.MaxPressureDeltaPerc1;
+	#sLiftingSys1.DeltaPressure.IW := "HA 1 Differenzdruck";
+	#sLiftingSys1.DeltaPressure.Val.I := "ScaleValueIntToInt"(iVal := "HA 1 Differenzdruck",
+	                                                     iXMin := "AnalogMin",
+	                                                     iXMax := "AnalogMax",
+	                                                     iYMin := 0,
+	                                                     iYMax := 100);
+	#sLiftingSys1.DeltaPressure.Limits.Max.I := "Retain_DB".Settings.MaxPressureDeltaPerc1;
 	
-	#sLiftingSys2.DeltaPressure.Val."Int" := "HA 2 Differenzdruck";
-	#sLiftingSys2.DeltaPressure.Val.IntPerc := "ScaleValueInt"(VALUE := "HA 2 Differenzdruck",
-	                                                        XMIN := "AnalogMin",
-	                                                        XMAX := "AnalogMax",
-	                                                        YMIN := 0,
-	                                                        YMAX := 100);
-	#sLiftingSys2.DeltaPressure.Limits.Max.IntPerc := "Retain_DB".Settings.MaxPressureDeltaPerc1;
+	#sLiftingSys2.DeltaPressure.IW := "HA 2 Differenzdruck";
+	#sLiftingSys2.DeltaPressure.Val.I := "ScaleValueIntToInt"(iVal := "HA 2 Differenzdruck",
+	                                                     iXMin := "AnalogMin",
+	                                                     iXMax := "AnalogMax",
+	                                                     iYMin := 0,
+	                                                     iYMax := 100);
+	#sLiftingSys2.DeltaPressure.Limits.Max.I := "Retain_DB".Settings.MaxPressureDeltaPerc1;
 	
-	#sTempPlant.Val."Int" := "Vorlauftemperatur Werk";
-	#sTempPlant.Val.IntPerc := "ScaleValueInt"(VALUE := "Vorlauftemperatur Werk",
-	                                           XMIN := "AnalogMin",
-	                                           XMAX := "AnalogMax",
-	                                           YMIN := 0,
-	                                           YMAX := 100);
-	#sTempPlant.Limits.Max."Real" := "Retain_DB".Settings.MaxTempTransgression;
+	#sTempPlant.IW := "Vorlauftemperatur Werk";
+	#sTempPlant.Val := "ScaleInputWord100"("Vorlauftemperatur Werk");
+	//#sTempPlant.SetPoint.Lower
+	#sTempPlant.SetPoint.Upper := "RealToNum"("Retain_DB".Settings.SetPointTempPlant);
+	//#sTempPlant.Limits.Min
+	#sTempPlant.Limits.Max := "RealToNum"("Retain_DB".Settings.SetPointTempPlant);
 	
-	#sTempFurnace.Val."Int" := "Vorlauftemperatur Ofen";
-	#sTempFurnace.Val.IntPerc := "ScaleValueInt"(VALUE := "Vorlauftemperatur Ofen",
-	                                           XMIN := "AnalogMin",
-	                                           XMAX := "AnalogMax",
-	                                           YMIN := 0,
-	                                           YMAX := 100);
-	#sTempFurnace.Limits.Max."Real" := "Retain_DB".Settings.MaxTempTransgression;
+	#sTempFurnace.IW := "Vorlauftemperatur Ofen";
+	#sTempFurnace.Val := "ScaleInputWord100"("Vorlauftemperatur Ofen");
+	//sTempFurnace.SetPoint.Lower
+	#sTempFurnace.SetPoint.Upper := "RealToNum"("Retain_DB".Settings.SetPointTempFurnace);
+	//sTempFurnace.Limits.Min
+	#sTempFurnace.Limits.Max := "RealToNum"("Retain_DB".Settings.MaxTempTransgression);
 	
 	#AlwaysRUN(iCvOff := NOT "Steuerspannung Ein",
 	           iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
@@ -155,8 +153,8 @@ BEGIN
 	           iAnimationRange := #sAnimationRange,
 	           iLiftingSys1 := #sLiftingSys1,
 	           iLiftingSys2 := #sLiftingSys2,
-	           iTempPlant:=#sTempPlant,
-	           iTempFurnace:=#sTempFurnace,
+	           iTempPlant := #sTempPlant,
+	           iTempFurnace := #sTempFurnace,
 	           oFlowTempPlant => #FlowTemperaturePlant,
 	           oFlowTempFurnace => #FlowTemperatureFurnace,
 	           oAlarmLamp => "Rundumleuchte Störung",
