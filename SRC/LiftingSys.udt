@@ -1,0 +1,8 @@
+﻿TYPE "LiftingSys"
+VERSION : 0.1
+   STRUCT
+      DeltaPressure : Int;
+   END_STRUCT;
+
+END_TYPE
+
