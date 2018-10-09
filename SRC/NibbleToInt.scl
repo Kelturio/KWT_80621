@@ -1,0 +1,16 @@
+﻿FUNCTION "NibbleToInt" : Int
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iNibble : "Nibble";
+   END_VAR
+
+
+BEGIN
+	#NibbleToInt := 0;
+	#NibbleToInt.%X0 := #iNibble.X0;
+	#NibbleToInt.%X1 := #iNibble.X1;
+	#NibbleToInt.%X2 := #iNibble.X2;
+	#NibbleToInt.%X3 := #iNibble.X3;
+END_FUNCTION
+
