@@ -1,0 +1,26 @@
+﻿FUNCTION "ScaleValueIntToReal" : Real
+TITLE = ScaleValue
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
+FAMILY : AKK
+NAME : '1337'
+VERSION : 0.1
+//Der Baustein liefert einen linearen Zusammenhang zwischen dem Wert am Eingang I1 und dem Wert am Ausgang QV. Der Ausgangswert wird durch die beiden Koordinatenpaare X1, Y1 und X2, Y2 definiert. 
+   VAR_INPUT 
+      Val : Int;   // Eingangswert
+      XMin : Int;   // Stützpunkt 1
+      XMax : Int;   // Stützpunkt 2
+      YMin : Real;   // Stützpunkt 1
+      YMax : Real;   // Stützpunkt 2
+   END_VAR
+
+   VAR_TEMP 
+      tNorm : Real;
+   END_VAR
+
+
+BEGIN
+	#tNorm := NORM_X(MIN := #XMin, VALUE := #Val, MAX := #XMax);
+	#ScaleValueIntToReal := SCALE_X(MIN := #YMin, VALUE := #tNorm, MAX := #YMax);
+END_FUNCTION
+
