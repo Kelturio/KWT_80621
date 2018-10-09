@@ -19,10 +19,40 @@ VERSION : 0.1
    VAR 
       EmergencyStop : "EmergencyStop";
       sSurgeTankLevel : Int;
+      sPumpPlant1 : "Pump";
+      sPumpPlant2 : "Pump";
+      sPumpCoolWater1 : "Pump";
+      sPumpCoolWater2 : "Pump";
+      sPumpFurnace1 : "Pump";
+      sPumpFurnace2 : "Pump";
    END_VAR
 
 
 BEGIN
+	#sPumpPlant1.Q := "Werkspumpe 1";
+	#sPumpPlant1.IsRunning := "Werkspumpe 1 Betrieb";
+	#sPumpPlant1.HasError := "Werkspumpe 1 Störung";
+	
+	#sPumpPlant2.Q := "Werkspumpe 2";
+	#sPumpPlant2.IsRunning := "Werkspumpe 2 Betrieb";
+	#sPumpPlant2.HasError := "Werkspumpe 2 Störung";
+	
+	#sPumpCoolWater1.Q := "Kühlwasserpumpe 1";
+	#sPumpCoolWater1.IsRunning := "Kühlwasserpumpe 1 Betrieb";
+	#sPumpCoolWater1.HasError := NOT "Kühlwasserpumpe 1 MSS OK";
+	
+	#sPumpCoolWater2.Q := "Kühlwasserpumpe 2";
+	#sPumpCoolWater2.IsRunning := "Kühlwasserpumpe 2 Betrieb";
+	#sPumpCoolWater2.HasError := NOT "Kühlwasserpumpe 2 MSS OK";
+	
+	#sPumpFurnace1.Q := "Ofenpumpe 1";
+	#sPumpFurnace1.IsRunning := "Ofenpumpe 1 Betrieb";
+	#sPumpFurnace1.HasError := NOT "Ofenpumpe 1 MSS OK";
+	
+	#sPumpFurnace2.Q := "Ofenpumpe 2";
+	#sPumpFurnace2.IsRunning := "Ofenpumpe 2 Betrieb";
+	#sPumpFurnace2.HasError := NOT "Ofenpumpe 2 MSS OK";
+	
 	#AlwaysRUN(iCvOff := NOT "Steuerspannung Ein",
 	           iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
 	           iCt1FanErr := "KT 1 Ventilator Störung",
@@ -64,6 +94,12 @@ BEGIN
 	           iCt2FanQ := "KT 2 Ventilator",
 	           iCt2FanRun := "KT 2 Ventilator Betrieb",
 	           iAutoMode := #sAutoMode,
+	           iPumpPlant1 := #sPumpPlant1,
+	           iPumpPlant2 := #sPumpPlant2,
+	           iPumpCoolWater1 := #sPumpCoolWater1,
+	           iPumpCoolWater2 := #sPumpCoolWater2,
+	           iPumpFurnace1 := #sPumpFurnace1,
+	           iPumpFurnace2 := #sPumpFurnace2,
 	           oFlowTempPlant => #FlowTemperaturePlant,
 	           oFlowTempFurnace => #FlowTemperatureFurnace,
 	           oAlarmLamp => "Rundumleuchte Störung",

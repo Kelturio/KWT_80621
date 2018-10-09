@@ -96,30 +96,27 @@ BEGIN
 	
 	#sSetPointMin := #sSetPointMax - #sMinToMaxZone;
 	
-	IF "AlwaysTRUE" THEN
-	    #Hebeanlage(Strang := #sBranch,
-	                Temp := "Main_DB".FlowTemperatureFurnace,
-	                TempMin := #sSetPointMin,
-	                TempMax := #sSetPointMax + 1,
-	                Motorschutzschalter_H1 := NOT "Ofenpumpe 1 MSS OK",
-	                Motorschutzschalter_H2 := NOT "Ofenpumpe 2 MSS OK",
-	                Betrieb_P1 := "Ofenpumpe 1 Betrieb",
-	                Betrieb_P2 := "Ofenpumpe 2 Betrieb",
-	                "H1 Klappe geöffnet" := "HA 1 Klappe geöffnet",
-	                "H2 Klappe geöffnet" := "HA 2 Klappe geöffnet",
-	                "Behälter Trockenlaufschutz" := "WSB OUT1",
-	                "Behälter Pumpe ein" := "WSB OUT2",
-	                "Behälter Pumpe aus" := "WSB OUT3",
-	                "Behälter Überlauf" := "WSB OUT4",
-	                "H1 Differenzdruck" := "HA 1 Differenzdruck",
-	                "H2 Differenzdruck" := "HA 2 Differenzdruck",
-	                "Hebeanlage 1 öffnen" => "HA 1 Klappe Freigabe",
-	                "Hebeanlage 2 öffnen" => "HA 2 Klappe Freigabe",
-	                Pumpe_H1 => "Ofenpumpe 1",
-	                Pumpe_H2 => "Ofenpumpe 2",
-	                H1_Durchflußmenge => "HA 1 Klappe Durchflußmenge",
-	                H2_Durchflußmenge => "HA 2 Klappe Durchflußmenge");
-	END_IF;
-	
+	#Hebeanlage(Strang := #sBranch,
+	            Temp := "Main_DB".FlowTemperatureFurnace,
+	            TempMin := #sSetPointMin,
+	            TempMax := #sSetPointMax + 1,
+	            Motorschutzschalter_H1 := NOT "Ofenpumpe 1 MSS OK",
+	            Motorschutzschalter_H2 := NOT "Ofenpumpe 2 MSS OK",
+	            Betrieb_P1 := "Ofenpumpe 1 Betrieb",
+	            Betrieb_P2 := "Ofenpumpe 2 Betrieb",
+	            "H1 Klappe geöffnet" := "HA 1 Klappe geöffnet",
+	            "H2 Klappe geöffnet" := "HA 2 Klappe geöffnet",
+	            "Behälter Trockenlaufschutz" := "WSB OUT1",
+	            "Behälter Pumpe ein" := "WSB OUT2",
+	            "Behälter Pumpe aus" := "WSB OUT3",
+	            "Behälter Überlauf" := "WSB OUT4",
+	            "H1 Differenzdruck" := "HA 1 Differenzdruck",
+	            "H2 Differenzdruck" := "HA 2 Differenzdruck",
+	            "Hebeanlage 1 öffnen" => "HA 1 Klappe Freigabe",
+	            "Hebeanlage 2 öffnen" => "HA 2 Klappe Freigabe",
+	            Pumpe_H1 => "Ofenpumpe 1",
+	            Pumpe_H2 => "Ofenpumpe 2",
+	            H1_Durchflußmenge => "HA 1 Klappe Durchflußmenge",
+	            H2_Durchflußmenge => "HA 2 Klappe Durchflußmenge");
 END_FUNCTION_BLOCK
 

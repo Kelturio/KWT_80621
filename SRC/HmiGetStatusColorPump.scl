@@ -3,15 +3,13 @@
 AUTHOR : Searinox
 VERSION : 0.1
    VAR_INPUT 
-      iPumpQ : Bool;
-      iPumpRun : Bool;
-      iPumpErr : Bool;
+      iPump : "Pump";
    END_VAR
 
 
 BEGIN
-	#HmiGetStatusColorPump := "HmiGetStatusColor"(iQ:=#iPumpQ,
-	                                              iRun:=#iPumpRun,
-	                                              iErr:=#iPumpErr);
+	#HmiGetStatusColorPump := "HmiGetStatusColor"(iQ := #iPump.Q,
+	                                              iRun := #iPump.IsRunning,
+	                                              iErr := #iPump.HasError);
 END_FUNCTION
 

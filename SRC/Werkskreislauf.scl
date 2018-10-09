@@ -26,7 +26,7 @@ VERSION : 0.1
 
 BEGIN
 	#Baustein_1(i_strang := #iBranch,
-	            i_beide := "AlwaysFALSE",
+	            i_beide := FALSE,
 	            i_err1 := #iPumpPlant1Err,
 	            i_err2 := #iPumpPlant2Err,
 	            i_run1 := #iPumpPlant1Run,

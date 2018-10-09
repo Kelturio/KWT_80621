@@ -3,6 +3,12 @@
 AUTHOR : Searinox
 VERSION : 0.1
    VAR_INPUT 
+      iPumpPlant1 : "Pump";
+      iPumpPlant2 : "Pump";
+      iPumpCoolWater1 : "Pump";
+      iPumpCoolWater2 : "Pump";
+      iPumpFurnace1 : "Pump";
+      iPumpFurnace2 : "Pump";
       iPumpPlant1Q : Bool;
       iPumpPlant1Run : Bool;
       iPumpPlant1Err : Bool;
@@ -69,26 +75,14 @@ VERSION : 0.1
 
 
 BEGIN
-	#sPumpPlant1 := "HmiGetStatusColorPump"(iPumpQ := #iPumpPlant1Q,
-	                                        iPumpRun := #iPumpPlant1Run,
-	                                        iPumpErr := #iPumpPlant1Err);
-	#sPumpPlant2 := "HmiGetStatusColorPump"(iPumpQ := #iPumpPlant2Q,
-	                                        iPumpRun := #iPumpPlant2Run,
-	                                        iPumpErr := #iPumpPlant2Err);
+	#sPumpPlant1 := "HmiGetStatusColorPump"(iPump := #iPumpPlant1);
+	#sPumpPlant2 := "HmiGetStatusColorPump"(iPump := #iPumpPlant2);
 	
-	#sPumpCoolWater1 := "HmiGetStatusColorPump"(iPumpQ := #iPumpCoolWater1Q,
-	                                            iPumpRun := #iPumpCoolWater1Run,
-	                                            iPumpErr := #iPumpCoolWater1Err);
-	#sPumpCoolWater2 := "HmiGetStatusColorPump"(iPumpQ := #iPumpCoolWater2Q,
-	                                            iPumpRun := #iPumpCoolWater2Run,
-	                                            iPumpErr := #iPumpCoolWater2Err);
+	#sPumpCoolWater1 := "HmiGetStatusColorPump"(iPump := #iPumpCoolWater1);
+	#sPumpCoolWater2 := "HmiGetStatusColorPump"(iPump := #iPumpCoolWater2);
 	
-	#sPumpFurnace1 := "HmiGetStatusColorPump"(iPumpQ := #iPumpFurnace1Q,
-	                                          iPumpRun := #iPumpFurnace1Run,
-	                                          iPumpErr := #iPumpFurnace1Err);
-	#sPumpFurnace2 := "HmiGetStatusColorPump"(iPumpQ := #iPumpFurnace2Q,
-	                                          iPumpRun := #iPumpFurnace2Run,
-	                                          iPumpErr := #iPumpFurnace2Err);
+	#sPumpFurnace1 := "HmiGetStatusColorPump"(iPump := #iPumpFurnace1);
+	#sPumpFurnace2 := "HmiGetStatusColorPump"(iPump := #iPumpFurnace2);
 	
 	#sCt1Fan := "HmiGetStatusColorFan"(iFanQ := #iCt1FanQ,
 	                                   iFanRun := #iCt1FanRun,
