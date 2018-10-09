@@ -34,6 +34,8 @@ VERSION : 0.1
       iSurgeTankRefill : "Valve";
       iAnimationPt : Time;
       iAnimationRange : "Range";
+      iLiftingSys1 : "LiftingSys";
+      iLiftingSys2 : "LiftingSys";
    END_VAR
 
    VAR_OUTPUT 
@@ -101,9 +103,20 @@ BEGIN
 	       iCt2SprayPipeIsOpen := #iCt2SprayPipeIsOpen,
 	       iFlowTempPlant := #oFlowTempPlant,
 	       iFlowTempFurnace := #oFlowTempFurnace,
-	       iLiftSys1DeltaPressure := #iLiftSys1DeltaPressure,
-	       iLiftSys2DeltaPressure := #iLiftSys2DeltaPressure,
 	       iSurgeTankLevel := #oSurgeTankLevel,
+	       iFan1 := #iFan1,
+	       iFan2 := #iFan2,
+	       iPumpPlant1 := #iPumpPlant1,
+	       iPumpPlant2 := #iPumpPlant2,
+	       iPumpCoolWater1 := #iPumpCoolWater1,
+	       iPumpCoolWater2 := #iPumpCoolWater2,
+	       iPumpFurnace1 := #iPumpFurnace1,
+	       iPumpFurnace2 := #iPumpFurnace2,
+	       iSprayPipe1 := #iSprayPipe1,
+	       iSprayPipe2 := #iSprayPipe2,
+	       iSurgeTankRefill := #iSurgeTankRefill,
+	       iLiftingSys1 := #iLiftingSys1,
+	       iLiftingSys2 := #iLiftingSys2,
 	       oAlarmCount => #tAlarmCount,
 	       oAlarmLamp => #oAlarmLamp,
 	       oSprayPipeOpenTimeout1 => #sSprayPipeOpenTimeout1,
