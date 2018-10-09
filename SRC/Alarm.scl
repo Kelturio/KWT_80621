@@ -46,8 +46,8 @@ VERSION : 0.1
       sPumpCoolWater2Err : Int;
       sPumpFurnace1Err : Int;
       sPumpFurnace2Err : Int;
-      sFlowTemperaturePlantHot : Int;
-      sFlowTemperatureFurnaceHot : Int;
+      sFlowTempPlantHot : Int;
+      sFlowTempFurnaceHot : Int;
       sPressureDeltaPerc1 : Int;
       sPressureDeltaPerc2 : Int;
       sSurgeTankRunDry : Int;
@@ -85,24 +85,36 @@ BEGIN
 	END_REGION
 	REGION analog
 	    // temperatures
-	    #sFlowTemperaturePlantHot := BOOL_TO_INT("Main_DB".FlowTemperaturePlant
-	                                             >= ("Main_DB".Auto.sSetPointMax
-	                                             + "Retain_DB".Settings.MaxTempTransgression));
-	    #sFlowTemperatureFurnaceHot := BOOL_TO_INT("Main_DB".FlowTemperatureFurnace
-	                                               >= ("Main_DB".Auto.sSetPointMax
-	                                               + "Retain_DB".Settings.MaxTempTransgression));
+	    #sFlowTempPlantHot
+	    := BOOL_TO_INT("Main_DB".FlowTemperaturePlant
+	                   >= ("Main_DB".Auto.sSetPointMax
+	                   + "Retain_DB".Settings.MaxTempTransgression));
+	    #sFlowTempFurnaceHot
+	    := BOOL_TO_INT("Main_DB".FlowTemperatureFurnace
+	                   >= ("Main_DB".Auto.sSetPointMax
+	                   + "Retain_DB".Settings.MaxTempTransgression));
 	    // pressures
 	    #tPressureDeltaPerc1 := "ScaleValueInt"(VALUE := #iLiftSys1DeltaPressure,
-	                                            XMIN := "AnalogMin", XMAX := "AnalogMax",
+	                                            XMIN := "AnalogMin",
+	                                            XMAX := "AnalogMax",
 	                                            YMIN := 0, YMAX := 100);
-	    #sPressureDeltaPerc1 := BOOL_TO_INT(#"tPressureDeltaPerc1" >= "Retain_DB".Settings.MaxPressureDeltaPerc1);
+	    #sPressureDeltaPerc1
+	    := BOOL_TO_INT(#"tPressureDeltaPerc1"
+	                   >= "Retain_DB".Settings.MaxPressureDeltaPerc1);
 	    #tPressureDeltaPerc2 := "ScaleValueInt"(VALUE := #iLiftSys2DeltaPressure,
-	                                            XMIN := "AnalogMin", XMAX := "AnalogMax",
+	                                            XMIN := "AnalogMin",
+	                                            XMAX := "AnalogMax",
 	                                            YMIN := 0, YMAX := 100);
-	    #sPressureDeltaPerc2 := BOOL_TO_INT(#"tPressureDeltaPerc2" >= "Retain_DB".Settings.MaxPressureDeltaPerc2);
+	    #sPressureDeltaPerc2
+	    := BOOL_TO_INT(#"tPressureDeltaPerc2"
+	                   >= "Retain_DB".Settings.MaxPressureDeltaPerc2);
 	    // levels
-	    #sSurgeTankRunDry := BOOL_TO_INT(#iSurgeTankLevel <= "Retain_DB".Settings.SurgeTankLevel.RunDry);
-	    #sSurgeTankOverflow := BOOL_TO_INT(#iSurgeTankLevel >= "Retain_DB".Settings.SurgeTankLevel.Overflow);
+	    #sSurgeTankRunDry
+	    := BOOL_TO_INT(#iSurgeTankLevel
+	                   <= "Retain_DB".Settings.SurgeTankLevel.RunDry);
+	    #sSurgeTankOverflow
+	    := BOOL_TO_INT(#iSurgeTankLevel
+	                   >= "Retain_DB".Settings.SurgeTankLevel.Overflow);
 	END_REGION
 	REGION timeout
 	    #IEC_TMR_0.TON(IN := #iCt1SprayPipeOpen,
@@ -130,8 +142,8 @@ BEGIN
 	#oAlarmCount += #sPumpCoolWater2Err;
 	#oAlarmCount += #sPumpFurnace1Err;
 	#oAlarmCount += #sPumpFurnace2Err;
-	#oAlarmCount += #sFlowTemperaturePlantHot;
-	#oAlarmCount += #sFlowTemperatureFurnaceHot;
+	#oAlarmCount += #sFlowTempPlantHot;
+	#oAlarmCount += #sFlowTempFurnaceHot;
 	#oAlarmCount += #sPressureDeltaPerc1;
 	#oAlarmCount += #sPressureDeltaPerc2;
 	#oAlarmCount += #sSurgeTankRunDry;
