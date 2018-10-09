@@ -3,7 +3,8 @@
 AUTHOR : Searinox
 VERSION : 0.1
    VAR_INPUT 
-      iTimer0Pt : Time := T#100ms;
+      iPt : Time := T#100ms;
+      iRange : "Range";
    END_VAR
 
    VAR 
@@ -14,13 +15,13 @@ VERSION : 0.1
 
 BEGIN
 	#IEC_TMR_0.TON(IN := TRUE,
-	               PT := #iTimer0Pt);
+	               PT := #iPt);
 	
 	IF #IEC_TMR_0.Q THEN
 	    RESET_TIMER(#IEC_TMR_0);
-	    #sFrame += 1;
-	    IF #sFrame = 5 THEN
-	        #sFrame := 1;
+	    #sFrame += #iRange.Step;
+	    IF #sFrame = #iRange.End THEN
+	        #sFrame := #iRange.Start;
 	    END_IF;
 	END_IF;
 END_FUNCTION_BLOCK
