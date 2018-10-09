@@ -2,6 +2,7 @@
 VERSION : 0.1
    STRUCT
       DeltaPressure : Int;
+      DeltaPressureAlarmMaxPerc : Int;
    END_STRUCT;
 
 END_TYPE
