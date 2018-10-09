@@ -7,20 +7,20 @@ NAME : '1337'
 VERSION : 0.1
 //Der Baustein liefert einen linearen Zusammenhang zwischen dem Wert am Eingang I1 und dem Wert am Ausgang QV. Der Ausgangswert wird durch die beiden Koordinatenpaare X1, Y1 und X2, Y2 definiert. 
    VAR_INPUT 
-      VALUE : Real;   // Eingangswert
-      XMIN : Real;   // Stützpunkt 1
-      XMAX : Real;   // Stützpunkt 2
-      YMIN : Int;   // Stützpunkt 1
-      YMAX : Int;   // Stützpunkt 2
+      iVal : Real;   // Eingangswert
+      iXMin : Real;   // Stützpunkt 1
+      iXMax : Real;   // Stützpunkt 2
+      iYMin : Int;   // Stützpunkt 1
+      iYMax : Int;   // Stützpunkt 2
    END_VAR
 
    VAR_TEMP 
-      t_norm : Real;
+      tNorm : Real;
    END_VAR
 
 
 BEGIN
-	#t_norm := NORM_X(MIN := #XMIN, VALUE := #VALUE, MAX := #XMAX);
-	#ScaleValueRealToInt := SCALE_X(MIN := #YMIN, VALUE := #t_norm, MAX := #YMAX);
+	#tNorm := NORM_X(MIN := #iXMin, VALUE := #iVal, MAX := #iXMax);
+	#ScaleValueRealToInt := SCALE_X(MIN := #iYMin, VALUE := #tNorm, MAX := #iYMax);
 END_FUNCTION
 
