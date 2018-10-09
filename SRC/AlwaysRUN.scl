@@ -29,6 +29,8 @@ VERSION : 0.1
       iPumpFurnace2 : "Pump";
       iFan1 : "Fan";
       iFan2 : "Fan";
+      iSprayPipe1 : "Valve";
+      iSprayPipe2 : "Valve";
    END_VAR
 
    VAR_OUTPUT 
@@ -102,7 +104,9 @@ BEGIN
 	       oSprayPipeOpenTimeout1 => #sSprayPipeOpenTimeout1,
 	       oSprayPipeOpenTimeout2 => #sSprayPipeOpenTimeout2);
 	
-	"HmiDb"(iPumpPlant1 := #iPumpPlant1,
+	"HmiDb"(iFan1:=#iFan1,
+	        iFan2:=#iFan2,
+	        iPumpPlant1 := #iPumpPlant1,
 	        iPumpPlant2 := #iPumpPlant2,
 	        iPumpCoolWater1 := #iPumpCoolWater1,
 	        iPumpCoolWater2 := #iPumpCoolWater2,
@@ -132,6 +136,8 @@ BEGIN
 	        iCt2FanQ := #iCt2FanQ,
 	        iCt2FanRun := #iCt2FanRun,
 	        iCt2FanErr := #iCt2FanErr,
+	        iSprayPipe1:=#iSprayPipe1,
+	        iSprayPipe2:=#iSprayPipe2,
 	        iCt1RepairSwitchOff := #iCt1RepairSwitchOff,
 	        iCt2RepairSwitchOff := #iCt2RepairSwitchOff,
 	        iCt1SprayPipeOpen := #iCt1SprayPipeOpen,
@@ -140,6 +146,7 @@ BEGIN
 	        iCt2SprayPipeOpen := #iCt2SprayPipeOpen,
 	        iCt2SprayPipeIsOpen := #iCt2SprayPipeIsOpen,
 	        iCt2SprayPipeErr := #sSprayPipeOpenTimeout2,
-	        iAutoMode := #iAutoMode);
+	        iAutoMode := #iAutoMode,
+	        iSurgeTankRefill:=#iSurgeTankRefill);
 END_FUNCTION_BLOCK
 
