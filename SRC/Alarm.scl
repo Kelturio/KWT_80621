@@ -7,7 +7,6 @@ VERSION : 0.1
       iFuseOutputsErr : Bool;   // Fuse Outputs Error
       iCt1RepairSwitchOff : Bool;   // Cooling Tower 1 Repair Switch
       iCt2RepairSwitchOff : Bool;   // Cooling Tower 2 Repair Switch
-      iSurgeTankLevel : Int;
       iFan1 : "Fan";
       iFan2 : "Fan";
       iPumpPlant1 : "Pump";
@@ -18,11 +17,11 @@ VERSION : 0.1
       iPumpFurnace2 : "Pump";
       iSprayPipe1 : "Valve";
       iSprayPipe2 : "Valve";
-      iSurgeTankRefill : "Valve";
       iLiftingSys1 : "LiftingSys";
       iLiftingSys2 : "LiftingSys";
       iTempPlant : "Temperature";
       iTempFurnace : "Temperature";
+      iSurgeTank : "Tank";
    END_VAR
 
    VAR_OUTPUT 
@@ -57,13 +56,6 @@ VERSION : 0.1
       sSprayPipeOpenTimeout2 : Int;
    END_VAR
 
-   VAR_TEMP 
-      tSprayPipeOpenTimer1 : Bool;
-      tSprayPipeOpenTimer1Et : Time;
-      tSprayPipeOpenTimer2 : Bool;
-      tSprayPipeOpenTimer2Et : Time;
-   END_VAR
-
 
 BEGIN
 	REGION bool
@@ -90,18 +82,17 @@ BEGIN
 	                                        #iTempFurnace.SetPoint.Upper.R +
 	                                        #iTempFurnace.Limits.Max.R));
 	    // pressures
-	    #sPressureDeltaPerc1 := BOOL_TO_INT(#iLiftingSys1.DeltaPressure.Val.I >=
-	                                        #iLiftingSys1.DeltaPressure.Limits.Max.I);
+	    #sPressureDeltaPerc1 := BOOL_TO_INT(#iLiftingSys1.DeltaPressure.Val.R >=
+	                                        #iLiftingSys1.DeltaPressure.Limits.Max.R);
 	    
-	    #sPressureDeltaPerc2 := BOOL_TO_INT(#iLiftingSys2.DeltaPressure.Val.I >=
-	                                        #iLiftingSys2.DeltaPressure.Limits.Max.I);
+	    #sPressureDeltaPerc2 := BOOL_TO_INT(#iLiftingSys2.DeltaPressure.Val.R >=
+	                                        #iLiftingSys2.DeltaPressure.Limits.Max.R);
 	    // levels
-	    #sSurgeTankRunDry
-	    := BOOL_TO_INT(#iSurgeTankLevel
-	                   <= "Retain_DB".Settings.SurgeTankLevel.RunDry);
-	    #sSurgeTankOverflow
-	    := BOOL_TO_INT(#iSurgeTankLevel
-	                   >= "Retain_DB".Settings.SurgeTankLevel.Overflow);
+	    #sSurgeTankRunDry := BOOL_TO_INT(#iSurgeTank.Val.I <=
+	                                     #iSurgeTank.Limits.Min.I);
+	    
+	    #sSurgeTankOverflow := BOOL_TO_INT(#iSurgeTank.Val.I >=
+	                                       #iSurgeTank.Limits.Max.I);
 	END_REGION
 	REGION timeout
 	    #Ton0(IN := #iSprayPipe1.Q,
