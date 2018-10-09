@@ -11,6 +11,8 @@ VERSION : 0.1
       iPumpCoolWater2 : "Pump";
       iPumpFurnace1 : "Pump";
       iPumpFurnace2 : "Pump";
+      iSprayPipe1 : "Valve";
+      iSprayPipe2 : "Valve";
       iCt1RepairSwitchOff : Bool;
       iCt2RepairSwitchOff : Bool;
       iCt1SprayPipeOpen : Bool;
@@ -67,16 +69,13 @@ BEGIN
 	#sCt2Fan := "HmiGetStatusColorFan"(iFan:=#iFan2,
 	                                   iAnimationFrame := #sAnimationFrame);
 	
-	#sCt1SprayPipe := "HmiGetStatusColorValve"(iValveQ := #iCt1SprayPipeOpen,
-	                                           iValveOpen := #iCt1SprayPipeIsOpen,
-	                                           iValveErr := #iCt1SprayPipeErr);
-	#sCt2SprayPipe := "HmiGetStatusColorValve"(iValveQ := #iCt2SprayPipeOpen,
-	                                           iValveOpen := #iCt2SprayPipeIsOpen,
-	                                           iValveErr := #iCt2SprayPipeErr);
+	#sCt1SprayPipe := "HmiGetStatusColorValve"(iValve:=#iSprayPipe1);
+	#sCt2SprayPipe := "HmiGetStatusColorValve"(iValve:=#iSprayPipe2);
 	
 	#sSurgeTankRefill := "HmiGetStatusColorValve"(iValveQ := #iSurgeTankRefill,
 	                                              iValveOpen := #iSurgeTankRefill,
-	                                              iValveErr := FALSE);
+	                                              iValveErr := FALSE,
+	                                              iValve:=_block_udt_in_);
 	
 	#IEC_TMR_0.TON(IN := #sTimer0Start,
 	               PT := #sTimer0Pt,
