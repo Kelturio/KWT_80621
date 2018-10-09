@@ -93,20 +93,10 @@ BEGIN
 	                                        ("Main_DB".Auto.sSetPointMax +
 	                                        "Retain_DB".Settings.MaxTempTransgression));
 	    // pressures
-	    (*    #tPressureDeltaPerc1 := "ScaleValueInt"(VALUE := #iLiftingSys1.DeltaPressure,
-	                                            XMIN := "AnalogMin",
-	                                            XMAX := "AnalogMax",
-	                                            YMIN := 0,
-	                                            YMAX := 100); *)
 	    #sPressureDeltaPerc1 := BOOL_TO_INT(#iLiftingSys1.DeltaPressure.Val.Perc >=
-	                                        #iLiftingSys1.DeltaPressure.Alarm.Max.Perc);
-	(*    #tPressureDeltaPerc2 := "ScaleValueInt"(VALUE := #iLiftingSys2.DeltaPressure,
-	                                            XMIN := "AnalogMin",
-	                                            XMAX := "AnalogMax",
-	                                            YMIN := 0,
-	                                            YMAX := 100); *)
+	                                        #iLiftingSys1.DeltaPressure.Limits.Max.Perc);
 	    #sPressureDeltaPerc2 := BOOL_TO_INT(#iLiftingSys2.DeltaPressure.Val.Perc >=
-	                                        #iLiftingSys2.DeltaPressure.Alarm.Max.Perc);
+	                                        #iLiftingSys2.DeltaPressure.Limits.Max.Perc);
 	    // levels
 	    #sSurgeTankRunDry
 	    := BOOL_TO_INT(#iSurgeTankLevel
