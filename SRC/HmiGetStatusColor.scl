@@ -1,0 +1,27 @@
+﻿FUNCTION "HmiGetStatusColor" : Int
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR_INPUT 
+      iQ : Bool;
+      iRun : Bool;
+      iErr : Bool;
+   END_VAR
+
+
+BEGIN
+	IF #iErr THEN
+	    #HmiGetStatusColor := 3;
+	ELSIF #iQ AND NOT #iRun THEN
+	    #HmiGetStatusColor := 2;
+	ELSIF #iQ AND #iRun THEN
+	    #HmiGetStatusColor := 1;
+	ELSIF NOT #iQ AND #iRun THEN
+	    #HmiGetStatusColor := 1;
+	ELSIF NOT #iQ AND NOT #iRun THEN
+	    #HmiGetStatusColor := 0;
+	ELSE
+	    #HmiGetStatusColor := 404;
+	END_IF;
+END_FUNCTION
+

@@ -1,4 +1,4 @@
-﻿FUNCTION "HmiFan" : Int
+﻿FUNCTION "HmiGetStatusColorFan" : Int
 { S7_Optimized_Access := 'TRUE' }
 AUTHOR : Searinox
 VERSION : 0.1
@@ -12,23 +12,23 @@ VERSION : 0.1
 
 
 BEGIN
-	#HmiFan := 0;
+	#HmiGetStatusColorFan := 0;
 	IF #iFanErr OR #iRepairSwitchOff THEN
-	    #HmiFan := 41;
+	    #HmiGetStatusColorFan := 41;
 	ELSIF #iFanQ AND NOT #iFanRun THEN
-	    #HmiFan := 31;
+	    #HmiGetStatusColorFan := 31;
 	ELSIF #iFanQ AND #iFanRun THEN
-	    #HmiFan := 20;
+	    #HmiGetStatusColorFan := 20;
 	ELSIF NOT #iFanQ AND #iFanRun THEN
-	    #HmiFan := 20;
+	    #HmiGetStatusColorFan := 20;
 	ELSIF NOT #iFanQ AND NOT #iFanRun THEN
-	    #HmiFan := 11;
+	    #HmiGetStatusColorFan := 11;
 	ELSE
-	    #HmiFan := 404;
+	    #HmiGetStatusColorFan := 404;
 	END_IF;
 	
-	IF #HmiFan = 20 THEN
-	    #HmiFan := #HmiFan + #iAnimationFrame;
+	IF #HmiGetStatusColorFan = 20 THEN
+	    #HmiGetStatusColorFan := #HmiGetStatusColorFan + #iAnimationFrame;
 	END_IF;
 END_FUNCTION
 

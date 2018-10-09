@@ -1,0 +1,17 @@
+﻿FUNCTION "HmiGetStatusColorValve" : Int
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR_INPUT 
+      iValveQ : Bool;
+      iValveOpen : Bool;
+      iValveErr : Bool;
+   END_VAR
+
+
+BEGIN
+	#HmiGetStatusColorValve := "HmiGetStatusColor"(iQ := #iValveQ,
+	                                               iRun := #iValveOpen,
+	                                               iErr := #iValveErr);
+END_FUNCTION
+
