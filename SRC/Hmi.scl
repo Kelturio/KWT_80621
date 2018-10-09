@@ -3,36 +3,14 @@
 AUTHOR : Searinox
 VERSION : 0.1
    VAR_INPUT 
+      iFan1 : "Fan";
+      iFan2 : "Fan";
       iPumpPlant1 : "Pump";
       iPumpPlant2 : "Pump";
       iPumpCoolWater1 : "Pump";
       iPumpCoolWater2 : "Pump";
       iPumpFurnace1 : "Pump";
       iPumpFurnace2 : "Pump";
-      iPumpPlant1Q : Bool;
-      iPumpPlant1Run : Bool;
-      iPumpPlant1Err : Bool;
-      iPumpPlant2Q : Bool;
-      iPumpPlant2Run : Bool;
-      iPumpPlant2Err : Bool;
-      iPumpCoolWater1Q : Bool;
-      iPumpCoolWater1Run : Bool;
-      iPumpCoolWater1Err : Bool;
-      iPumpCoolWater2Q : Bool;
-      iPumpCoolWater2Run : Bool;
-      iPumpCoolWater2Err : Bool;
-      iPumpFurnace1Q : Bool;
-      iPumpFurnace1Run : Bool;
-      iPumpFurnace1Err : Bool;
-      iPumpFurnace2Q : Bool;
-      iPumpFurnace2Run : Bool;
-      iPumpFurnace2Err : Bool;
-      iCt1FanQ : Bool;
-      iCt1FanRun : Bool;
-      iCt1FanErr : Bool;
-      iCt2FanQ : Bool;
-      iCt2FanRun : Bool;
-      iCt2FanErr : Bool;
       iCt1RepairSwitchOff : Bool;
       iCt2RepairSwitchOff : Bool;
       iCt1SprayPipeOpen : Bool;
@@ -84,15 +62,9 @@ BEGIN
 	#sPumpFurnace1 := "HmiGetStatusColorPump"(iPump := #iPumpFurnace1);
 	#sPumpFurnace2 := "HmiGetStatusColorPump"(iPump := #iPumpFurnace2);
 	
-	#sCt1Fan := "HmiGetStatusColorFan"(iFanQ := #iCt1FanQ,
-	                                   iFanRun := #iCt1FanRun,
-	                                   iFanErr := #iCt1FanErr,
-	                                   iRepairSwitchOff := #iCt1RepairSwitchOff,
+	#sCt1Fan := "HmiGetStatusColorFan"(iFan:=#iFan1,
 	                                   iAnimationFrame := #sAnimationFrame);
-	#sCt2Fan := "HmiGetStatusColorFan"(iFanQ := #iCt2FanQ,
-	                                   iFanRun := #iCt2FanRun,
-	                                   iFanErr := #iCt2FanErr,
-	                                   iRepairSwitchOff := #iCt2RepairSwitchOff,
+	#sCt2Fan := "HmiGetStatusColorFan"(iFan:=#iFan2,
 	                                   iAnimationFrame := #sAnimationFrame);
 	
 	#sCt1SprayPipe := "HmiGetStatusColorValve"(iValveQ := #iCt1SprayPipeOpen,
