@@ -82,17 +82,19 @@ BEGIN
 	END_REGION
 	REGION analog
 	    // temperatures
-	    #sFlowTempPlantHot := BOOL_TO_INT(#iTempPlant.Val.RealPerc >=
-	                                      ("Main_DB".Auto.sSetPointMax +
-	                                      "Retain_DB".Settings.MaxTempTransgression));
-	    #sFlowTempFurnaceHot := BOOL_TO_INT(#iTempFurnace.Val.RealPerc >=
-	                                        ("Main_DB".Auto.sSetPointMax +
-	                                        "Retain_DB".Settings.MaxTempTransgression));
+	    #sFlowTempPlantHot := BOOL_TO_INT(#iTempPlant.Val.R >= (
+	                                      #iTempPlant.SetPoint.Upper.R +
+	                                      #iTempPlant.Limits.Max.R));
+	    
+	    #sFlowTempFurnaceHot := BOOL_TO_INT(#iTempFurnace.Val.R >= (
+	                                        #iTempFurnace.SetPoint.Upper.R +
+	                                        #iTempFurnace.Limits.Max.R));
 	    // pressures
-	    #sPressureDeltaPerc1 := BOOL_TO_INT(#iLiftingSys1.DeltaPressure.Val.IntPerc >=
-	                                        #iLiftingSys1.DeltaPressure.Limits.Max.Perc);
-	    #sPressureDeltaPerc2 := BOOL_TO_INT(#iLiftingSys2.DeltaPressure.Val.IntPerc >=
-	                                        #iLiftingSys2.DeltaPressure.Limits.Max.Perc);
+	    #sPressureDeltaPerc1 := BOOL_TO_INT(#iLiftingSys1.DeltaPressure.Val.I >=
+	                                        #iLiftingSys1.DeltaPressure.Limits.Max.I);
+	    
+	    #sPressureDeltaPerc2 := BOOL_TO_INT(#iLiftingSys2.DeltaPressure.Val.I >=
+	                                        #iLiftingSys2.DeltaPressure.Limits.Max.I);
 	    // levels
 	    #sSurgeTankRunDry
 	    := BOOL_TO_INT(#iSurgeTankLevel
