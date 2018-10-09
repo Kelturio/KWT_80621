@@ -1,12 +1,8 @@
 ﻿TYPE "Limits"
 VERSION : 0.1
    STRUCT
-      Min : Struct
-         Perc : Bool;
-      END_STRUCT;
-      Max : Struct
-         Perc : Int;
-      END_STRUCT;
+      Min : "Val";
+      Max : "Val";
    END_STRUCT;
 
 END_TYPE
