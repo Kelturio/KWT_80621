@@ -7,12 +7,6 @@ VERSION : 0.1
       iFuseOutputsErr : Bool;   // Fuse Outputs Error
       iCt1RepairSwitchOff : Bool;   // Cooling Tower 1 Repair Switch
       iCt2RepairSwitchOff : Bool;   // Cooling Tower 2 Repair Switch
-      iCt1SprayPipeOpen : Bool;   // Cooling Tower 1 Spray Pipe open
-      iCt2SprayPipeOpen : Bool;   // Cooling Tower 2 Spray Pipe open
-      iCt1SprayPipeIsOpen : Bool;   // Cooling Tower 1 Spray Pipe is open
-      iCt2SprayPipeIsOpen : Bool;   // Cooling Tower 2 Spray Pipe is open
-      iFlowTempPlant : Real;   // Flow Temperature Plant
-      iFlowTempFurnace : Real;   // Flow Temperature Furnace
       iSurgeTankLevel : Int;
       iFan1 : "Fan";
       iFan2 : "Fan";
@@ -27,6 +21,8 @@ VERSION : 0.1
       iSurgeTankRefill : "Valve";
       iLiftingSys1 : "LiftingSys";
       iLiftingSys2 : "LiftingSys";
+      iTempPlant : "Temperature";
+      iTempFurnace : "Temperature";
    END_VAR
 
    VAR_OUTPUT 
@@ -86,16 +82,16 @@ BEGIN
 	END_REGION
 	REGION analog
 	    // temperatures
-	    #sFlowTempPlantHot := BOOL_TO_INT(#iFlowTempPlant >=
+	    #sFlowTempPlantHot := BOOL_TO_INT(#iTempPlant.Val.RealPerc >=
 	                                      ("Main_DB".Auto.sSetPointMax +
 	                                      "Retain_DB".Settings.MaxTempTransgression));
-	    #sFlowTempFurnaceHot := BOOL_TO_INT(#iFlowTempFurnace >=
+	    #sFlowTempFurnaceHot := BOOL_TO_INT(#iTempFurnace.Val.RealPerc >=
 	                                        ("Main_DB".Auto.sSetPointMax +
 	                                        "Retain_DB".Settings.MaxTempTransgression));
 	    // pressures
-	    #sPressureDeltaPerc1 := BOOL_TO_INT(#iLiftingSys1.DeltaPressure.Val.Perc >=
+	    #sPressureDeltaPerc1 := BOOL_TO_INT(#iLiftingSys1.DeltaPressure.Val.IntPerc >=
 	                                        #iLiftingSys1.DeltaPressure.Limits.Max.Perc);
-	    #sPressureDeltaPerc2 := BOOL_TO_INT(#iLiftingSys2.DeltaPressure.Val.Perc >=
+	    #sPressureDeltaPerc2 := BOOL_TO_INT(#iLiftingSys2.DeltaPressure.Val.IntPerc >=
 	                                        #iLiftingSys2.DeltaPressure.Limits.Max.Perc);
 	    // levels
 	    #sSurgeTankRunDry
