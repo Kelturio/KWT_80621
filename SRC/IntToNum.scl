@@ -1,0 +1,13 @@
+﻿FUNCTION "IntToNum" : "Val"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iVal : Int;
+   END_VAR
+
+
+BEGIN
+	#IntToNum.I := #iVal;
+	#IntToNum.R := INT_TO_REAL(#iVal);
+END_FUNCTION
+
