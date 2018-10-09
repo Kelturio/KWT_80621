@@ -141,7 +141,7 @@ IGuiDialogView
 		width: 97
 		height: 33
 		qm_BorderWidth: 1
-		qm_ImageSource: "image://QSmartImageProvider/93#2#4#128#0#0"
+		qm_ImageSource: "image://QSmartImageProvider/95#2#4#128#0#0"
 		qm_Border.top: 12
 		qm_Border.bottom: 12
 		qm_Border.right: 2

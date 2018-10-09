@@ -12,7 +12,7 @@ Item
 		width: 37
 		height: 53
 		qm_BorderWidth: 1
-		qm_ImageSource: "image://QSmartImageProvider/89#2#4#128#0#0"
+		qm_ImageSource: "image://QSmartImageProvider/91#2#4#128#0#0"
 		qm_Border.top: 2
 		qm_Border.bottom: 2
 		qm_Border.right: 2
@@ -29,7 +29,7 @@ Item
 		qm_AlarmTextHeight: 14
 		qm_TextColor: "#ffffffff"
 		visible: false
-		qm_GraphicImageID : 87
+		qm_GraphicImageID : 89
 		Component.onCompleted:
 		{
 			proxy.initProxy(q419430400,419430400)
@@ -111,17 +111,17 @@ Item
 				width: 1178
 				height: 615
 				totalColumnWidth: 1144
-				qm_leftImageID: 80
+				qm_leftImageID: 82
 				qm_leftTileTop: 11
 				qm_leftTileBottom: 12
 				qm_leftTileRight: 2
 				qm_leftTileLeft: 4
-				qm_middleImageID: 81
+				qm_middleImageID: 83
 				qm_middleTileTop: 11
 				qm_middleTileBottom: 12
 				qm_middleTileRight: 2
 				qm_middleTileLeft: 2
-				qm_rightImageID: 82
+				qm_rightImageID: 84
 				qm_rightTileTop: 11
 				qm_rightTileBottom: 12
 				qm_rightTileRight: 4
@@ -248,7 +248,7 @@ Item
 				height: 40
 				qm_BorderCornerRadius: 3
 				qm_BorderWidth: 1
-				qm_ImageSource: "image://QSmartImageProvider/83#2#4#128#0#0"
+				qm_ImageSource: "image://QSmartImageProvider/85#2#4#128#0#0"
 				qm_Border.top: 15
 				qm_Border.bottom: 15
 				qm_Border.right: 5
@@ -278,7 +278,7 @@ Item
 				height: 40
 				qm_BorderCornerRadius: 3
 				qm_BorderWidth: 1
-				qm_ImageSource: "image://QSmartImageProvider/83#2#4#128#0#0"
+				qm_ImageSource: "image://QSmartImageProvider/85#2#4#128#0#0"
 				qm_Border.top: 15
 				qm_Border.bottom: 15
 				qm_Border.right: 5
@@ -384,17 +384,17 @@ Item
 				width: 1178
 				height: 615
 				totalColumnWidth: 1144
-				qm_leftImageID: 80
+				qm_leftImageID: 82
 				qm_leftTileTop: 11
 				qm_leftTileBottom: 12
 				qm_leftTileRight: 2
 				qm_leftTileLeft: 4
-				qm_middleImageID: 81
+				qm_middleImageID: 83
 				qm_middleTileTop: 11
 				qm_middleTileBottom: 12
 				qm_middleTileRight: 2
 				qm_middleTileLeft: 2
-				qm_rightImageID: 82
+				qm_rightImageID: 84
 				qm_rightTileTop: 11
 				qm_rightTileBottom: 12
 				qm_rightTileRight: 4
@@ -521,7 +521,7 @@ Item
 				height: 40
 				qm_BorderCornerRadius: 3
 				qm_BorderWidth: 1
-				qm_ImageSource: "image://QSmartImageProvider/83#2#4#128#0#0"
+				qm_ImageSource: "image://QSmartImageProvider/85#2#4#128#0#0"
 				qm_Border.top: 15
 				qm_Border.bottom: 15
 				qm_Border.right: 5
@@ -551,7 +551,7 @@ Item
 				height: 40
 				qm_BorderCornerRadius: 3
 				qm_BorderWidth: 1
-				qm_ImageSource: "image://QSmartImageProvider/83#2#4#128#0#0"
+				qm_ImageSource: "image://QSmartImageProvider/85#2#4#128#0#0"
 				qm_Border.top: 15
 				qm_Border.bottom: 15
 				qm_Border.right: 5
@@ -657,17 +657,17 @@ Item
 				width: 1178
 				height: 615
 				totalColumnWidth: 1144
-				qm_leftImageID: 80
+				qm_leftImageID: 82
 				qm_leftTileTop: 11
 				qm_leftTileBottom: 12
 				qm_leftTileRight: 2
 				qm_leftTileLeft: 4
-				qm_middleImageID: 81
+				qm_middleImageID: 83
 				qm_middleTileTop: 11
 				qm_middleTileBottom: 12
 				qm_middleTileRight: 2
 				qm_middleTileLeft: 2
-				qm_rightImageID: 82
+				qm_rightImageID: 84
 				qm_rightTileTop: 11
 				qm_rightTileBottom: 12
 				qm_rightTileRight: 4
@@ -794,7 +794,7 @@ Item
 				height: 40
 				qm_BorderCornerRadius: 3
 				qm_BorderWidth: 1
-				qm_ImageSource: "image://QSmartImageProvider/83#2#4#128#0#0"
+				qm_ImageSource: "image://QSmartImageProvider/85#2#4#128#0#0"
 				qm_Border.top: 15
 				qm_Border.bottom: 15
 				qm_Border.right: 5
@@ -824,7 +824,7 @@ Item
 				height: 40
 				qm_BorderCornerRadius: 3
 				qm_BorderWidth: 1
-				qm_ImageSource: "image://QSmartImageProvider/83#2#4#128#0#0"
+				qm_ImageSource: "image://QSmartImageProvider/85#2#4#128#0#0"
 				qm_Border.top: 15
 				qm_Border.bottom: 15
 				qm_Border.right: 5
