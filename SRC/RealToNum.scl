@@ -1,0 +1,13 @@
+﻿FUNCTION "RealToNum" : "Val"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      iVal : Real;
+   END_VAR
+
+
+BEGIN
+	#RealToNum.R := #iVal;
+	#RealToNum.I := REAL_TO_INT(#iVal);
+END_FUNCTION
+
