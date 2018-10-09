@@ -8,18 +8,6 @@ VERSION : 0.1
       iFuseOutputsErr : Bool;   // Fuse Outputs Error
       iCt1RepairSwitchOff : Bool;   // Cooling Tower 1 Repair Switch
       iCt2RepairSwitchOff : Bool;   // Cooling Tower 2 Repair Switch
-      iCt1SprayPipeOpen : Bool;   // Cooling Tower 1 Spray Pipe open
-      iCt2SprayPipeOpen : Bool;   // Cooling Tower 2 Spray Pipe open
-      iCt1SprayPipeIsOpen : Bool;   // Cooling Tower 1 Spray Pipe is open
-      iCt2SprayPipeIsOpen : Bool;   // Cooling Tower 2 Spray Pipe is open
-      iFlowTempPlant : Int;   // Flow Temperature Plant
-      iFlowTempFurnace : Int;   // Flow Temperature Furnace
-      iLiftSys1DeltaPressure : Int;   // Lifting System 1 Delta Pressure
-      iLiftSys2DeltaPressure : Int;   // Lifting System 2 Delta Pressure
-      iSurgeTankLevelOut1 : Bool;
-      iSurgeTankLevelOut2 : Bool;
-      iSurgeTankLevelOut3 : Bool;
-      iSurgeTankLevelOut4 : Bool;
       iAutoMode : Bool;
       iPumpPlant1 : "Pump";
       iPumpPlant2 : "Pump";
@@ -42,16 +30,12 @@ VERSION : 0.1
    END_VAR
 
    VAR_OUTPUT 
-      oFlowTempPlant : Real;
-      oFlowTempFurnace : Real;
       oAlarmLamp : Bool;
-      oSurgeTankLevel : Int := 0;
       oSurgeTankRefill : Bool;
       oAnimationFrame : Int;
    END_VAR
 
    VAR 
-      ScaleAnalogValues : "ScaleAnalogValues";
       RuntimeMeters : "RuntimeMeters";
       Alarm : "Alarm";
       IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
@@ -69,21 +53,10 @@ VERSION : 0.1
 
 
 BEGIN
-	#oSurgeTankLevel := 0;
-	#oSurgeTankLevel.%X0 := #iSurgeTankLevelOut1;
-	#oSurgeTankLevel.%X1 := #iSurgeTankLevelOut2;
-	#oSurgeTankLevel.%X2 := #iSurgeTankLevelOut3;
-	#oSurgeTankLevel.%X3 := #iSurgeTankLevelOut4;
-	
 	#IEC_TMR_0.TOF(IN := #sStorageTankRefillStart,
 	               PT := #sStorageTankRefillPt,
 	               Q => #oSurgeTankRefill,
 	               ET => #tStorageTankRefillEt);
-	
-	#ScaleAnalogValues(iFlowTempPlant := #iFlowTempPlant,
-	                   iFlowTempFurnace := #iFlowTempFurnace,
-	                   oFlowTempPlant => #oFlowTempPlant,
-	                   oFlowTempFurnace => #oFlowTempFurnace);
 	
 	#RuntimeMeters(iPlcRun := TRUE,
 	               iPumpPlant1 := #iPumpPlant1,
@@ -117,8 +90,8 @@ BEGIN
 	       iSurgeTank := #iSurgeTank,
 	       oAlarmCount => #tAlarmCount,
 	       oAlarmLamp => #oAlarmLamp,
-	       oSprayPipeOpenTimeout1 => #sSprayPipeOpenTimeout1,
-	       oSprayPipeOpenTimeout2 => #sSprayPipeOpenTimeout2);
+	       oSprayPipeOpenTimeout1 => #sSprayPipeOpenTimeout1,//XXXX
+	       oSprayPipeOpenTimeout2 => #sSprayPipeOpenTimeout2);//XXXX
 	
 	#Animation(iPt := #iAnimationPt,
 	           iRange := #iAnimationRange,
