@@ -13,6 +13,7 @@ VERSION : 0.1
 
    VAR 
       IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
+      sFrame : Int;
    END_VAR
 
 
@@ -22,10 +23,12 @@ BEGIN
 	
 	IF #IEC_TMR_0.Q THEN
 	    RESET_TIMER(#IEC_TMR_0);
-	    #oFrame += #iRange.Step;
-	    IF #oFrame = #iRange.End THEN
-	        #oFrame := #iRange.Start;
+	    #sFrame += #iRange.Step;
+	    IF #sFrame = #iRange.End THEN
+	        #sFrame := #iRange.Start;
 	    END_IF;
 	END_IF;
+	
+	#oFrame := #sFrame;
 END_FUNCTION_BLOCK
 
