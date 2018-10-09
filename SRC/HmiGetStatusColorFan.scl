@@ -3,25 +3,22 @@
 AUTHOR : Searinox
 VERSION : 0.1
    VAR_INPUT 
-      iFanQ : Bool;
-      iFanRun : Bool;
-      iFanErr : Bool;
-      iRepairSwitchOff : Bool;
+      iFan : "Fan";
       iAnimationFrame : Int;
    END_VAR
 
 
 BEGIN
 	#HmiGetStatusColorFan := 0;
-	IF #iFanErr OR #iRepairSwitchOff THEN
+	IF #iFan.HasError OR NOT #iFan.RepairSwitch THEN
 	    #HmiGetStatusColorFan := 41;
-	ELSIF #iFanQ AND NOT #iFanRun THEN
+	ELSIF #iFan.Q AND NOT #iFan.IsRunning THEN
 	    #HmiGetStatusColorFan := 31;
-	ELSIF #iFanQ AND #iFanRun THEN
+	ELSIF #iFan.Q AND #iFan.IsRunning THEN
 	    #HmiGetStatusColorFan := 20;
-	ELSIF NOT #iFanQ AND #iFanRun THEN
+	ELSIF NOT #iFan.Q AND #iFan.IsRunning THEN
 	    #HmiGetStatusColorFan := 20;
-	ELSIF NOT #iFanQ AND NOT #iFanRun THEN
+	ELSIF NOT #iFan.Q AND NOT #iFan.IsRunning THEN
 	    #HmiGetStatusColorFan := 11;
 	ELSE
 	    #HmiGetStatusColorFan := 404;
