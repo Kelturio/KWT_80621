@@ -18,7 +18,7 @@ VERSION : 0.1
    END_VAR
    VAR 
       EmergencyStop : "EmergencyStop";
-      sSurgeTankLevel : Int;
+      sSurgeTankLevelXXX : Int;
       sPumpPlant1 : "Pump";
       sPumpPlant2 : "Pump";
       sPumpCoolWater1 : "Pump";
@@ -37,6 +37,11 @@ VERSION : 0.1
       sLiftingSys2 : "LiftingSys";
       sTempPlant : "Temperature";
       sTempFurnace : "Temperature";
+      sSurgeTank : "Tank";
+   END_VAR
+
+   VAR_TEMP 
+      tSurgeTankLevelOut : "Nibble";
    END_VAR
 
 
@@ -92,20 +97,14 @@ BEGIN
 	//sSurgeTankRefill.HasError := 
 	//
 	#sLiftingSys1.DeltaPressure.IW := "HA 1 Differenzdruck";
-	#sLiftingSys1.DeltaPressure.Val.I := "ScaleValueIntToInt"(iVal := "HA 1 Differenzdruck",
-	                                                     iXMin := "AnalogMin",
-	                                                     iXMax := "AnalogMax",
-	                                                     iYMin := 0,
-	                                                     iYMax := 100);
-	#sLiftingSys1.DeltaPressure.Limits.Max.I := "Retain_DB".Settings.MaxPressureDeltaPerc1;
+	#sLiftingSys1.DeltaPressure.Val := "ScaleInputWord100"("HA 1 Differenzdruck");
+	//#sLiftingSys1.DeltaPressure.Limits.Min
+	#sLiftingSys1.DeltaPressure.Limits.Max := "RealToNum"("Retain_DB".Settings.MaxPressureDeltaPerc1);
 	
 	#sLiftingSys2.DeltaPressure.IW := "HA 2 Differenzdruck";
-	#sLiftingSys2.DeltaPressure.Val.I := "ScaleValueIntToInt"(iVal := "HA 2 Differenzdruck",
-	                                                     iXMin := "AnalogMin",
-	                                                     iXMax := "AnalogMax",
-	                                                     iYMin := 0,
-	                                                     iYMax := 100);
-	#sLiftingSys2.DeltaPressure.Limits.Max.I := "Retain_DB".Settings.MaxPressureDeltaPerc1;
+	#sLiftingSys2.DeltaPressure.Val := "ScaleInputWord100"("HA 2 Differenzdruck");
+	//#sLiftingSys1.DeltaPressure.Limits.Min
+	#sLiftingSys2.DeltaPressure.Limits.Max := "RealToNum"("Retain_DB".Settings.MaxPressureDeltaPerc2);
 	
 	#sTempPlant.IW := "Vorlauftemperatur Werk";
 	#sTempPlant.Val := "ScaleInputWord100"("Vorlauftemperatur Werk");
@@ -120,6 +119,17 @@ BEGIN
 	#sTempFurnace.SetPoint.Upper := "RealToNum"("Retain_DB".Settings.SetPointTempFurnace);
 	//sTempFurnace.Limits.Min
 	#sTempFurnace.Limits.Max := "RealToNum"("Retain_DB".Settings.MaxTempTransgression);
+	
+	#tSurgeTankLevelOut.X0 := "WSB OUT1";
+	#tSurgeTankLevelOut.X1 := "WSB OUT2";
+	#tSurgeTankLevelOut.X2 := "WSB OUT3";
+	#tSurgeTankLevelOut.X3 := "WSB OUT4";
+	#sSurgeTank.Val := "IntToNum"("NibbleToInt"(#tSurgeTankLevelOut));
+	#sSurgeTank.SetPoint.Lower := "IntToNum"("Retain_DB".Settings.SurgeTankLevel.SetPointLower);
+	#sSurgeTank.SetPoint.Upper := "IntToNum"("Retain_DB".Settings.SurgeTankLevel.SetPointUpper);
+	#sSurgeTank.Limits.Min := "IntToNum"("Retain_DB".Settings.SurgeTankLevel.RunDry);
+	#sSurgeTank.Limits.Max := "IntToNum"("Retain_DB".Settings.SurgeTankLevel.Overflow);
+	#sSurgeTank.Levels := "Retain_DB".Settings.SurgeTankLevel;
 	
 	#AlwaysRUN(iCvOff := NOT "Steuerspannung Ein",
 	           iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
@@ -155,10 +165,11 @@ BEGIN
 	           iLiftingSys2 := #sLiftingSys2,
 	           iTempPlant := #sTempPlant,
 	           iTempFurnace := #sTempFurnace,
+	           iSurgeTank := #sSurgeTank,
 	           oFlowTempPlant => #FlowTemperaturePlant,
 	           oFlowTempFurnace => #FlowTemperatureFurnace,
 	           oAlarmLamp => "Rundumleuchte Störung",
-	           oSurgeTankLevel => #sSurgeTankLevel,
+	           oSurgeTankLevel => #sSurgeTankLevelXXX,
 	           oSurgeTankRefill => "WSB Magnetventil",
 	           oAnimationFrame => #sAnimationFrame);
 	
@@ -180,7 +191,7 @@ BEGIN
 	          iBleedingUnitCirculatingPumpRun := "Absalzanlage läuft",
 	          iCt1SprayPipeIsOpen := "KT 1 Sprührohr geöffnet",
 	          iCt2SprayPipeIsOpen := "KT 2 Sprührohr geöffnet",
-	          iSurgeTankLevel := #sSurgeTankLevel,
+	          iSurgeTankLevel := #sSurgeTankLevelXXX,
 	          iSurgeTankLevelSetPointUpper := "Retain_DB".Settings.SurgeTankLevel.SetPointUpper,
 	          iPumpPlant1 := #sPumpPlant1,
 	          iPumpPlant2 := #sPumpPlant2,
@@ -201,7 +212,7 @@ BEGIN
 	          oCt1SprayPipeOpen => "KT 1 Sprührohr öffnen",
 	          oCt2SprayPipeOpen => "KT 2 Sprührohr öffnen");
 	ELSE
-	    #Hand(iSurgeTankLevel := #sSurgeTankLevel,
+	    #Hand(iSurgeTankLevel := #sSurgeTankLevelXXX,
 	          iSurgeTankLevelSetPointUpper := "Retain_DB".Settings.SurgeTankLevel.SetPointUpper,
 	          oCt1FanSetPoint => "KT 1 Ventilator Sollwert",
 	          oCt2FanSetPoint => "KT 2 Ventilator Sollwert");
