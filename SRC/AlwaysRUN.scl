@@ -6,44 +6,20 @@ VERSION : 0.1
    VAR_INPUT 
       iCvOff : Bool;   // Control Voltage Off / emergency stop
       iFuseOutputsErr : Bool;   // Fuse Outputs Error
-      iCt1FanErr : Bool;   // Cooling Tower 1 Fan Error
-      iCt2FanErr : Bool;   // Cooling Tower 2 Fan Error
       iCt1RepairSwitchOff : Bool;   // Cooling Tower 1 Repair Switch
       iCt2RepairSwitchOff : Bool;   // Cooling Tower 2 Repair Switch
       iCt1SprayPipeOpen : Bool;   // Cooling Tower 1 Spray Pipe open
       iCt2SprayPipeOpen : Bool;   // Cooling Tower 2 Spray Pipe open
       iCt1SprayPipeIsOpen : Bool;   // Cooling Tower 1 Spray Pipe is open
       iCt2SprayPipeIsOpen : Bool;   // Cooling Tower 2 Spray Pipe is open
-      iPumpPlant1Err : Bool;   // Plant Pump 1 Error
-      iPumpPlant2Err : Bool;   // Plant Pump 2 Error
-      iPumpCoolWater1Err : Bool;   // Cooling Water Pump 1 Error
-      iPumpCoolWater2Err : Bool;   // Cooling Water Pump 2 Error
-      iPumpFurnace1Err : Bool;   // Furnace Pump 1 Error
-      iPumpFurnace2Err : Bool;   // Furnace Pump 2 Error
       iFlowTempPlant : Int;   // Flow Temperature Plant
       iFlowTempFurnace : Int;   // Flow Temperature Furnace
       iLiftSys1DeltaPressure : Int;   // Lifting System 1 Delta Pressure
       iLiftSys2DeltaPressure : Int;   // Lifting System 2 Delta Pressure
-      iPumpPlant1Q : Bool;
-      iPumpPlant1Run : Bool;
-      iPumpPlant2Q : Bool;
-      iPumpPlant2Run : Bool;
-      iPumpCoolWater1Q : Bool;
-      iPumpCoolWater1Run : Bool;
-      iPumpCoolWater2Q : Bool;
-      iPumpCoolWater2Run : Bool;
-      iPumpFurnace1Q : Bool;
-      iPumpFurnace1Run : Bool;
-      iPumpFurnace2Q : Bool;
-      iPumpFurnace2Run : Bool;
       iSurgeTankLevelOut1 : Bool;
       iSurgeTankLevelOut2 : Bool;
       iSurgeTankLevelOut3 : Bool;
       iSurgeTankLevelOut4 : Bool;
-      iCt1FanQ : Bool;
-      iCt1FanRun : Bool;
-      iCt2FanQ : Bool;
-      iCt2FanRun : Bool;
       iAutoMode : Bool;
       iPumpPlant1 : "Pump";
       iPumpPlant2 : "Pump";
@@ -98,32 +74,24 @@ BEGIN
 	                   oFlowTempFurnace => #oFlowTempFurnace);
 	
 	#RuntimeMeters(iPlcRun := TRUE,
-	               iPumpPlant1Run := #iPumpPlant1Run,
-	               iPumpPlant2Run := #iPumpPlant2Run,
-	               iPumpCoolWater1Run := #iPumpCoolWater1Run,
-	               iPumpCoolWater2Run := #iPumpCoolWater2Run,
-	               iPumpFurnace1Run := #iPumpFurnace1Run,
-	               iPumpFurnace2Run := #iPumpFurnace2Run,
-	               iCt1FanRun := #iCt1FanRun,
-	               iCt2FanRun := #iCt2FanRun,
+	               iPumpPlant1 := #iPumpPlant1,
+	               iPumpPlant2 := #iPumpPlant2,
+	               iPumpCoolWater1 := #iPumpCoolWater1,
+	               iPumpCoolWater2 := #iPumpCoolWater2,
+	               iPumpFurnace1 := #iPumpFurnace1,
+	               iPumpFurnace2 := #iPumpFurnace2,
+	               iFan1 := #iFan1,
+	               iFan2 := #iFan2,
 	               iRtm9Run := FALSE);
 	
 	#Alarm(iCvOff := #iCvOff,
 	       iFuseOutputsErr := #iFuseOutputsErr,
-	       iCt1FanErr := #iCt1FanErr,
-	       iCt2FanErr := #iCt2FanErr,
 	       iCt1RepairSwitchOff := #iCt1RepairSwitchOff,
 	       iCt2RepairSwitchOff := #iCt2RepairSwitchOff,
 	       iCt1SprayPipeOpen := #iCt1SprayPipeOpen,
 	       iCt2SprayPipeOpen := #iCt2SprayPipeOpen,
 	       iCt1SprayPipeIsOpen := #iCt1SprayPipeIsOpen,
 	       iCt2SprayPipeIsOpen := #iCt2SprayPipeIsOpen,
-	       iPumpPlant1Err := #iPumpPlant1Err,
-	       iPumpPlant2Err := #iPumpPlant2Err,
-	       iPumpCoolWater1Err := #iPumpCoolWater1Err,
-	       iPumpCoolWater2Err := #iPumpCoolWater2Err,
-	       iPumpFurnace1Err := #iPumpFurnace1Err,
-	       iPumpFurnace2Err := #iPumpFurnace2Err,
 	       iFlowTempPlant := #oFlowTempPlant,
 	       iFlowTempFurnace := #oFlowTempFurnace,
 	       iLiftSys1DeltaPressure := #iLiftSys1DeltaPressure,
