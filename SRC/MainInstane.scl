@@ -63,12 +63,14 @@ BEGIN
 	
 	#sFan1.Q := "KT 1 Ventilator";
 	#sFan1.IsRunning := "KT 1 Ventilator Betrieb";
-	#sFan1.HasError := "KT 1 Ventilator Störung" OR NOT "KT 1 Ventilator RS ein";
+	#sFan1.HasError := "KT 1 Ventilator Störung";
+	#sFan1.RepairSwitch := "KT 1 Ventilator RS ein";
 	#sFan1.AnimationFrame := #sAnimationFrame;
 	
 	#sFan2.Q := "KT 2 Ventilator";
 	#sFan2.IsRunning := "KT 2 Ventilator Betrieb";
-	#sFan2.HasError := "KT 2 Ventilator Störung" OR NOT "KT 2 Ventilator RS ein";
+	#sFan2.HasError := "KT 2 Ventilator Störung";
+	#sFan2.RepairSwitch := "KT 2 Ventilator RS ein";
 	#sFan2.AnimationFrame := #sAnimationFrame;
 	
 	#sSprayPipe1.Q := "KT 1 Sprührohr öffnen";
