@@ -5,14 +5,14 @@ FAMILY : AKK
 VERSION : 0.1
    VAR_INPUT 
       iPlcRun : Bool;
-      iPumpPlant1Run : Bool;
-      iPumpPlant2Run : Bool;
-      iPumpCoolWater1Run : Bool;
-      iPumpCoolWater2Run : Bool;
-      iPumpFurnace1Run : Bool;
-      iPumpFurnace2Run : Bool;
-      iCt1FanRun : Bool;
-      iCt2FanRun : Bool;
+      iPumpPlant1 : "Pump";
+      iPumpPlant2 : "Pump";
+      iPumpCoolWater1 : "Pump";
+      iPumpCoolWater2 : "Pump";
+      iPumpFurnace1 : "Pump";
+      iPumpFurnace2 : "Pump";
+      iFan1 : "Fan";
+      iFan2 : "Fan";
       iRtm9Run : Bool;
    END_VAR
 
@@ -32,21 +32,21 @@ BEGIN
 	        0:
 	            #tClk := #iPlcRun;
 	        1:
-	            #tClk := #iPumpPlant1Run;
+	            #tClk := #iPumpPlant1.IsRunning;
 	        2:
-	            #tClk := #iPumpPlant2Run;
+	            #tClk := #iPumpPlant2.IsRunning;
 	        3:
-	            #tClk := #iPumpCoolWater1Run;
+	            #tClk := #iPumpCoolWater1.IsRunning;
 	        4:
-	            #tClk := #iPumpCoolWater2Run;
+	            #tClk := #iPumpCoolWater2.IsRunning;
 	        5:
-	            #tClk := #iPumpFurnace1Run;
+	            #tClk := #iPumpFurnace1.IsRunning;
 	        6:
-	            #tClk := #iPumpFurnace2Run;
+	            #tClk := #iPumpFurnace2.IsRunning;
 	        7:
-	            #tClk := #iCt1FanRun;
+	            #tClk := #iFan1.IsRunning;
 	        8:
-	            #tClk := #iCt2FanRun;
+	            #tClk := #iFan2.IsRunning;
 	        9:
 	            #tClk := #iRtm9Run;
 	        ELSE
