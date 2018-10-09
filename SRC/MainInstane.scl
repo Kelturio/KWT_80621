@@ -33,6 +33,8 @@ VERSION : 0.1
       sAnimationPt : Time := T#100ms;
       sAnimationRange : "Range";
       sAnimationFrame : Int := 1;
+      sLiftingSys1 : "LiftingSys";
+      sLiftingSys2 : "LiftingSys";
    END_VAR
 
 
@@ -117,6 +119,8 @@ BEGIN
 	           iSurgeTankRefill := #sSurgeTankRefill,
 	           iAnimationPt := #sAnimationPt,
 	           iAnimationRange := #sAnimationRange,
+	           iLiftingSys1 := #sLiftingSys1,
+	           iLiftingSys2 := #sLiftingSys2,
 	           oFlowTempPlant => #FlowTemperaturePlant,
 	           oFlowTempFurnace => #FlowTemperatureFurnace,
 	           oAlarmLamp => "Rundumleuchte Störung",
