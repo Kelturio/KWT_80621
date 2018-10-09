@@ -67,18 +67,6 @@ BEGIN
 	
 	#sSurgeTankRefill := "HmiGetStatusColorValve"(iValve := #iSurgeTankRefill);
 	
-	#IEC_TMR_0.TON(IN := #sTimer0Start,
-	               PT := #sTimer0Pt,
-	               Q => #sTimer0Q);
-	
-	IF #sTimer0Q THEN
-	    RESET_TIMER(#IEC_TMR_0);
-	    #sAnimationFrame += 1;
-	    IF #sAnimationFrame = 5 THEN
-	        #sAnimationFrame := 1;
-	    END_IF;
-	END_IF;
-	
 	#IEC_TMR_1.TON(IN := #iAutoMode,
 	               PT := #sAutoModePt,
 	               Q => #tAutoModeTimer);
