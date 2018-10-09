@@ -1,7 +1,8 @@
 ﻿TYPE "Val"
 VERSION : 0.1
    STRUCT
-      _Int : Int;
+      "[Int]" : Int;
+      "[Real]" : Real;
       Perc : Int;
    END_STRUCT;
 
