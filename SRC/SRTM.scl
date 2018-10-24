@@ -12,7 +12,7 @@ VERSION : 0.1
    VAR 
       R_TRIG {OriginalPartName := 'R_TRIG_1200'; LibVersion := '1.0'} : R_TRIG;   // Detect positive signal edge
       F_TRIG {OriginalPartName := 'F_TRIG_1200'; LibVersion := '1.0'} : F_TRIG;   // Detect negative signal edge
-      RtmMode : "RTM_MODE";   // Job IDs
+      RtmMode : "RtmMode";   // Job IDs
       sMode : Byte;   // Job ID
       sPv : DInt;   // New value for the operating hours counter
       sCq : Bool;   // Status of the operating hours counter (1: running)
