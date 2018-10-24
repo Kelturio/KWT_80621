@@ -5,10 +5,12 @@ VERSION : 0.1
 NON_RETAIN
    VAR RETAIN
       Settings : Struct
-         MaxPressureDeltaPerc1 { S7_SetPoint := 'True'} : Int;   // Maximum pressure difference in percent before error
-         MaxPressureDeltaPerc2 { S7_SetPoint := 'True'} : Int;   // Maximum pressure difference in percent before error
+         MaxPressureDeltaPerc1 { S7_SetPoint := 'True'} : Real;   // Maximum pressure difference in percent before error
+         MaxPressureDeltaPerc2 { S7_SetPoint := 'True'} : Real;   // Maximum pressure difference in percent before error
          MaxTempTransgression { S7_SetPoint := 'True'} : Real;   // Maximum temperature overrun of setpoint in centigrade before error
          SprayPipeOpenTimeout { S7_SetPoint := 'True'} : Time;   // Maximum time until spray tube must be open before error
+         SetPointTempPlant : Real;
+         SetPointTempFurnace : Real;
          SurgeTankLevel : Struct
             RunDry { S7_SetPoint := 'True'} : Int;   // position 4, e.g. minimum value reached
             SetPointLower { S7_SetPoint := 'True'} : Int;   // position 3, e.g. lower preset value reached
@@ -20,10 +22,12 @@ NON_RETAIN
 
 
 BEGIN
-   Settings.MaxPressureDeltaPerc1 := 50;
-   Settings.MaxPressureDeltaPerc2 := 50;
+   Settings.MaxPressureDeltaPerc1 := 50.0;
+   Settings.MaxPressureDeltaPerc2 := 50.0;
    Settings.MaxTempTransgression := 4.0;
    Settings.SprayPipeOpenTimeout := T#15s;
+   Settings.SetPointTempPlant := 27.0;
+   Settings.SetPointTempFurnace := 27.0;
    Settings.SurgeTankLevel.RunDry := 2;
    Settings.SurgeTankLevel.SetPointLower := 4;
    Settings.SurgeTankLevel.SetPointUpper := 6;
