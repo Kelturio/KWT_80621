@@ -92,11 +92,11 @@ BEGIN
 	ELSIF #sTooCold THEN
 	    #sSetPoint := #sSetPointMin;
 	ELSE
-	    #sSetPoint := "ScaleValueRealToInt"(VALUE := #iFlowTempPlant,
-	                                        XMIN := #iSetPointMin,
-	                                        XMAX := #iSetPointMax,
-	                                        YMIN := #sSetPointMin,
-	                                        YMAX := #sSetPointMax);
+	    #sSetPoint := "ScaleValueRealToInt"(iVal := #iFlowTempPlant,
+	                                        iXMin := #iSetPointMin,
+	                                        iXMax := #iSetPointMax,
+	                                        iYMin := #sSetPointMin,
+	                                        iYMax := #sSetPointMax);
 	END_IF;
 	
 	#oCt1FanSetPoint := #sSetPoint;
