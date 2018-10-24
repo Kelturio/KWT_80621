@@ -71,11 +71,11 @@ BEGIN
 	ELSIF #s_zu_kalt THEN
 	    #s_Sollwert := #s_SET_POINT_MIN;
 	ELSE
-	    #s_Sollwert := "ScaleValueRealToInt"(VALUE := #Temp,
-	                                         XMIN := #TempMin,
-	                                         XMAX := #TempMax,
-	                                         YMIN := #s_SET_POINT_MIN,
-	                                         YMAX := #s_SET_POINT_MAX);
+	    #s_Sollwert := "ScaleValueRealToInt"(iVal := #Temp,
+	                                         iXMin := #TempMin,
+	                                         iXMax := #TempMax,
+	                                         iYMin := #s_SET_POINT_MIN,
+	                                         iYMax := #s_SET_POINT_MAX);
 	END_IF;
 	
 	IF #Pumpe_H1 THEN
