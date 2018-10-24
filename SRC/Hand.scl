@@ -20,16 +20,16 @@ VERSION : 0.1
 
 
 BEGIN
-	#oCt1FanSetPoint := "ScaleValueInt"(VALUE := #sCt1FanSetPointPerc,
-	                                    XMIN := 0,
-	                                    XMAX := 100,
-	                                    YMIN := "AnalogMin",
-	                                    YMAX := "AnalogMax");
-	#oCt2FanSetPoint := "ScaleValueInt"(VALUE := #sCt2FanSetPointPerc,
-	                                    XMIN := 0,
-	                                    XMAX := 100,
-	                                    YMIN := "AnalogMin",
-	                                    YMAX := "AnalogMax");
+	#oCt1FanSetPoint := "ScaleValueIntToInt"(iVal := #sCt1FanSetPointPerc,
+	                                    iXMin := 0,
+	                                    iXMax := 100,
+	                                    iYMin := "AnalogMin",
+	                                    iYMax := "AnalogMax");
+	#oCt2FanSetPoint := "ScaleValueIntToInt"(iVal := #sCt2FanSetPointPerc,
+	                                    iXMin := 0,
+	                                    iXMax := 100,
+	                                    iYMin := "AnalogMin",
+	                                    iYMax := "AnalogMax");
 	
 	"Main_DB".AlwaysRUN.sStorageTankRefillStart :=
 	"Main_DB".HMI.StorageTankRefill AND #iSurgeTankLevel <= #iSurgeTankLevelSetPointUpper;
