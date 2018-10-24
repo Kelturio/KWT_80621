@@ -135,6 +135,7 @@ BEGIN
 	           iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
 	           iCt1RepairSwitchOff := NOT "KT 1 Ventilator RS ein",
 	           iCt2RepairSwitchOff := NOT "KT 2 Ventilator RS ein",
+	
 	           iAutoMode := #sAutoMode,
 	           iPumpPlant1 := #sPumpPlant1,
 	           iPumpPlant2 := #sPumpPlant2,
