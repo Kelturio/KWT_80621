@@ -1,0 +1,27 @@
+Drive Name: -21A1 - 1; FC-102 15.00kW (P15K) 380V-480V
+Drive Address: 1
+Field-bus: Serial
+
+The following parameters have been changed from default values:
+
+ID	Name				Setup		Current value		Default value	
+
+001	Language                  	Setup 1		Deutsch                	English	
+001	Language                  	Setup 2		Deutsch                	English	
+001	Language                  	Setup 3		Deutsch                	English	
+001	Language                  	Setup 4		Deutsch                	English	
+103	Torque Characteristics    	Setup 1		Variable torque        	Auto Energy Optim. VT	
+124	Motor Current             	Setup 1		28.70                  	30.00	
+125	Motor Nominal Speed       	Setup 1		1465                   	1450	
+130	Stator Resistance (Rs)    	Setup 1		0.2912                 	0.1478	
+131	Rotor Resistance (Rr)     	Setup 1		0.2332                 	0.1255	
+135	Main Reactance (Xh)       	Setup 1		17.4824                	23.0940	
+302	Minimum Reference         	Setup 1		20.000                 	0.000	
+341	Ramp 1 Ramp Up Time       	Setup 1		60.00                  	30.00	
+410	Motor Speed Direction     	Setup 1		Clockwise              	Both directions	
+416	Torque Limit Motor Mode   	Setup 1		122.6                  	117.3	
+830	Protocol                  	Setup 1		FC MC                  	FC	
+830	Protocol                  	Setup 2		FC MC                  	FC	
+830	Protocol                  	Setup 3		FC MC                  	FC	
+830	Protocol                  	Setup 4		FC MC                  	FC	
+1443	Motor Cosphi              	Setup 1		0.69                   	0.79	

@@ -1,0 +1,1 @@
+Open ssp file with %ProgramFiles(x86)%\Danfoss Drives\VLT Motion Control Tool\MCT 10 Set-up Software\MCT 10 Set-up Software.exe
