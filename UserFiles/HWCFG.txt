@@ -1,6 +1,11 @@
-ID  Short designation           Article number    Firmware version  
+PLC_1
+ID  Short designation           Article number    		Firmware version
 1   CPU 1214C DC/DC/DC          6ES7 214-1AG40-0XB0     V4.2
 2   SM 1223 DI16/DQ16 x 24VDC   6ES7 223-1BL32-0XB0     V2.0
 3   SM 1221 DI16 x 24VDC        6ES7 221-1BH32-0XB0     V2.0
 4   SM 1231 AI4                 6ES7 231-4HD32-0XB0     V2.0
 5   SM 1232 AQ4                 6ES7 232-4HD32-0XB0     V2.0
+
+HMI_1
+ID  Short designation           Article number    		Firmware version
+1	KTP1200 Basic PN			6AV2 123-2MB03-0AX0		14.0.1.0
