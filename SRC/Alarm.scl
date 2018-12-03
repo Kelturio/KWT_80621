@@ -22,6 +22,7 @@ VERSION : 0.1
       iTempPlant : "Temperature";
       iTempFurnace : "Temperature";
       iSurgeTank : "Tank";
+      iBleedingUnit : "BleedingUnit";
    END_VAR
 
    VAR_OUTPUT 
@@ -59,6 +60,7 @@ VERSION : 0.1
       Ton1 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
       sSprayPipeOpenTimeout1 : Int;
       sSprayPipeOpenTimeout2 : Int;
+      sBleedingUnitErr : Int;
    END_VAR
 
 
@@ -81,6 +83,7 @@ BEGIN
 	    #sPumpFurnace1Err := BOOL_TO_INT(#iPumpFurnace1.HasError);
 	    #sPumpFurnace2Err := BOOL_TO_INT(#iPumpFurnace2.HasError);
 	    #sPumpFurnaceErrCrit := BOOL_TO_INT(#iPumpFurnace1.HasError AND #iPumpFurnace2.HasError);
+	    #sBleedingUnitErr := BOOL_TO_INT(#iBleedingUnit.HasError);
 	END_REGION
 	REGION analog
 	    // temperatures
@@ -126,6 +129,7 @@ BEGIN
 	#oAlarmCount += #sPumpCoolWater2Err;
 	#oAlarmCount += #sPumpFurnace1Err;
 	#oAlarmCount += #sPumpFurnace2Err;
+	#oAlarmCount += #sBleedingUnitErr;
 	#oAlarmCount += #sFlowTempPlantHot;
 	#oAlarmCount += #sFlowTempFurnaceHot;
 	#oAlarmCount += #sPressureDeltaPerc1;
