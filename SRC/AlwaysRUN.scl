@@ -27,6 +27,7 @@ VERSION : 0.1
       iTempPlant : "Temperature";
       iTempFurnace : "Temperature";
       iSurgeTank : "Tank";
+      iBleedingUnit : "BleedingUnit";
    END_VAR
 
    VAR_OUTPUT 
@@ -49,6 +50,7 @@ VERSION : 0.1
    VAR_TEMP 
       tStorageTankRefillEt : Time;
       tAlarmCount : Int;
+      tAlarmCountCrit : Int;
    END_VAR
 
 
@@ -88,7 +90,9 @@ BEGIN
 	       iTempPlant := #iTempPlant,
 	       iTempFurnace := #iTempFurnace,
 	       iSurgeTank := #iSurgeTank,
+	       iBleedingUnit := #iBleedingUnit,
 	       oAlarmCount => #tAlarmCount,
+	       oAlarmCountCrit => #tAlarmCountCrit,
 	       oAlarmLamp => #oAlarmLamp,
 	       oSprayPipeOpenTimeout1 => #sSprayPipeOpenTimeout1,//XXXX
 	       oSprayPipeOpenTimeout2 => #sSprayPipeOpenTimeout2);//XXXX
