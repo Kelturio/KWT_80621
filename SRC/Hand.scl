@@ -4,8 +4,7 @@ AUTHOR : 'Searinox(Gerrit_Vogtlaender)'
 FAMILY : AKK
 VERSION : 0.1
    VAR_INPUT 
-      iSurgeTankLevel : Int;
-      iSurgeTankLevelSetPointUpper : Int;
+      iSurgeTank : "Tank";
    END_VAR
 
    VAR_OUTPUT 
@@ -32,6 +31,6 @@ BEGIN
 	                                    iYMax := "AnalogMax");
 	
 	"Main_DB".AlwaysRUN.sStorageTankRefillStart :=
-	"Main_DB".HMI.StorageTankRefill AND #iSurgeTankLevel <= #iSurgeTankLevelSetPointUpper;
+	"Main_DB".HMI.StorageTankRefill AND #iSurgeTank.Val.I <= #iSurgeTank.SetPoint.Upper.I;
 END_FUNCTION_BLOCK
 
