@@ -110,7 +110,25 @@ BEGIN
 	        iSurgeTankRefill := #iSurgeTankRefill,
 	        iAutoMode := #iAutoMode);
 	
-	"NetDb"(#Alarm);
+	"NetDb"(iAutoMode:=#iAutoMode,
+	        iPumpPlant1:=#iPumpPlant1,
+	        iPumpPlant2:=#iPumpPlant2,
+	        iPumpCoolWater1:=#iPumpCoolWater1,
+	        iPumpCoolWater2:=#iPumpCoolWater2,
+	        iPumpFurnace1:=#iPumpFurnace1,
+	        iPumpFurnace2:=#iPumpFurnace2,
+	        iFan1:=#iFan1,
+	        iFan2:=#iFan2,
+	        iSprayPipe1:=#iSprayPipe1,
+	        iSprayPipe2:=#iSprayPipe2,
+	        iSurgeTankRefill:=#iSurgeTankRefill,
+	        iLiftingSys1:=#iLiftingSys1,
+	        iLiftingSys2:=#iLiftingSys2,
+	        iTempPlant:=#iTempPlant,
+	        iTempFurnace:=#iTempFurnace,
+	        iSurgeTank:=#iSurgeTank,
+	        iBleedingUnit:=#iBleedingUnit,
+	        ioAlarm:=#Alarm);
 	
 END_FUNCTION_BLOCK
 
