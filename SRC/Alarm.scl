@@ -26,6 +26,7 @@ VERSION : 0.1
 
    VAR_OUTPUT 
       oAlarmCount : Int := 0;
+      oAlarmCountCrit : Int;
       oAlarmLamp : Bool := false;
       oSprayPipeOpenTimeout1 : Bool;
       oSprayPipeOpenTimeout2 : Bool;
@@ -38,12 +39,16 @@ VERSION : 0.1
       sCt1RepairSwitchOff : Int;
       sCt2FanErr : Int;
       sCt2RepairSwitchOff : Int;
+      sFanErrCrit : Int;
       sPumpPlant1Err : Int;
       sPumpPlant2Err : Int;
+      sPumpPlantErrCrit : Int;
       sPumpCoolWater1Err : Int;
       sPumpCoolWater2Err : Int;
+      sPumpCoolWaterErrCrit : Int;
       sPumpFurnace1Err : Int;
       sPumpFurnace2Err : Int;
+      sPumpFurnaceErrCrit : Int;
       sFlowTempPlantHot : Int;
       sFlowTempFurnaceHot : Int;
       sPressureDeltaPerc1 : Int;
@@ -65,12 +70,17 @@ BEGIN
 	    #sCt2FanErr := BOOL_TO_INT(#iFan2.HasError);
 	    #sCt1RepairSwitchOff := BOOL_TO_INT(#iCt1RepairSwitchOff);
 	    #sCt2RepairSwitchOff := BOOL_TO_INT(#iCt2RepairSwitchOff);
+	    #sFanErrCrit := BOOL_TO_INT((#iFan1.HasError AND #iFan2.HasError) OR
+	                                (#iCt1RepairSwitchOff AND #iCt2RepairSwitchOff));
 	    #sPumpPlant1Err := BOOL_TO_INT(#iPumpPlant1.HasError);
 	    #sPumpPlant2Err := BOOL_TO_INT(#iPumpPlant2.HasError);
+	    #sPumpPlantErrCrit := BOOL_TO_INT(#iPumpPlant1.HasError AND #iPumpPlant2.HasError);
 	    #sPumpCoolWater1Err := BOOL_TO_INT(#iPumpCoolWater1.HasError);
 	    #sPumpCoolWater2Err := BOOL_TO_INT(#iPumpCoolWater2.HasError);
+	    #sPumpCoolWaterErrCrit := BOOL_TO_INT(#iPumpCoolWater1.HasError AND #iPumpCoolWater2.HasError);
 	    #sPumpFurnace1Err := BOOL_TO_INT(#iPumpFurnace1.HasError);
 	    #sPumpFurnace2Err := BOOL_TO_INT(#iPumpFurnace2.HasError);
+	    #sPumpFurnaceErrCrit := BOOL_TO_INT(#iPumpFurnace1.HasError AND #iPumpFurnace2.HasError);
 	END_REGION
 	REGION analog
 	    // temperatures
@@ -124,6 +134,16 @@ BEGIN
 	#oAlarmCount += #sSurgeTankOverflow;
 	#oAlarmCount += #sSprayPipeOpenTimeout1;
 	#oAlarmCount += #sSprayPipeOpenTimeout2;
+	
+	#oAlarmCountCrit := 0;
+	#oAlarmCountCrit += #sCvOff;
+	#oAlarmCountCrit += #sFuseOutputsErr;
+	#oAlarmCountCrit += #sFanErrCrit;
+	#oAlarmCountCrit += #sPumpPlantErrCrit;
+	#oAlarmCountCrit += #sPumpCoolWaterErrCrit;
+	#oAlarmCountCrit += #sPumpFurnaceErrCrit;
+	#oAlarmCountCrit += #sSurgeTankRunDry;
+	#oAlarmCountCrit += #sSurgeTankOverflow;
 	
 	#oAlarmLamp := #oAlarmCount > 0;
 	#oSprayPipeOpenTimeout1 := #sSprayPipeOpenTimeout1 > 0;
