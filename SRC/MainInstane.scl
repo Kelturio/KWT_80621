@@ -35,6 +35,7 @@ VERSION : 0.1
       sTempPlant : "Temperature";
       sTempFurnace : "Temperature";
       sSurgeTank : "Tank";
+      sBleedingUnit : "BleedingUnit";
    END_VAR
 
    VAR_TEMP 
@@ -128,6 +129,9 @@ BEGIN
 	#sSurgeTank.Limits.Max := "IntToNum"("Retain_DB".Settings.SurgeTankLevel.Overflow);
 	#sSurgeTank.Levels := "Retain_DB".Settings.SurgeTankLevel;
 	
+	#sBleedingUnit.IsRunning := "Absalzanlage läuft";
+	#sBleedingUnit.HasError := NOT "Absalzanlage Störung";
+	
 	#AlwaysRUN(iCvOff := NOT "Steuerspannung Ein",
 	           iFuseOutputsErr := NOT "Sicherung Ausgänge OK",
 	           iCt1RepairSwitchOff := NOT "KT 1 Ventilator RS ein",
@@ -151,6 +155,7 @@ BEGIN
 	           iTempPlant := #sTempPlant,
 	           iTempFurnace := #sTempFurnace,
 	           iSurgeTank := #sSurgeTank,
+	           iBleedingUnit := #sBleedingUnit,
 	           oAlarmLamp => "Rundumleuchte Störung",
 	           oSurgeTankRefill => "WSB Magnetventil",
 	           oAnimationFrame => #sAnimationFrame);
