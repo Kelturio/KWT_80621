@@ -1,0 +1,9 @@
+﻿TYPE "BleedingUnit"
+VERSION : 0.1
+   STRUCT
+      IsRunning : Bool;
+      HasError : Bool;
+   END_STRUCT;
+
+END_TYPE
+
