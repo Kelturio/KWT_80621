@@ -1,0 +1,70 @@
+﻿FUNCTION_BLOCK "Net"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR_IN_OUT 
+      ioAlarm : "Alarm";
+   END_VAR
+
+   VAR 
+      sAlarms : Struct
+         Crit : Struct
+            CvOff : Int;
+            FuseOutputsErr : Int;
+            FanErrCrit : Int;
+            PumpPlantErrCrit : Int;
+            PumpCoolWaterErrCrit : Int;
+            PumpFurnaceErrCrit : Int;
+            SurgeTankRunDry : Int;
+            SurgeTankOverflow : Int;
+         END_STRUCT;
+         Ct1FanErr : Int;
+         Ct1RepairSwitchOff : Int;
+         Ct2FanErr : Int;
+         Ct2RepairSwitchOff : Int;
+         PumpPlant1Err : Int;
+         PumpPlant2Err : Int;
+         PumpCoolWater1Err : Int;
+         PumpCoolWater2Err : Int;
+         PumpFurnace1Err : Int;
+         PumpFurnace2Err : Int;
+         FlowTempPlantHot : Int;
+         FlowTempFurnaceHot : Int;
+         PressureDeltaPerc1 : Int;
+         PressureDeltaPerc2 : Int;
+         SprayPipeOpenTimeout1 : Int;
+         SprayPipeOpenTimeout2 : Int;
+         BleedingUnitErr : Int;
+      END_STRUCT;
+   END_VAR
+
+
+BEGIN
+	#sAlarms.BleedingUnitErr := #ioAlarm.sBleedingUnitErr;
+	#sAlarms.Crit.CvOff := #ioAlarm.sCvOff;
+	#sAlarms.Crit.FanErrCrit := #ioAlarm.sFanErrCrit;
+	#sAlarms.Crit.FuseOutputsErr := #ioAlarm.sFuseOutputsErr;
+	#sAlarms.Crit.PumpCoolWaterErrCrit := #ioAlarm.sPumpCoolWaterErrCrit;
+	#sAlarms.Crit.PumpFurnaceErrCrit := #ioAlarm.sPumpFurnaceErrCrit;
+	#sAlarms.Crit.PumpPlantErrCrit := #ioAlarm.sPumpPlantErrCrit;
+	#sAlarms.Crit.SurgeTankOverflow := #ioAlarm.sSurgeTankOverflow;
+	#sAlarms.Crit.SurgeTankRunDry := #ioAlarm.sSurgeTankRunDry;
+	#sAlarms.Ct1FanErr := #ioAlarm.sCt1FanErr;
+	#sAlarms.Ct1RepairSwitchOff := #ioAlarm.sCt1RepairSwitchOff;
+	#sAlarms.Ct2FanErr := #ioAlarm.sCt2FanErr;
+	#sAlarms.Ct2RepairSwitchOff := #ioAlarm.sCt2RepairSwitchOff;
+	#sAlarms.FlowTempFurnaceHot := #ioAlarm.sFlowTempFurnaceHot;
+	#sAlarms.FlowTempPlantHot := #ioAlarm.sFlowTempPlantHot;
+	#sAlarms.PressureDeltaPerc1 := #ioAlarm.sPressureDeltaPerc1;
+	#sAlarms.PressureDeltaPerc2 := #ioAlarm.sPressureDeltaPerc2;
+	#sAlarms.PumpCoolWater1Err := #ioAlarm.sPumpCoolWater1Err;
+	#sAlarms.PumpCoolWater2Err := #ioAlarm.sPumpCoolWater2Err;
+	#sAlarms.PumpFurnace1Err := #ioAlarm.sPumpFurnace1Err;
+	#sAlarms.PumpFurnace2Err := #ioAlarm.sPumpFurnace2Err;
+	#sAlarms.PumpPlant1Err := #ioAlarm.sPumpPlant1Err;
+	#sAlarms.PumpPlant2Err := #ioAlarm.sPumpPlant2Err;
+	#sAlarms.SprayPipeOpenTimeout1 := #ioAlarm.sSprayPipeOpenTimeout1;
+	#sAlarms.SprayPipeOpenTimeout2 := #ioAlarm.sSprayPipeOpenTimeout2;
+	
+END_FUNCTION_BLOCK
+
