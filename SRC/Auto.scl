@@ -8,7 +8,6 @@ VERSION : 0.1
       iPumpPlant1Err : Bool;
       iPumpPlant2Run : Bool;
       iPumpPlant2Err : Bool;
-      iFlowTempPlant : Real;
       iPumpCoolWater1Run : Bool;
       iPumpCoolWater2Run : Bool;
       iPumpCoolWater1Err : Bool;
@@ -16,8 +15,6 @@ VERSION : 0.1
       iBleedingUnitCirculatingPumpRun : Bool;
       iCt1SprayPipeIsOpen : Bool;
       iCt2SprayPipeIsOpen : Bool;
-      iSurgeTankLevel : Int;
-      iSurgeTankLevelSetPointUpper : Int;
       iPumpPlant1 : "Pump";
       iPumpPlant2 : "Pump";
       iPumpCoolWater1 : "Pump";
@@ -26,6 +23,9 @@ VERSION : 0.1
       iPumpFurnace2 : "Pump";
       iFan1 : "Fan";
       iFan2 : "Fan";
+      iSurgeTank : "Tank";
+      iTempPlant : "Temperature";
+      iTempFurnace : "Temperature";
    END_VAR
 
    VAR_OUTPUT 
@@ -68,7 +68,7 @@ BEGIN
 	#t_ret_val := RD_SYS_T(#t_dtl_out);
 	#sBranch := #t_dtl_out.DAY MOD 2 = 0;
 	
-	"Main_DB".AlwaysRUN.sStorageTankRefillStart := #iSurgeTankLevel <= #iSurgeTankLevelSetPointUpper;
+	"Main_DB".AlwaysRUN.sStorageTankRefillStart := #iSurgeTank.Val.I <= #iSurgeTank.SetPoint.Upper.I;
 	
 	#PlantCirculation(iBranch := #sBranch,
 	                  iPumpPlant1Run := #iPumpPlant1Run,
@@ -83,7 +83,7 @@ BEGIN
 	#CoolingTowerCirculation(iBranch := #sBranch,
 	                         iPumpCoolWater1 := #iPumpCoolWater1,
 	                         iPumpCoolWater2 := #iPumpCoolWater2,
-	                         iFlowTempPlant := #iFlowTempPlant,
+	                         iFlowTempPlant := #iTempPlant.Val.R,
 	                         iSetPointMin := #sSetPointMin,
 	                         iSetPointMax := #sSetPointMax,
 	                         iPumpCoolWater1Run := #iPumpCoolWater1Run,
@@ -111,7 +111,7 @@ BEGIN
 	#Hebeanlage(Strang := #sBranch,
 	            iPumpFurnace1 := #iPumpFurnace1,
 	            iPumpFurnace2 := #iPumpFurnace2,
-	            Temp := "Main_DB".FlowTemperatureFurnace,
+	            Temp := #iTempFurnace.Val.R,
 	            TempMin := #sSetPointMin,
 	            TempMax := #sSetPointMax + 1,
 	            Motorschutzschalter_H1 := NOT "Ofenpumpe 1 MSS OK",
