@@ -10,6 +10,17 @@ VERSION : 0.1
       iPumpCoolWater2 : "Pump";
       iPumpFurnace1 : "Pump";
       iPumpFurnace2 : "Pump";
+      iFan1 : "Fan";
+      iFan2 : "Fan";
+      iSprayPipe1 : "Valve";
+      iSprayPipe2 : "Valve";
+      iSurgeTankRefill : "Valve";
+      iLiftingSys1 : "LiftingSys";
+      iLiftingSys2 : "LiftingSys";
+      iTempPlant : "Temperature";
+      iTempFurnace : "Temperature";
+      iSurgeTank : "Tank";
+      iBleedingUnit : "BleedingUnit";
    END_VAR
 
    VAR_IN_OUT 
@@ -79,6 +90,87 @@ VERSION : 0.1
          IsRunning : Bool;
          HasError : Bool;
       END_STRUCT;
+      sFan1 : Struct
+         Q : Bool;
+         IsRunning : Bool;
+         HasError : Bool;
+         RepairSwitch : Bool;
+         SetPoint : Int;
+      END_STRUCT;
+      sFan2 : Struct
+         Q : Bool;
+         IsRunning : Bool;
+         HasError : Bool;
+         RepairSwitch : Bool;
+         SetPoint : Int;
+      END_STRUCT;
+      sSprayPipe1 : Struct
+         Q : Bool;
+         IsOpen : Bool;
+         Timeout : Time;
+      END_STRUCT;
+      sSprayPipe2 : Struct
+         Q : Bool;
+         IsOpen : Bool;
+         Timeout : Time;
+      END_STRUCT;
+      sSurgeTankRefill : Struct
+         Q : Bool;
+         IsOpen : Bool;
+         IsClosed : Bool;
+         HasError : Bool;
+         SetPoint : Int;
+         Timeout : Time;
+      END_STRUCT;
+      sLiftingSys1 : Struct
+         DeltaPressure : Struct
+            IW : Int;
+            Val : Real;
+            Limits : Struct
+               Min : Real;
+               Max : Real;
+            END_STRUCT;
+         END_STRUCT;
+      END_STRUCT;
+      sLiftingSys2 : Struct
+         DeltaPressure : Struct
+            IW : Int;
+            Val : Real;
+            Limits : Struct
+               Min : Real;
+               Max : Real;
+            END_STRUCT;
+         END_STRUCT;
+      END_STRUCT;
+      sTempPlant : Struct
+         IW : Int;
+         Val : Real;
+         Limits : Struct
+            Min : Real;
+            Max : Real;
+         END_STRUCT;
+      END_STRUCT;
+      sTempFurnace : Struct
+         IW : Int;
+         Val : Real;
+         Limits : Struct
+            Min : Real;
+            Max : Real;
+         END_STRUCT;
+      END_STRUCT;
+      sSurgeTank : Struct
+         Val : Int;
+         Levels : Struct
+            RunDry : Int;
+            SetPointLower : Int;
+            SetPointUpper : Int;
+            Overflow : Int;
+         END_STRUCT;
+      END_STRUCT;
+      sBleedingUnit : Struct
+         IsRunning : Bool;
+         HasError : Bool;
+      END_STRUCT;
    END_VAR
 
 
@@ -111,6 +203,26 @@ BEGIN
 	#sAlarms.SprayPipeOpenTimeout1 := #ioAlarm.sSprayPipeOpenTimeout1;
 	#sAlarms.SprayPipeOpenTimeout2 := #ioAlarm.sSprayPipeOpenTimeout2;
 	#sAutoMode := #iAutoMode;
+	#sBleedingUnit.HasError := #iBleedingUnit.HasError;
+	#sBleedingUnit.IsRunning := #iBleedingUnit.IsRunning;
+	#sFan1.HasError := #iFan1.HasError;
+	#sFan1.IsRunning := #iFan1.IsRunning;
+	#sFan1.Q := #iFan1.Q;
+	#sFan1.RepairSwitch := #iFan1.RepairSwitch;
+	#sFan1.SetPoint := #iFan1.SetPoint;
+	#sFan2.HasError := #iFan2.HasError;
+	#sFan2.IsRunning := #iFan2.IsRunning;
+	#sFan2.Q := #iFan2.Q;
+	#sFan2.RepairSwitch := #iFan2.RepairSwitch;
+	#sFan2.SetPoint := #iFan2.SetPoint;
+	#sLiftingSys1.DeltaPressure.IW := #iLiftingSys1.DeltaPressure.IW;
+	#sLiftingSys1.DeltaPressure.Limits.Max := #iLiftingSys1.DeltaPressure.Limits.Max.R;
+	#sLiftingSys1.DeltaPressure.Limits.Min := #iLiftingSys1.DeltaPressure.Limits.Min.R;
+	#sLiftingSys1.DeltaPressure.Val := #iLiftingSys1.DeltaPressure.Val.R;
+	#sLiftingSys2.DeltaPressure.IW := #iLiftingSys2.DeltaPressure.IW;
+	#sLiftingSys2.DeltaPressure.Limits.Max := #iLiftingSys2.DeltaPressure.Limits.Max.R;
+	#sLiftingSys2.DeltaPressure.Limits.Min := #iLiftingSys2.DeltaPressure.Limits.Min.R;
+	#sLiftingSys2.DeltaPressure.Val := #iLiftingSys2.DeltaPressure.Val.R;
 	#sPumpCoolWater1.HasError := #iPumpCoolWater1.HasError;
 	#sPumpCoolWater1.IsRunning := #iPumpCoolWater1.IsRunning;
 	#sPumpCoolWater1.Q := #iPumpCoolWater1.Q;
@@ -129,7 +241,27 @@ BEGIN
 	#sPumpPlant2.HasError := #iPumpPlant2.HasError;
 	#sPumpPlant2.IsRunning := #iPumpPlant2.IsRunning;
 	#sPumpPlant2.Q := #iPumpPlant2.Q;
-	
+	#sSprayPipe1.IsOpen := #iSprayPipe1.IsOpen;
+	#sSprayPipe1.Q := #iSprayPipe1.Q;
+	#sSprayPipe1.Timeout := #iSprayPipe1.Timeout;
+	#sSprayPipe2.IsOpen := #iSprayPipe2.IsOpen;
+	#sSprayPipe2.Q := #iSprayPipe2.Q;
+	#sSprayPipe2.Timeout := #iSprayPipe2.Timeout;
+	#sSurgeTank.Levels.Overflow := #iSurgeTank.Levels.Overflow;
+	#sSurgeTank.Levels.RunDry := #iSurgeTank.Levels.RunDry;
+	#sSurgeTank.Levels.SetPointLower := #iSurgeTank.Levels.SetPointLower;
+	#sSurgeTank.Levels.SetPointUpper := #iSurgeTank.Levels.SetPointUpper;
+	#sSurgeTank.Val := #iSurgeTank.Val.I;
+	#sSurgeTankRefill.Q := #iSurgeTankRefill.Q;
+	#sSurgeTankRefill.IsOpen := #iSurgeTankRefill.IsOpen;
+	#sTempFurnace.IW := #iTempFurnace.IW;
+	#sTempFurnace.Limits.Max := #iTempFurnace.Limits.Max.R;
+	#sTempFurnace.Limits.Min := #iTempFurnace.Limits.Min.R;
+	#sTempFurnace.Val := #iTempFurnace.Val.R;
+	#sTempPlant.IW := #iTempPlant.IW;
+	#sTempPlant.Limits.Max := #iTempPlant.Limits.Max.R;
+	#sTempPlant.Limits.Min := #iTempPlant.Limits.Min.R;
+	#sTempPlant.Val := #iTempPlant.Val.R;
 	
 END_FUNCTION_BLOCK
 
