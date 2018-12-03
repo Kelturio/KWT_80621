@@ -42,8 +42,6 @@ VERSION : 0.1
       IEC_TMR_0 {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
       sStorageTankRefillStart : Bool;
       sStorageTankRefillPt : Time := T#5s;
-      sSprayPipeOpenTimeout1 : Bool;
-      sSprayPipeOpenTimeout2 : Bool;
       Animation : "Animation";
    END_VAR
 
@@ -93,9 +91,7 @@ BEGIN
 	       iBleedingUnit := #iBleedingUnit,
 	       oAlarmCount => #tAlarmCount,
 	       oAlarmCountCrit => #tAlarmCountCrit,
-	       oAlarmLamp => #oAlarmLamp,
-	       oSprayPipeOpenTimeout1 => #sSprayPipeOpenTimeout1,//XXXX
-	       oSprayPipeOpenTimeout2 => #sSprayPipeOpenTimeout2);//XXXX
+	       oAlarmLamp => #oAlarmLamp);
 	
 	#Animation(iPt := #iAnimationPt,
 	           iRange := #iAnimationRange,
