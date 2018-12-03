@@ -2,11 +2,23 @@
 { S7_Optimized_Access := 'TRUE' }
 AUTHOR : Searinox
 VERSION : 0.1
+   VAR_INPUT 
+      iAutoMode : Bool;
+      iPumpPlant1 : "Pump";
+      iPumpPlant2 : "Pump";
+      iPumpCoolWater1 : "Pump";
+      iPumpCoolWater2 : "Pump";
+      iPumpFurnace1 : "Pump";
+      iPumpFurnace2 : "Pump";
+   END_VAR
+
    VAR_IN_OUT 
       ioAlarm : "Alarm";
    END_VAR
 
    VAR 
+      sAlarmCount : Int;
+      sAlarmCountCrit : Int;
       sAlarms : Struct
          Crit : Struct
             CvOff : Int;
@@ -36,10 +48,43 @@ VERSION : 0.1
          SprayPipeOpenTimeout2 : Int;
          BleedingUnitErr : Int;
       END_STRUCT;
+      sAutoMode : Bool;
+      sPumpPlant1 : Struct
+         Q : Bool;
+         IsRunning : Bool;
+         HasError : Bool;
+      END_STRUCT;
+      sPumpPlant2 : Struct
+         Q : Bool;
+         IsRunning : Bool;
+         HasError : Bool;
+      END_STRUCT;
+      sPumpCoolWater1 : Struct
+         Q : Bool;
+         IsRunning : Bool;
+         HasError : Bool;
+      END_STRUCT;
+      sPumpCoolWater2 : Struct
+         Q : Bool;
+         IsRunning : Bool;
+         HasError : Bool;
+      END_STRUCT;
+      sPumpFurnace1 : Struct
+         Q : Bool;
+         IsRunning : Bool;
+         HasError : Bool;
+      END_STRUCT;
+      sPumpFurnace2 : Struct
+         Q : Bool;
+         IsRunning : Bool;
+         HasError : Bool;
+      END_STRUCT;
    END_VAR
 
 
 BEGIN
+	#sAlarmCount := #ioAlarm.oAlarmCount;
+	#sAlarmCountCrit := #ioAlarm.oAlarmCountCrit;
 	#sAlarms.BleedingUnitErr := #ioAlarm.sBleedingUnitErr;
 	#sAlarms.Crit.CvOff := #ioAlarm.sCvOff;
 	#sAlarms.Crit.FanErrCrit := #ioAlarm.sFanErrCrit;
@@ -65,6 +110,26 @@ BEGIN
 	#sAlarms.PumpPlant2Err := #ioAlarm.sPumpPlant2Err;
 	#sAlarms.SprayPipeOpenTimeout1 := #ioAlarm.sSprayPipeOpenTimeout1;
 	#sAlarms.SprayPipeOpenTimeout2 := #ioAlarm.sSprayPipeOpenTimeout2;
+	#sAutoMode := #iAutoMode;
+	#sPumpCoolWater1.HasError := #iPumpCoolWater1.HasError;
+	#sPumpCoolWater1.IsRunning := #iPumpCoolWater1.IsRunning;
+	#sPumpCoolWater1.Q := #iPumpCoolWater1.Q;
+	#sPumpCoolWater2.HasError := #iPumpCoolWater2.HasError;
+	#sPumpCoolWater2.IsRunning := #iPumpCoolWater2.IsRunning;
+	#sPumpCoolWater2.Q := #iPumpCoolWater2.Q;
+	#sPumpFurnace1.HasError := #iPumpFurnace1.HasError;
+	#sPumpFurnace1.IsRunning := #iPumpFurnace1.IsRunning;
+	#sPumpFurnace1.Q := #iPumpFurnace1.Q;
+	#sPumpFurnace2.HasError := #iPumpFurnace2.HasError;
+	#sPumpFurnace2.IsRunning := #iPumpFurnace2.IsRunning;
+	#sPumpFurnace2.Q := #iPumpFurnace2.Q;
+	#sPumpPlant1.HasError := #iPumpPlant1.HasError;
+	#sPumpPlant1.IsRunning := #iPumpPlant1.IsRunning;
+	#sPumpPlant1.Q := #iPumpPlant1.Q;
+	#sPumpPlant2.HasError := #iPumpPlant2.HasError;
+	#sPumpPlant2.IsRunning := #iPumpPlant2.IsRunning;
+	#sPumpPlant2.Q := #iPumpPlant2.Q;
+	
 	
 END_FUNCTION_BLOCK
 
