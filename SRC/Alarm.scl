@@ -29,8 +29,6 @@ VERSION : 0.1
       oAlarmCount : Int := 0;
       oAlarmCountCrit : Int;
       oAlarmLamp : Bool := false;
-      oSprayPipeOpenTimeout1 : Bool;
-      oSprayPipeOpenTimeout2 : Bool;
    END_VAR
 
    VAR 
@@ -150,7 +148,6 @@ BEGIN
 	#oAlarmCountCrit += #sSurgeTankOverflow;
 	
 	#oAlarmLamp := #oAlarmCount > 0;
-	#oSprayPipeOpenTimeout1 := #sSprayPipeOpenTimeout1 > 0;
-	#oSprayPipeOpenTimeout2 := #sSprayPipeOpenTimeout2 > 0;
+	
 END_FUNCTION_BLOCK
 
