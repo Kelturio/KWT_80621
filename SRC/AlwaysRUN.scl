@@ -113,5 +113,8 @@ BEGIN
 	        iSprayPipe2 := #iSprayPipe2,
 	        iSurgeTankRefill := #iSurgeTankRefill,
 	        iAutoMode := #iAutoMode);
+	
+	"NetDb"();
+	
 END_FUNCTION_BLOCK
 
