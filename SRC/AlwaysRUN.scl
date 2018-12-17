@@ -49,6 +49,18 @@ VERSION : 0.1
       tStorageTankRefillEt : Time;
       tAlarmCount : Int;
       tAlarmCountCrit : Int;
+      tRuntimeMeters : Struct
+         PlcRun : DInt;
+         PumpPlant1 : DInt;
+         PumpPlant2 : DInt;
+         PumpCoolWater1 : DInt;
+         PumpCoolWater2 : DInt;
+         PumpFurnace1 : DInt;
+         PumpFurnace2 : DInt;
+         Fan1 : DInt;
+         Fan2 : DInt;
+         Rtm9 : DInt;
+      END_STRUCT;
    END_VAR
 
 
@@ -110,25 +122,57 @@ BEGIN
 	        iSurgeTankRefill := #iSurgeTankRefill,
 	        iAutoMode := #iAutoMode);
 	
-	"NetDb"(iAutoMode:=#iAutoMode,
-	        iPumpPlant1:=#iPumpPlant1,
-	        iPumpPlant2:=#iPumpPlant2,
-	        iPumpCoolWater1:=#iPumpCoolWater1,
-	        iPumpCoolWater2:=#iPumpCoolWater2,
-	        iPumpFurnace1:=#iPumpFurnace1,
-	        iPumpFurnace2:=#iPumpFurnace2,
-	        iFan1:=#iFan1,
-	        iFan2:=#iFan2,
-	        iSprayPipe1:=#iSprayPipe1,
-	        iSprayPipe2:=#iSprayPipe2,
-	        iSurgeTankRefill:=#iSurgeTankRefill,
-	        iLiftingSys1:=#iLiftingSys1,
-	        iLiftingSys2:=#iLiftingSys2,
-	        iTempPlant:=#iTempPlant,
-	        iTempFurnace:=#iTempFurnace,
-	        iSurgeTank:=#iSurgeTank,
-	        iBleedingUnit:=#iBleedingUnit,
-	        ioAlarm:=#Alarm);
+	"NetDb"(iAutoMode := #iAutoMode,
+	        iPumpPlant1 := #iPumpPlant1,
+	        iPumpPlant2 := #iPumpPlant2,
+	        iPumpCoolWater1 := #iPumpCoolWater1,
+	        iPumpCoolWater2 := #iPumpCoolWater2,
+	        iPumpFurnace1 := #iPumpFurnace1,
+	        iPumpFurnace2 := #iPumpFurnace2,
+	        iFan1 := #iFan1,
+	        iFan2 := #iFan2,
+	        iSprayPipe1 := #iSprayPipe1,
+	        iSprayPipe2 := #iSprayPipe2,
+	        iSurgeTankRefill := #iSurgeTankRefill,
+	        iLiftingSys1 := #iLiftingSys1,
+	        iLiftingSys2 := #iLiftingSys2,
+	        iTempPlant := #iTempPlant,
+	        iTempFurnace := #iTempFurnace,
+	        iSurgeTank := #iSurgeTank,
+	        iBleedingUnit := #iBleedingUnit,
+	        ioAlarm := #Alarm);
+	
+	#tRuntimeMeters.PlcRun := "Main_DB".AlwaysRUN.RuntimeMeters.SRTM[0].sCv;
+	#tRuntimeMeters.PumpPlant1 := "Main_DB".AlwaysRUN.RuntimeMeters.SRTM[1].sCv;
+	#tRuntimeMeters.PumpPlant2 := "Main_DB".AlwaysRUN.RuntimeMeters.SRTM[2].sCv;
+	#tRuntimeMeters.PumpCoolWater1 := "Main_DB".AlwaysRUN.RuntimeMeters.SRTM[3].sCv;
+	#tRuntimeMeters.PumpCoolWater2 := "Main_DB".AlwaysRUN.RuntimeMeters.SRTM[4].sCv;
+	#tRuntimeMeters.PumpFurnace1 := "Main_DB".AlwaysRUN.RuntimeMeters.SRTM[5].sCv;
+	#tRuntimeMeters.PumpFurnace2 := "Main_DB".AlwaysRUN.RuntimeMeters.SRTM[6].sCv;
+	#tRuntimeMeters.Fan1 := "Main_DB".AlwaysRUN.RuntimeMeters.SRTM[7].sCv;
+	#tRuntimeMeters.Fan2 := "Main_DB".AlwaysRUN.RuntimeMeters.SRTM[8].sCv;
+	#tRuntimeMeters.Rtm9 := "Main_DB".AlwaysRUN.RuntimeMeters.SRTM[9].sCv;
+	
+	"NetGerDb"(iAutoMode:=#iAutoMode,
+	           iPumpPlant1:=#iPumpPlant1,
+	           iPumpPlant2:=#iPumpPlant2,
+	           iPumpCoolWater1:=#iPumpCoolWater1,
+	           iPumpCoolWater2:=#iPumpCoolWater2,
+	           iPumpFurnace1:=#iPumpFurnace1,
+	           iPumpFurnace2:=#iPumpFurnace2,
+	           iFan1:=#iFan1,
+	           iFan2:=#iFan2,
+	           iSprayPipe1:=#iSprayPipe1,
+	           iSprayPipe2:=#iSprayPipe2,
+	           iSurgeTankRefill:=#iSurgeTankRefill,
+	           iLiftingSys1:=#iLiftingSys1,
+	           iLiftingSys2:=#iLiftingSys2,
+	           iTempPlant:=#iTempPlant,
+	           iTempFurnace:=#iTempFurnace,
+	           iSurgeTank:=#iSurgeTank,
+	           iBleedingUnit:=#iBleedingUnit,
+	           iRuntimeMeters:=#tRuntimeMeters,
+	           ioAlarm:=#Alarm);
 	
 END_FUNCTION_BLOCK
 
