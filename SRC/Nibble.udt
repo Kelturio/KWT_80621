@@ -1,0 +1,11 @@
+﻿TYPE "Nibble"
+VERSION : 0.1
+   STRUCT
+      X0 : Bool;
+      X1 : Bool;
+      X2 : Bool;
+      X3 : Bool;
+   END_STRUCT;
+
+END_TYPE
+
