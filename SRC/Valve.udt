@@ -6,6 +6,7 @@ VERSION : 0.1
       IsClosed : Bool;
       HasError : Bool;
       SetPoint : Int;
+      Timeout : Time;
    END_STRUCT;
 
 END_TYPE
