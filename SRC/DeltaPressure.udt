@@ -1,6 +1,7 @@
 ﻿TYPE "DeltaPressure"
 VERSION : 0.1
    STRUCT
+      IW : Int;
       Val : "Val";
       Limits : "Limits";
    END_STRUCT;
