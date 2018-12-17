@@ -1,0 +1,11 @@
+﻿DATA_BLOCK "NetGerDb"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+NON_RETAIN
+"NetGer"
+
+BEGIN
+
+END_DATA_BLOCK
+
