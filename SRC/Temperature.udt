@@ -1,7 +1,9 @@
 ﻿TYPE "Temperature"
 VERSION : 0.1
    STRUCT
+      IW : Int;
       Val : "Val";
+      SetPoint : "SetPoint";
       Limits : "Limits";
    END_STRUCT;
 
