@@ -1,0 +1,295 @@
+﻿FUNCTION_BLOCK "NetGer"
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : Searinox
+VERSION : 0.1
+   VAR_INPUT 
+      iAutoMode : Bool;
+      iPumpPlant1 : "Pump";
+      iPumpPlant2 : "Pump";
+      iPumpCoolWater1 : "Pump";
+      iPumpCoolWater2 : "Pump";
+      iPumpFurnace1 : "Pump";
+      iPumpFurnace2 : "Pump";
+      iFan1 : "Fan";
+      iFan2 : "Fan";
+      iSprayPipe1 : "Valve";
+      iSprayPipe2 : "Valve";
+      iSurgeTankRefill : "Valve";
+      iLiftingSys1 : "LiftingSys";
+      iLiftingSys2 : "LiftingSys";
+      iTempPlant : "Temperature";
+      iTempFurnace : "Temperature";
+      iSurgeTank : "Tank";
+      iBleedingUnit : "BleedingUnit";
+      iRuntimeMeters : Struct
+         PlcRun : DInt;
+         PumpPlant1 : DInt;
+         PumpPlant2 : DInt;
+         PumpCoolWater1 : DInt;
+         PumpCoolWater2 : DInt;
+         PumpFurnace1 : DInt;
+         PumpFurnace2 : DInt;
+         Fan1 : DInt;
+         Fan2 : DInt;
+         Rtm9 : DInt;
+      END_STRUCT;
+   END_VAR
+
+   VAR_IN_OUT 
+      ioAlarm : "Alarm";
+   END_VAR
+
+   VAR 
+      AlarmAnzahl : Int;   // Anzahl der Alarme
+      AlarmAnzahlKritisch : Int;   // Anzahl der kritischen Alarme
+      Alarme : Struct   // Alarme
+         Kritisch : Struct   // Kritische Alarme
+            NotAus : Bool;
+            VentilatorAusfall : Bool;
+            SicherungAusgaengeAusfall : Bool;
+            PumpeKuehlwasserAusfall : Bool;
+            PumpeOefenAusfall : Bool;
+            PumpeWerkAusfall : Bool;
+            AusgleichsbehaelterUeberlauf : Bool;
+            AusgleichsbehaelterTrockenlauf : Bool;
+         END_STRUCT;
+         AbsalzanlageStoerung : Bool;   // Absalzanlage Stoerung
+         Ventilator1Stoerung : Bool;   // Kuehlturm 1 Ventilator Stoerung
+         Ventilator1ReparaturSchalter : Bool;   // Kuehlturm 1 Reparaturschalter aus
+         Ventilator2Stoerung : Bool;   // Kuehlturm 2 Ventilator Stoerung
+         Ventilator2ReparaturSchalter : Bool;   // Kuehlturm 2 Reparaturschalter aus
+         TemperaturOefenHoch : Bool;   // Vorlauftemperatur Oefenkreisauf zu hoch
+         TemperaturWerkHoch : Bool;   // Vorlauftemperatur Werkskreislauf zu hoch
+         Filter1DifferenzdruckHoch : Bool;   // Hebeanlage Filter 1 Differenzdruck zu hoch
+         Filter2DifferenzdruckHoch : Bool;   // Hebeanlage Filter 2 Differenzdruck zu hoch
+         PumpeKuehlwasser1Stoerung : Bool;   // Pumpe Kuehlwasser 1 Stoerung
+         PumpeKuehlwasser2Stoerung : Bool;   // Pumpe Kuehlwasser 2 Stoerung
+         PumpeOefen1Stoerung : Bool;   // Pumpe Oefen 1 Stoerung
+         PumpeOefen2Stoerung : Bool;   // Pumpe Oefen 2 Stoerung
+         PumpeWerk1Stoerung : Bool;   // Pumpe Werk 1 Stoerung
+         PumpeWerk2Stoerung : Bool;   // Pumpe Werk 2 Stoerung
+         Spruehrohr1Zeitueberschreitung : Bool;   // Kuehlturm 1 Spruehrohr braucht zu lange zum oeffnen
+         Spruehrohr2Zeitueberschreitung : Bool;   // Kuehlturm 2 Spruehrohr braucht zu lange zum oeffnen
+      END_STRUCT;
+      AutomatikBetrieb : Bool;   // Anlage in Automatikbetrieb
+      Absalzanlage : Struct   // Absalzanlage
+         Betrieb : Bool;   // Absalzanlage Dosierpumpe laeuft
+         Stoerung : Bool;   // Absalzanlage Stoerung
+      END_STRUCT;
+      Ventilator1 : Struct   // Kuehlturm 1 Ventilator
+         Ausgang : Bool;   // Kuehlturm 1 Ventilator Ausgang
+         Betrieb : Bool;   // Kuehlturm 1 Ventilator Betrieb
+         Stoerung : Bool;   // Kuehlturm 1 Ventilator Stoerung
+         ReparaturSchalter : Bool;   // Kuehlturm 1 Ventilator Reparaturschalter aus
+         Sollwert : Int;   // Kuehlturm 1 Ventilator Sollwert
+      END_STRUCT;
+      Ventilator2 : Struct   // Kuehlturm 2 Ventilator
+         Ausgang : Bool;   // Kuehlturm 2 Ventilator Ausgang
+         Betrieb : Bool;   // Kuehlturm 2 Ventilator Betrieb
+         Stoerung : Bool;   // Kuehlturm 2 Ventilator Stoerung
+         ReparaturSchalter : Bool;   // Kuehlturm 2 Ventilator Reparaturschalter
+         Sollwert : Int;   // Kuehlturm 2 Ventilator Sollwert
+      END_STRUCT;
+      Hebeanlage : Struct   // Hebeanlage
+         Filter1 : Struct   // Hebeanlage Filter 1
+            Differenzdruck : Struct   // Hebeanlage Filter 1 Differenzdruck
+               Wert : Real;   // Hebeanlage Filter 1 Differenzdruck Wert 100%
+               Grenzen : Struct   // Hebeanlage Filter 1 Differenzdruck Grenzen
+                  Min : Real;   // Hebeanlage Filter 1 Differenzdruck Grenzen Min
+                  Max : Real;   // Hebeanlage Filter 1 Differenzdruck Grenzen Max
+               END_STRUCT;
+            END_STRUCT;
+         END_STRUCT;
+         Filter2 : Struct   // Hebeanlage Filter 2
+            Differenzdruck : Struct   // Hebeanlage Filter 2 Differenzdruck
+               Wert : Real;   // Hebeanlage Filter 2 Differenzdruck Wert 100%
+               Grenzen : Struct   // Hebeanlage Filter 2 Differenzdruck Grenzen
+                  Min : Real;   // Hebeanlage Filter 2 Differenzdruck Grenzen Min
+                  Max : Real;   // Hebeanlage Filter 2 Differenzdruck Grenzen Max
+               END_STRUCT;
+            END_STRUCT;
+         END_STRUCT;
+      END_STRUCT;
+      PumpeKuehlwasser1 : Struct   // Pumpe Kuehlwasser 1
+         Ausgang : Bool;   // Pumpe Kuehlwasser 1 Ausgang
+         Betrieb : Bool;   // Pumpe Kuehlwasser 1 Betrieb
+         Stoerung : Bool;   // Pumpe Kuehlwasser 1 Stoerung
+      END_STRUCT;
+      PumpeKuehlwasser2 : Struct   // Pumpe Kuehlwasser 2
+         Ausgang : Bool;   // Pumpe Kuehlwasser 2 Ausgang
+         Betrieb : Bool;   // Pumpe Kuehlwasser 2 Betrieb
+         Stoerung : Bool;   // Pumpe Kuehlwasser 2 Stoerung
+      END_STRUCT;
+      PumpeOefen1 : Struct   // Pumpe Oefen 1
+         Ausgang : Bool;   // Pumpe Oefen 1 Ausgang
+         Betrieb : Bool;   // Pumpe Oefen 1 Betrieb
+         Stoerung : Bool;   // Pumpe Oefen 1 Stoerung
+      END_STRUCT;
+      PumpeOefen2 : Struct   // Pumpe Oefen 2
+         Ausgang : Bool;   // Pumpe Oefen 2 Ausgang
+         Betrieb : Bool;   // Pumpe Oefen 2 Betrieb
+         Stoerung : Bool;   // Pumpe Oefen 2 Stoerung
+      END_STRUCT;
+      PumpeWerk1 : Struct   // Pumpe Werk 1
+         Ausgang : Bool;   // Pumpe Werk 1 Ausgang
+         Betrieb : Bool;   // Pumpe Werk 1 Betrieb
+         Stoerung : Bool;   // Pumpe Werk 1 Stoerung
+      END_STRUCT;
+      PumpeWerk2 : Struct   // Pumpe Werk 2
+         Ausgang : Bool;   // Pumpe Werk 2 Ausgang
+         Betrieb : Bool;   // Pumpe Werk 2 Betrieb
+         Stoerung : Bool;   // Pumpe Werk 2 Stoerung
+      END_STRUCT;
+      Spruehrohr1 : Struct   // Kuehlturm 1 Spruehrohr
+         Ausgang : Bool;   // Kuehlturm 1 Spruehrohr Ausgang
+         IstOffen : Bool;   // Kuehlturm 1 Spruehrohr Ventil ist offen
+         Grenzen : Struct   // Kuehlturm 1 Spruehrohr Grenzen
+            Zeitueberschreitung : Time;   // Kuehlturm 1 Spruehrohr Grenzen Zeit fuer Zeitueberschreitung Alarm
+         END_STRUCT;
+      END_STRUCT;
+      Spruehrohr2 : Struct   // Kuehlturm 2 Spruehrohr
+         Ausgang : Bool;   // Kuehlturm 2 Spruehrohr Ausgang
+         IstOffen : Bool;   // Kuehlturm 2 Spruehrohr Ventil ist offen
+         Grenzen : Struct   // Kuehlturm 2 Spruehrohr Grenzen
+            Zeitueberschreitung : Time;   // Kuehlturm 2 Spruehrohr Grenzen Zeit fuer Zeitueberschreitung Alarm
+         END_STRUCT;
+      END_STRUCT;
+      Ausgleichsbehaelter : Struct   // Ausgleichsbehaelter
+         Fuellstand : Int;   // Ausgleichsbehaelter Fuellstand 0-15
+         Niveaus : Struct   // Ausgleichsbehaelter Niveaus
+            Trockenlauf : Int;   // Ausgleichsbehaelter Niveaus Trockenlauf
+            UntererSollwert : Int;   // Ausgleichsbehaelter Niveaus UntererSollwert
+            ObererSollwert : Int;   // Ausgleichsbehaelter Niveaus ObererSollwert
+            Ueberlauf : Int;   // Ausgleichsbehaelter Niveaus Ueberlauf
+         END_STRUCT;
+         VentilNachfuellung : Struct   // Ausgleichsbehaelter VentilNachfuellung
+            Ausgang : Bool;   // Ausgleichsbehaelter VentilNachfuellung Ausgang
+            IstOffen : Bool;   // Ausgleichsbehaelter VentilNachfuellung IstOffen
+         END_STRUCT;
+      END_STRUCT;
+      TemperaturOefen : Struct   // Temperatur Vorlauf Oefen
+         Wert : Real;   // Temperatur Vorlauf Oefen Wert
+         Grenzen : Struct   // Temperatur Vorlauf Oefen Grenzen
+            Min : Real;   // Temperatur Vorlauf Oefen Grenzen Min
+            Max : Real;   // Temperatur Vorlauf Oefen Grenzen Max
+         END_STRUCT;
+      END_STRUCT;
+      TemperaturWerk : Struct   // Temperatur Vorlauf Werk
+         Wert : Real;   // Temperatur Vorlauf Werk Wert
+         Grenzen : Struct   // Temperatur Vorlauf Werk Grenzen
+            Min : Real;   // Temperatur Vorlauf Werk Grenzen Min
+            Max : Real;   // Temperatur Vorlauf Werk Grenzen Max
+         END_STRUCT;
+      END_STRUCT;
+      Betriebsstundenzaehler : Struct   // Betriebsstundenzaehler
+         SPS : DInt;   // Betriebsstundenzaehler SPS
+         PumpeWerk1 : DInt;   // Betriebsstundenzaehler Pumpe Werk 1
+         PumpeWerk2 : DInt;   // Betriebsstundenzaehler Pumpe Werk 2
+         PumpeKuehlwasser1 : DInt;   // Betriebsstundenzaehler Pumpe Kuehlwasser 1
+         PumpeKuehlwasser2 : DInt;   // Betriebsstundenzaehler Pumpe Kuehlwasser 2
+         PumpeOefen1 : DInt;   // Betriebsstundenzaehler Pumpe Oefen 1
+         PumpeOefen2 : DInt;   // Betriebsstundenzaehler Pumpe Oefen 2
+         Ventilator1 : DInt;   // Betriebsstundenzaehler Kuehlturm 1 Ventilator
+         Ventilator2 : DInt;   // Betriebsstundenzaehler Kuehlturm 2 Ventilator
+         Rtm9 : DInt;   // Betriebsstundenzaehler Reserve
+      END_STRUCT;
+   END_VAR
+
+
+BEGIN
+	#AlarmAnzahl := #ioAlarm.oAlarmCount;
+	#AlarmAnzahlKritisch := #ioAlarm.oAlarmCountCrit;
+	#Alarme.AbsalzanlageStoerung := INT_TO_BOOL(#ioAlarm.sBleedingUnitErr);
+	#Alarme.Kritisch.NotAus := INT_TO_BOOL(#ioAlarm.sCvOff);
+	#Alarme.Kritisch.VentilatorAusfall := INT_TO_BOOL(#ioAlarm.sFanErrCrit);
+	#Alarme.Kritisch.SicherungAusgaengeAusfall := INT_TO_BOOL(#ioAlarm.sFuseOutputsErr);
+	#Alarme.Kritisch.PumpeKuehlwasserAusfall := INT_TO_BOOL(#ioAlarm.sPumpCoolWaterErrCrit);
+	#Alarme.Kritisch.PumpeOefenAusfall := INT_TO_BOOL(#ioAlarm.sPumpFurnaceErrCrit);
+	#Alarme.Kritisch.PumpeWerkAusfall := INT_TO_BOOL(#ioAlarm.sPumpPlantErrCrit);
+	#Alarme.Kritisch.AusgleichsbehaelterUeberlauf := INT_TO_BOOL(#ioAlarm.sSurgeTankOverflow);
+	#Alarme.Kritisch.AusgleichsbehaelterTrockenlauf := INT_TO_BOOL(#ioAlarm.sSurgeTankRunDry);
+	#Alarme.Ventilator1Stoerung := INT_TO_BOOL(#ioAlarm.sCt1FanErr);
+	#Alarme.Ventilator1ReparaturSchalter := INT_TO_BOOL(#ioAlarm.sCt1RepairSwitchOff);
+	#Alarme.Ventilator2Stoerung := INT_TO_BOOL(#ioAlarm.sCt2FanErr);
+	#Alarme.Ventilator2ReparaturSchalter := INT_TO_BOOL(#ioAlarm.sCt2RepairSwitchOff);
+	#Alarme.TemperaturOefenHoch := INT_TO_BOOL(#ioAlarm.sFlowTempFurnaceHot);
+	#Alarme.TemperaturWerkHoch := INT_TO_BOOL(#ioAlarm.sFlowTempPlantHot);
+	#Alarme.Filter1DifferenzdruckHoch := INT_TO_BOOL(#ioAlarm.sPressureDeltaPerc1);
+	#Alarme.Filter2DifferenzdruckHoch := INT_TO_BOOL(#ioAlarm.sPressureDeltaPerc2);
+	#Alarme.PumpeKuehlwasser1Stoerung := INT_TO_BOOL(#ioAlarm.sPumpCoolWater1Err);
+	#Alarme.PumpeKuehlwasser2Stoerung := INT_TO_BOOL(#ioAlarm.sPumpCoolWater2Err);
+	#Alarme.PumpeOefen1Stoerung := INT_TO_BOOL(#ioAlarm.sPumpFurnace1Err);
+	#Alarme.PumpeOefen2Stoerung := INT_TO_BOOL(#ioAlarm.sPumpFurnace2Err);
+	#Alarme.PumpeWerk1Stoerung := INT_TO_BOOL(#ioAlarm.sPumpPlant1Err);
+	#Alarme.PumpeWerk2Stoerung := INT_TO_BOOL(#ioAlarm.sPumpPlant2Err);
+	#Alarme.Spruehrohr1Zeitueberschreitung := INT_TO_BOOL(#ioAlarm.sSprayPipeOpenTimeout1);
+	#Alarme.Spruehrohr2Zeitueberschreitung := INT_TO_BOOL(#ioAlarm.sSprayPipeOpenTimeout2);
+	#AutomatikBetrieb := #iAutoMode;
+	#Absalzanlage.Stoerung := #iBleedingUnit.HasError;
+	#Absalzanlage.Betrieb := #iBleedingUnit.IsRunning;
+	#Ventilator1.Stoerung := #iFan1.HasError;
+	#Ventilator1.Betrieb := #iFan1.IsRunning;
+	#Ventilator1.Ausgang := #iFan1.Q;
+	#Ventilator1.ReparaturSchalter := #iFan1.RepairSwitch;
+	#Ventilator1.Sollwert := #iFan1.SetPoint;
+	#Ventilator2.Stoerung := #iFan2.HasError;
+	#Ventilator2.Betrieb := #iFan2.IsRunning;
+	#Ventilator2.Ausgang := #iFan2.Q;
+	#Ventilator2.ReparaturSchalter := #iFan2.RepairSwitch;
+	#Ventilator2.Sollwert := #iFan2.SetPoint;
+	#Hebeanlage.Filter1.Differenzdruck.Grenzen.Max := #iLiftingSys1.DeltaPressure.Limits.Max.R;
+	#Hebeanlage.Filter1.Differenzdruck.Grenzen.Min := #iLiftingSys1.DeltaPressure.Limits.Min.R;
+	#Hebeanlage.Filter1.Differenzdruck.Wert := #iLiftingSys1.DeltaPressure.Val.R;
+	#Hebeanlage.Filter2.Differenzdruck.Grenzen.Max := #iLiftingSys2.DeltaPressure.Limits.Max.R;
+	#Hebeanlage.Filter2.Differenzdruck.Grenzen.Min := #iLiftingSys2.DeltaPressure.Limits.Min.R;
+	#Hebeanlage.Filter2.Differenzdruck.Wert := #iLiftingSys2.DeltaPressure.Val.R;
+	#PumpeKuehlwasser1.Stoerung := #iPumpCoolWater1.HasError;
+	#PumpeKuehlwasser1.Betrieb := #iPumpCoolWater1.IsRunning;
+	#PumpeKuehlwasser1.Ausgang := #iPumpCoolWater1.Q;
+	#PumpeKuehlwasser2.Stoerung := #iPumpCoolWater2.HasError;
+	#PumpeKuehlwasser2.Betrieb := #iPumpCoolWater2.IsRunning;
+	#PumpeKuehlwasser2.Ausgang := #iPumpCoolWater2.Q;
+	#PumpeOefen1.Stoerung := #iPumpFurnace1.HasError;
+	#PumpeOefen1.Betrieb := #iPumpFurnace1.IsRunning;
+	#PumpeOefen1.Ausgang := #iPumpFurnace1.Q;
+	#PumpeOefen2.Stoerung := #iPumpFurnace2.HasError;
+	#PumpeOefen2.Betrieb := #iPumpFurnace2.IsRunning;
+	#PumpeOefen2.Ausgang := #iPumpFurnace2.Q;
+	#PumpeWerk1.Stoerung := #iPumpPlant1.HasError;
+	#PumpeWerk1.Betrieb := #iPumpPlant1.IsRunning;
+	#PumpeWerk1.Ausgang := #iPumpPlant1.Q;
+	#PumpeWerk2.Stoerung := #iPumpPlant2.HasError;
+	#PumpeWerk2.Betrieb := #iPumpPlant2.IsRunning;
+	#PumpeWerk2.Ausgang := #iPumpPlant2.Q;
+	#Spruehrohr1.IstOffen := #iSprayPipe1.IsOpen;
+	#Spruehrohr1.Ausgang := #iSprayPipe1.Q;
+	#Spruehrohr1.Grenzen.Zeitueberschreitung := #iSprayPipe1.Timeout;
+	#Spruehrohr2.IstOffen := #iSprayPipe2.IsOpen;
+	#Spruehrohr2.Ausgang := #iSprayPipe2.Q;
+	#Spruehrohr2.Grenzen.Zeitueberschreitung := #iSprayPipe2.Timeout;
+	#Ausgleichsbehaelter.Niveaus.Ueberlauf := #iSurgeTank.Levels.Overflow;
+	#Ausgleichsbehaelter.Niveaus.Trockenlauf := #iSurgeTank.Levels.RunDry;
+	#Ausgleichsbehaelter.Niveaus.UntererSollwert := #iSurgeTank.Levels.SetPointLower;
+	#Ausgleichsbehaelter.Niveaus.ObererSollwert := #iSurgeTank.Levels.SetPointUpper;
+	#Ausgleichsbehaelter.Fuellstand := #iSurgeTank.Val.I;
+	#Ausgleichsbehaelter.VentilNachfuellung.Ausgang := #iSurgeTankRefill.Q;
+	#Ausgleichsbehaelter.VentilNachfuellung.IstOffen := #iSurgeTankRefill.IsOpen;
+	#TemperaturOefen.Grenzen.Max := #iTempFurnace.Limits.Max.R;
+	#TemperaturOefen.Grenzen.Min := #iTempFurnace.Limits.Min.R;
+	#TemperaturOefen.Wert := #iTempFurnace.Val.R;
+	#TemperaturWerk.Grenzen.Max := #iTempPlant.Limits.Max.R;
+	#TemperaturWerk.Grenzen.Min := #iTempPlant.Limits.Min.R;
+	#TemperaturWerk.Wert := #iTempPlant.Val.R;
+	#Betriebsstundenzaehler.SPS := #iRuntimeMeters.PlcRun;
+	#Betriebsstundenzaehler.PumpeWerk1 := #iRuntimeMeters.PumpPlant1;
+	#Betriebsstundenzaehler.PumpeWerk2 := #iRuntimeMeters.PumpPlant2;
+	#Betriebsstundenzaehler.PumpeKuehlwasser1 := #iRuntimeMeters.PumpCoolWater1;
+	#Betriebsstundenzaehler.PumpeKuehlwasser2 := #iRuntimeMeters.PumpCoolWater2;
+	#Betriebsstundenzaehler.PumpeOefen1 := #iRuntimeMeters.PumpFurnace1;
+	#Betriebsstundenzaehler.PumpeOefen2 := #iRuntimeMeters.PumpFurnace2;
+	#Betriebsstundenzaehler.Ventilator1 := #iRuntimeMeters.Fan1;
+	#Betriebsstundenzaehler.Ventilator2 := #iRuntimeMeters.Fan2;
+	#Betriebsstundenzaehler.Rtm9 := #iRuntimeMeters.Rtm9;
+	
+END_FUNCTION_BLOCK
+
