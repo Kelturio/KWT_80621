@@ -174,5 +174,7 @@ BEGIN
 	           iRuntimeMeters:=#tRuntimeMeters,
 	           ioAlarm:=#Alarm);
 	
+	"HmiDataExchange".PLC_Time_RD_SYS_T_RetVal1 := RD_SYS_T("HmiAreaPointer".DateTimePLC.DateTime);
+	
 END_FUNCTION_BLOCK
 
