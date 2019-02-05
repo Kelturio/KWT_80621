@@ -1,0 +1,15 @@
+﻿DATA_BLOCK "HmiDataExchange"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+   STRUCT 
+      PLC_Time_RD_SYS_T {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;   // UTC Zeit / UTC time
+      PLC_Time_RD_SYS_T_RetVal1 : Int;
+      PLC_Time_RD_SYS_T_RetVal2 : Int;
+   END_STRUCT;
+
+
+BEGIN
+
+END_DATA_BLOCK
+
