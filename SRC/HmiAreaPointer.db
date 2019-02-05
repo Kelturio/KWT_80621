@@ -1,0 +1,23 @@
+﻿DATA_BLOCK "HmiAreaPointer"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+   STRUCT 
+      Coordination : Word;
+      DateTime {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+      JobMailbox : Array[0..3] of Word;
+      DataRecord : Array[0..4] of Word;
+      ProjectID : Word;
+      ScreenNumber : Array[0..4] of Word;
+      DateTimePLC : Struct
+         DateTime {OriginalPartName := 'DTL'; LibVersion := '1.0'} : DTL;
+         Reserve_01 : Word;
+         Reserve_02 : Word;
+      END_STRUCT;
+   END_STRUCT;
+
+
+BEGIN
+
+END_DATA_BLOCK
+
